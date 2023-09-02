@@ -1,5 +1,7 @@
 package shinhan.onesol.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shinhan.onesol.enums.MemberStatusEnum;
@@ -13,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "Member")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +34,15 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private ProviderEnum provider;
 
+    @Builder
+    public Member(String name, MemberTypeEnum type, String email, String password, MemberStatusEnum status, ProviderEnum provider){
+        this.name = name;
+        this.type = type;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.provider = provider;
+    }
 
 
 }

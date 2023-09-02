@@ -10,21 +10,23 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberFriend {
+public class Account {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    private String bankCode;
+    private Long money;
+    private String account;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany
-    @JoinColumn(name = "member_id")
-    private Member friend;
-
     @Builder
-    public MemberFriend(Member member, Member friend){
+    public Account(String bankCode, Long money, String account, Member member){
+        this.bankCode = bankCode;
+        this.money = money;
+        this.account = account;
         this.member = member;
-        this.friend = friend;
     }
 }
