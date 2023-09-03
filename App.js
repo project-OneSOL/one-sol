@@ -7,9 +7,14 @@ export default function App() {
     <View style={styles.background}>
       <StatusBar style="auto" />
       <View style={styles.header}>
-        <Image source={require("./assets/1SOL_logo.png")} />
+        <Image style={styles.logo} source={require("./assets/1SOL_logo.png")} />
         <View style={styles.topRight}>
-          <Octicons name="bell-fill" size={24} color="white" />
+          <Octicons
+            style={{ paddingHorizontal: 20 }}
+            name="bell-fill"
+            size={24}
+            color="white"
+          />
           <Ionicons name="person" size={24} color="white" />
         </View>
       </View>
@@ -27,10 +32,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 60,
   },
+  logo: {},
   topRight: {
     flexDirection: "row",
-    justifyContent: "space-between",
   },
 });
