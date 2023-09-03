@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Table(name = "SUB_PAYMENT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SubPayment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,11 @@ public class SubPayment {
     private PaymentStatusEnum status;
     private Long price;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
