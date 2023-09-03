@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ACCOUNT")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
