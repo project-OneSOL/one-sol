@@ -1,0 +1,22 @@
+### 회원가입
+POST {{baseUrl}}/auth/signUp
+Content-Type: application/json
+
+{
+  "name": "minsoo",
+  "email": "choi@gmail.com",
+  "password": "1234"
+}
+
+### 로그인
+GET {{baseUrl}}/auth/login
+
+
+### 로그인
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "choi@gmail.com",
+  "password": "1234"
+}

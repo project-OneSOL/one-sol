@@ -39,3 +39,9 @@ application.properties
 
 ### VS Code ###
 .vscode/
+
+### http
+http/
+
+### env
+env/

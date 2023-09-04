@@ -1,9 +1,14 @@
 package shinhan.onesol.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.Member;
+import shinhan.onesol.dto.TokenInfo;
 import shinhan.onesol.exception.DuplicateEmailException;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.request.SignUp;
@@ -17,6 +22,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public void signUp(SignUp signUp) {
         // 중복 이메일 체크
         Optional<Member> userEmail = memberRepository.findByEmail(signUp.getEmail());
@@ -29,9 +35,9 @@ public class AuthService {
         Member user = Member.builder()
                 .name(signUp.getName())
                 .email(signUp.getEmail())
-                .type(signUp.getTypeEnum())
                 .password(encodedPassword)
                 .build();
         memberRepository.save(user);
     }
+
 }
