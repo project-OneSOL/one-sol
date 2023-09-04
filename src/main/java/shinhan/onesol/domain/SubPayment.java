@@ -18,7 +18,7 @@ public class SubPayment {
 
     @Enumerated(value = EnumType.STRING)
     private PaymentStatusEnum status;
-    private Long price;
+    private int price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -29,7 +29,7 @@ public class SubPayment {
     private Payment payment;
 
     @Builder
-    public SubPayment(LocalDateTime date, PaymentStatusEnum status, Long price, Member member, Payment payment){
+    public SubPayment(LocalDateTime date, PaymentStatusEnum status, int price, Member member, Payment payment){
         this.date = date;
         this.status = status;
         this.price = price;
