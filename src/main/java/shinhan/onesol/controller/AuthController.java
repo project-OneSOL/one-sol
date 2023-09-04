@@ -22,9 +22,9 @@ public class AuthController {
     private final AuthService authService;
     private final MemberService memberService;
 
-    @GetMapping("/auth/login")
-    public String login() {
-        return "로그인 페이지 입니다.";
+    @GetMapping("/auth/signUp")
+    public String signUp() {
+        return "회원가입 페이지 입니다.";
     }
 
     @PostMapping("/auth/signUp")
@@ -32,12 +32,14 @@ public class AuthController {
         authService.signUp(signUp);
     }
 
+    @GetMapping("/auth/login")
+    public String login() {
+        return "로그인 페이지 입니다.";
+    }
+
     @PostMapping("/auth/login")
     public ResponseEntity<TokenInfo> login(@RequestBody MemberLoginDto memberLoginDto){
         TokenInfo tokenInfo = memberService.login(memberLoginDto.getEmail(), memberLoginDto.getPassword());
-        System.out.println("tokenInfo= " + tokenInfo);
-        log.info("tokenInfoLog={}", tokenInfo);
-
         return new ResponseEntity<>(tokenInfo, HttpStatus.OK);
     }
 
