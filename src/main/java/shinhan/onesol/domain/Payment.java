@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shinhan.onesol.enums.PaymentStatusEnum;
 
 import javax.persistence.*;
 
@@ -19,10 +20,17 @@ public class Payment {
     @JoinColumn(name = "member_id")
     private Member member;
     private int totalPrice;
+    @Enumerated(value = EnumType.STRING)
+    private PaymentStatusEnum status;
 
     @Builder
-    public Payment(Member member, int totalPrice){
+    public Payment(Member member, int totalPrice, PaymentStatusEnum status){
         this.member = member;
         this.totalPrice = totalPrice;
+        this.status = status;
+    }
+
+    public void updatePaymentStatus(PaymentStatusEnum status){
+        this.status = status;
     }
 }

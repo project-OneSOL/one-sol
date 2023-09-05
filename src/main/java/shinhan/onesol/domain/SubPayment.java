@@ -15,6 +15,7 @@ public class SubPayment {
     private Long id;
 
     private LocalDateTime date;
+    private String paymentKey;
 
     @Enumerated(value = EnumType.STRING)
     private PaymentStatusEnum status;
@@ -29,11 +30,16 @@ public class SubPayment {
     private Payment payment;
 
     @Builder
-    public SubPayment(LocalDateTime date, PaymentStatusEnum status, int price, Member member, Payment payment){
+    public SubPayment(String paymentKey, LocalDateTime date, PaymentStatusEnum status, int price, Member member, Payment payment){
+        this.paymentKey = paymentKey;
         this.date = date;
         this.status = status;
         this.price = price;
         this.member = member;
         this.payment = payment;
+    }
+
+    public void updateStatus(PaymentStatusEnum status){
+        this.status = status;
     }
 }
