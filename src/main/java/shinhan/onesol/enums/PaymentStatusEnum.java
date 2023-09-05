@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PaymentStatusEnum {
-    CANCELED("CANCELED"), SUCCESS("SUCCESS");
+    CANCELED("CANCELED"), ONGOING("ONGOING"), SUCCESS("SUCCESS");
 
     @JsonValue
     private final String status;
