@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.Payment;
@@ -17,6 +18,7 @@ import shinhan.onesol.dto.request.PaymentRequest;
 import shinhan.onesol.dto.response.PaymentResponse;
 import shinhan.onesol.enums.PaymentStatusEnum;
 import shinhan.onesol.exception.NotExistMemberException;
+import shinhan.onesol.exception.NotMatchTotalPriceException;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.repository.PaymentRepository;
 import shinhan.onesol.repository.SubPaymentRepository;
@@ -25,10 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,14 +49,11 @@ public class PaymentService {
 
     @Transactional
     public void doPayment(PaymentMemberRequest paymentMemberRequest, Long representMemberId){
-        RestTemplate rest = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
+        // validation
+        validateTotalPrice(paymentMemberRequest);
 
-        testSecretApiKey = testSecretApiKey + ":";
-        String encodedAuth = new String(Base64.getEncoder().encode(testSecretApiKey.getBytes(StandardCharsets.UTF_8)));
-        headers.setBasicAuth(encodedAuth);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = makeHeaders();
 
         Member representMember = memberRepository.findById(representMemberId)
                 .orElseThrow(NotExistMemberException::new);
@@ -66,10 +62,12 @@ public class PaymentService {
         Payment payment = Payment.builder()
                 .member(representMember)
                 .totalPrice(totalPrice)
+                .status(PaymentStatusEnum.ONGOING)
                 .build();
+        paymentRepository.save(payment);
         List<PaymentMemberDto> paymentMembers = paymentMemberRequest.getPaymentMembers();
 
-        int successCount = 0;
+        boolean isFailed = false;
         for (PaymentMemberDto paymentMember : paymentMembers) {
             Member member = memberRepository.findById(paymentMember.getId())
                     .orElseThrow(NotExistMemberException::new);
@@ -83,18 +81,33 @@ public class PaymentService {
             param.put("orderName", "order" + paymentMember.getName());
             param.put("customIdentityNumber", paymentMember.getCustomerIdentityNumber());
 
-            ResponseEntity<PaymentResponse> response = rest.postForEntity(
-                    tossOriginUrl + tossCardNumberPaymentUrl,
-                    new HttpEntity<>(param, headers),
-                    PaymentResponse.class
-            );
-
-            OffsetDateTime offsetDateTime = OffsetDateTime.parse(response.getBody().getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            LocalDateTime approvedDate = offsetDateTime.toLocalDateTime();
-
-            // 결제 성공 시
-            if (response.getStatusCode() == HttpStatus.OK) {
+            ResponseEntity<PaymentResponse> response = null;
+            try{
+                response = rest.postForEntity(
+                        tossOriginUrl + tossCardNumberPaymentUrl,
+                        new HttpEntity<>(param, headers),
+                        PaymentResponse.class
+                );
+            } catch (HttpClientErrorException e){
+                // 결제 실패 시
                 SubPayment subPayment = SubPayment.builder()
+                        .member(member)
+                        .payment(payment)
+                        .price(paymentMember.getAmount())
+                        .date(LocalDateTime.now())
+                        .status(PaymentStatusEnum.CANCELED)
+                        .build();
+                subPaymentRepository.save(subPayment);
+                isFailed = true;
+            }
+
+            if(response != null){
+                OffsetDateTime offsetDateTime = OffsetDateTime.parse(Objects.requireNonNull(response.getBody()).getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                LocalDateTime approvedDate = offsetDateTime.toLocalDateTime();
+                log.info(response.getBody().toString());
+                // 결제 성공 시
+                SubPayment subPayment = SubPayment.builder()
+                        .paymentKey(response.getBody().getPaymentKey())
                         .member(member)
                         .payment(payment)
                         .price(paymentMember.getAmount())
@@ -102,16 +115,66 @@ public class PaymentService {
                         .status(PaymentStatusEnum.SUCCESS)
                         .build();
                 subPaymentRepository.save(subPayment);
-                successCount++;
             }
         }
 
-        /**
-         * 모두가 결제 성공
-         */
-        if(successCount == paymentMembers.size()){
+        if(isFailed){
+            cancelPayment(payment);
+            payment.updatePaymentStatus(PaymentStatusEnum.CANCELED);
+            paymentRepository.save(payment);
+        } else {
+            payment.updatePaymentStatus(PaymentStatusEnum.SUCCESS);
             paymentRepository.save(payment);
         }
-
     }
+
+    private HttpHeaders makeHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+
+        testSecretApiKey = testSecretApiKey + ":";
+        String encodedAuth = new String(Base64.getEncoder().encode(testSecretApiKey.getBytes(StandardCharsets.UTF_8)));
+        headers.setBasicAuth(encodedAuth);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        return headers;
+    }
+
+    private void cancelPayment(Payment cancelPayment){
+        log.info("----cancelPayment----");
+        List<SubPayment> subPayments = subPaymentRepository.findByPayment(cancelPayment);
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        String encodedAuth = new String(Base64.getEncoder().encode(testSecretApiKey.getBytes(StandardCharsets.UTF_8)));
+        headers.setBasicAuth(encodedAuth);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        subPayments.stream()
+                .filter(sp -> sp.getStatus().equals(PaymentStatusEnum.SUCCESS))
+                .forEach(sp -> {
+            String paymentKey = sp.getPaymentKey();
+            JSONObject param = new JSONObject();
+            param.put("paymentKey", paymentKey);
+            param.put("cancelReason", "결제가 취소되었습니다.");
+            ResponseEntity<String> response = rest.postForEntity(
+                    tossOriginUrl + "/v1/payments/" + paymentKey + "/cancel",
+                    new HttpEntity<>(param, headers),
+                    String.class
+            );
+            log.info(response.getBody());
+            sp.updateStatus(PaymentStatusEnum.CANCELED);
+        });
+    }
+
+    private void validateTotalPrice(PaymentMemberRequest paymentMemberRequest) {
+        int memberTotalPrice = paymentMemberRequest.getPaymentMembers().stream()
+                .mapToInt(PaymentMemberDto::getAmount)
+                .sum();
+        if(memberTotalPrice != paymentMemberRequest.getTotalPrice()){
+            throw new NotMatchTotalPriceException();
+        }
+    }
+
+
 }
