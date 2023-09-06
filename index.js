@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Header } from "./components/Header";
-import { Home } from "./components/Home";
+import { Home } from "./pages/Home";
 import { palette } from "./lib/styles/colorPalette";
 import { StyleSheet, View, Image } from "react-native";
 import { getHeaderTitle } from "@react-navigation/elements";
@@ -17,12 +17,12 @@ export default function StackNavigator() {
         headerShown: false,
         headerMode: "screen",
         header: () => <Header />,
-        headerTitle: () => (
-          <Image
-            style={styles.logo}
-            source={require("./assets/1SOL_logo.png")}
-          />
-        ),
+        // headerTitle: () => (
+        //   <Image
+        //     style={styles.logo}
+        //     source={require("./assets/img/1SOL_logo.png")}
+        //   />
+        // ),
       }}
     >
       <Stack.Screen name="Home" component={Home} />

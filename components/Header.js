@@ -1,10 +1,12 @@
 import { StyleSheet, View, Image } from "react-native";
 import { Ionicons, Octicons } from "@expo/vector-icons";
+import Logo from "../assets/img/Logo";
 
 export const Header = () => {
   return (
     <View style={styles.header}>
-      <Image style={styles.logo} source={require("../assets/1SOL_logo.png")} />
+      {/* <Image style={styles.logo} source={Logo} /> */}
+      <Logo />
       <View style={styles.topRight}>
         <Octicons
           style={{ paddingHorizontal: 20 }}
@@ -17,27 +19,6 @@ export const Header = () => {
     </View>
   );
 };
-// export default function Header() {
-//   return (
-//     <View style={styles.background}>
-//       <View style={styles.header}>
-//         <Image
-//           style={styles.logo}
-//           source={require("../assets/1SOL_logo.png")}
-//         />
-//         <View style={styles.topRight}>
-//           <Octicons
-//             style={{ paddingHorizontal: 20 }}
-//             name="bell-fill"
-//             size={24}
-//             color="white"
-//           />
-//           <Ionicons name="person" size={24} color="white" />
-//         </View>
-//       </View>
-//     </View>
-//   );
-// }
 
 const styles = StyleSheet.create({
   background: {
@@ -52,7 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 60,
     height: 40,
   },
-  logo: {},
   topRight: {
     flexDirection: "row",
   },
