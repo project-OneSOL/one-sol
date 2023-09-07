@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import shinhan.onesol.controller.AccountForm;
 import shinhan.onesol.domain.Account;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.repository.AccountRepository;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,7 +25,6 @@ public class AccountService {
     /*
     대표 계좌 등록
      */
-
     private final AccountRepository accountRepository;
     public Long registerAccount(Member member, String bankCode, String accountNumber) {
         // 예금주 실명 조회 됐는지 확인
