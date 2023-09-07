@@ -13,6 +13,7 @@ import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.Payment;
 import shinhan.onesol.domain.SubPayment;
 import shinhan.onesol.dto.PaymentMemberDto;
+import shinhan.onesol.dto.SubPaymentDto;
 import shinhan.onesol.dto.request.PaymentMemberRequest;
 import shinhan.onesol.dto.request.PaymentRequest;
 import shinhan.onesol.dto.response.PaymentResponse;
@@ -175,6 +176,5 @@ public class PaymentService {
             throw new NotMatchTotalPriceException();
         }
     }
-
 
 }
