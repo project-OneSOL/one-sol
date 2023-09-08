@@ -23,6 +23,12 @@ public class Account {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // 카드
+    private String cardNumber;
+    private String cardExpirationYear;
+    private String cardExpirationMonth;
+    private String customerIdentityNumber;
+
     @Builder
     public Account(String bankCode, Long money, String account, Member member){
         this.bankCode = bankCode;
