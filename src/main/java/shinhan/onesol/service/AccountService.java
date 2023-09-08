@@ -26,6 +26,12 @@ public class AccountService {
     대표 계좌 등록
      */
     private final AccountRepository accountRepository;
+
+    public Account getAccount(Long id) {
+        Optional<Account> account = accountRepository.findById(id);
+        return account.get();
+    }
+
     public Long registerAccount(Member member, String bankCode, String accountNumber) {
         // 예금주 실명 조회 됐는지 확인
         String accountResponse = verifyAccountHolderName(bankCode, accountNumber);

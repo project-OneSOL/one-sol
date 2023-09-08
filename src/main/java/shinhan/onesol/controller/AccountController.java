@@ -29,14 +29,15 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // accountService에 id로 불러옹는 함수 작성
     @GetMapping("/getAccount")
-    public AccountForm getAccount() {
+    public ResponseEntity<AccountForm> getAccount() {
         AccountForm accountForm = new AccountForm();
-        Account account = accountRepository.getById(accountId);
+        Account account = accountService.getAccount(accountId);
 
         accountForm.setBankCode(account.getBankCode());
         accountForm.setAccountNumber(account.getAccount());
 
-        return accountForm;
+        return new ResponseEntity<>(accountForm, HttpStatus.OK);
     }
 }
