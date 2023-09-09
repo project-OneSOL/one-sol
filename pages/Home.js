@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Button } from "../components/button";
 import { Title } from "../components/title";
+import { Header } from "../components/Header";
 
 export const Home = () => {
   return (
@@ -37,7 +38,7 @@ export const Home = () => {
 
 const styles1 = StyleSheet.create({
   container: {
-    marginTop: 120,
+    marginTop: 20,
     padding: 20,
     flex: 1,
     justifyContent: "space-around",
