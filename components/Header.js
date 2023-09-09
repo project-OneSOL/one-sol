@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <View style={styles.header}>
       {/* <Image style={styles.logo} source={Logo} /> */}
-      <Logo />
+      <Logo/>
       <View style={styles.topRight}>
         <Octicons
           style={{ paddingHorizontal: 20 }}
@@ -30,10 +30,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#1845FF",
     marginTop: 60,
     height: 40,
+    marginHorizontal: 10
   },
   topRight: {
     flexDirection: "row",
   },
+  logo: {
+    flexDirection: "row",
+    justifyContent: "start",
+    alignItems: "center"
+  }
 });

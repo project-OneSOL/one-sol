@@ -13,19 +13,28 @@ export default function StackNavigator() {
     <Stack.Navigator
       initialRouteName="Home"
       //   headerMode="screen"
-      screenOptions={{
-        headerShown: false,
-        headerMode: "screen",
-        header: () => <Header />,
-        // headerTitle: () => (
-        //   <Image
-        //     style={styles.logo}
-        //     source={require("./assets/img/1SOL_logo.png")}
-        //   />
-        // ),
-      }}
+      // screenOptions={{
+      //   headerShown: false,
+      //   headerMode: "screen",
+      //   header: () => <Header />,
+      //   // headerTitle: () => (
+      //   //   <Image
+      //   //     style={styles.logo}
+      //   //     source={require("./assets/img/1SOL_logo.png")}
+      //   //   />
+      //   // ),
+      // }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen 
+        name="Home" 
+        component={Home}
+        options = {{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
