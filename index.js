@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { palette } from "./lib/styles/colorPalette";
 import { StyleSheet, View, Text, Image } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
+import { SignUp } from "./pages/SignUp";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -66,6 +67,18 @@ export default function StackNavigator() {
           },
         }}
       />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options = {{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          }
+        }}
+      >
+
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -88,3 +101,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
+
