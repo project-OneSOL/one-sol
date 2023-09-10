@@ -1,12 +1,23 @@
 import { StyleSheet, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { useFonts } from "expo-font";
+import {
+  useFonts,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from "@expo-google-fonts/inter";
 
 export const Title = (props) => {
-  const [fontsLoaded] = useFonts({
-    NotoSansKR: require("../assets/font/NotoSansKR-VariableFont_wght.ttf"),
+  const [fontsLoaded, fontError] = useFonts({
+    Inter_600SemiBold,
+    Inter_700Bold,
   });
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   const { text, size, weight = "bold", color = "black" } = props;
+
   return (
     <Text
       style={[
@@ -18,7 +29,9 @@ export const Title = (props) => {
           : size === "small"
           ? { fontSize: 18 }
           : { fontSize: 16 },
-        weight === "bold" && { fontWeight: "bold" },
+        weight === "bold"
+          ? { fontFamily: "Inter_700Bold" }
+          : { fontFamily: "Inter_600SemiBold" },
         color === "black"
           ? { color: palette.black }
           : color === "gray"
@@ -35,8 +48,6 @@ export const Title = (props) => {
 
 const styles = StyleSheet.create({
   text: {
-    // fontWeight: "800",
-    fontFamily: "NotoSansKR",
     // textAlign: "center",
     // textAlignVertical: "center",
     // paddingTop: 40,
