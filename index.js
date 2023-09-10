@@ -1,15 +1,45 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
 import { palette } from "./lib/styles/colorPalette";
-import { StyleSheet, View, Image } from "react-native";
-import { getHeaderTitle } from "@react-navigation/elements";
 import { SignUp } from "./pages/SignUp";
+import { StyleSheet, View, Text, Image } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Artificially delay for two seconds to simulate a slow loading experience.
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately!
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -26,10 +56,11 @@ export default function StackNavigator() {
       //   // ),
       // }}
     >
-      <Stack.Screen 
-        name="Home" 
+      <Stack.Screen
+        name="Home"
         component={Home}
-        options = {{
+        onLayout={onLayoutRootView}
+        options={{
           header: () => <Header />,
           headerStyle: {
             backgroundColor: palette.main,
@@ -39,15 +70,13 @@ export default function StackNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SignUp}
-        options = {{
+        options={{
           header: () => <Header />,
           headerStyle: {
             backgroundColor: palette.main,
-          }
+          },
         }}
-      >
-
-      </Stack.Screen>
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -70,4 +99,3 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-
