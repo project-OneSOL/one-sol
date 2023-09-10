@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { palette } from "./lib/styles/colorPalette";
 import { StyleSheet, View, Image } from "react-native";
 import { getHeaderTitle } from "@react-navigation/elements";
+import { SignUp } from "./pages/SignUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,18 @@ export default function StackNavigator() {
           },
         }}
       />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options = {{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          }
+        }}
+      >
+
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -57,3 +70,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
+
