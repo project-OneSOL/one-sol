@@ -16,9 +16,9 @@ const MyTheme = {
 export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>
-      <SafeAreaView style = {styles.safeArea}>
+      <SafeAreaView style={styles.safeArea}>
         <StatusBar style="auto" />
-        <StackNavigator />  
+        <StackNavigator />
       </SafeAreaView>
     </NavigationContainer>
   );
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1, // 내용을 화면 전체로 확장
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
