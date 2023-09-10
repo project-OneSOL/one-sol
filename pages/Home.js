@@ -2,7 +2,6 @@ import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
-import { Header } from "../components/Header";
 
 export const Home = () => {
   return (
