@@ -8,15 +8,32 @@ Content-Type: application/json
   "password": "1234"
 }
 
-### 로그인
-GET {{baseUrl}}/auth/login
-
-
-### 로그인
-POST {{baseUrl}}/auth/login
+### 회원가입 - 멤버2
+POST {{baseUrl}}/auth/signUp
 Content-Type: application/json
 
 {
-  "email": "choi@gmail.com",
-  "password": "1234"
+  "name": "ms",
+  "email": "ms@gmail.com",
+  "password": "5678"
 }
+
+### 회원가입 - 멤버3
+POST {{baseUrl}}/auth/signUp
+Content-Type: application/json
+
+{
+  "name": "third",
+  "email": "3@gmail.com",
+  "password": "5678"
+}
+
+#
+#### 로그인
+#POST {{baseUrl}}/auth/login
+#Content-Type: application/json
+#
+#{
+#  "email": "choi@gmail.com",
+#  "password": "1234"
+#}
