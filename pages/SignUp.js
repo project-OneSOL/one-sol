@@ -1,19 +1,19 @@
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { Button } from "../components/button";
-import { Title } from "../components/title";
+import { Button } from "../components/Button";
+import { Title } from "../components/Title";
 import { Header } from "../components/Header";
-import {CustomTextField} from "../components/textField";
+import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 
 export const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setpasswordError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setpasswordError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
 
   const handleNameChange = (name) => {
@@ -24,11 +24,11 @@ export const SignUp = () => {
 
     // 이메일 유효성 검사
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if(emailPattern.test(email)){
-      setEmailError('올바른 이메일 형식입니다.');
+    if (emailPattern.test(email)) {
+      setEmailError("올바른 이메일 형식입니다.");
       setIsEmailError(false);
     } else {
-      setEmailError('이메일 형식이 올바르지 않습니다. xxx@domain.com');
+      setEmailError("이메일 형식이 올바르지 않습니다. xxx@domain.com");
       setIsEmailError(true);
     }
   };
@@ -41,87 +41,83 @@ export const SignUp = () => {
   };
 
   const validatePassword = (password, confirmPassword) => {
-    if(password === confirmPassword){
-      setpasswordError('비밀번호가 일치합니다.');
+    if (password === confirmPassword) {
+      setpasswordError("비밀번호가 일치합니다.");
       setIsPasswordError(false);
     } else {
-      setpasswordError('비밀번호가 일치하지 않습니다.');
+      setpasswordError("비밀번호가 일치하지 않습니다.");
       setIsPasswordError(true);
     }
-  }
+  };
 
-  const onBtnPress = () => {
-
-  }
-
-
+  const onBtnPress = () => {};
 
   return (
     <View style={styles1.container}>
       <View style={styles1.titleContainer}>
         <View style={styles1.title}>
-            <Title
-                text="회원 가입" 
-                size="big"
-            ></Title>
+          <Title text="회원 가입" size="big"></Title>
         </View>
         <View style={styles1.subTitle}>
-            <Title
-                text="회원 가입에 필요한 정보를 입력해주세요."
-                size="small"
-                color="gray"
-            ></Title>
+          <Title
+            text="회원 가입에 필요한 정보를 입력해주세요."
+            size="small"
+            color="gray"
+          ></Title>
         </View>
       </View>
 
-        <View style={styles1.bodyContainer}>
-          <View style={styles1.textField}>
-            <CustomTextField
-              placeholder = "이름을 입력해주세요."
-              maxLength = {40}
-              onChangeText={handleNameChange}
-              value={name}
-            ></CustomTextField>
-          </View>
-          <View style={styles1.textField}>
-            <CustomTextField
-              placeholder= "이메일을 입력해주세요."
-              maxLength={40}
-              onChangeText={handleEmailChange}
-              value={email}
-            ></CustomTextField>
-            <Text style={ isEmailError ? styles1.errorText : styles1.successText}>{emailError}</Text>
-          </View>
-          <View style={styles1.textField}>
-            <CustomTextField
-              placeholder= "비밀번호를 입력해주세요."
-              maxLength={40}
-              onChangeText={handlePasswordChange}
-              value={password}
-              isHidden = {true}
-            ></CustomTextField>
-          </View>
-          <View style={styles1.textField}>
-            <CustomTextField
-              placeholder= "비밀번호 확인"
-              maxLength={40}
-              onChangeText={handleConfirmPasswordChange}
-              value={confirmPassword}
-              isHidden = {true}
-            ></CustomTextField>
-            <Text style={ isPasswordError ? styles1.error : styles1.successText}>{passwordError}</Text>
-          </View>
+      <View style={styles1.bodyContainer}>
+        <View style={styles1.textField}>
+          <CustomTextField
+            placeholder="이름을 입력해주세요."
+            maxLength={40}
+            onChangeText={handleNameChange}
+            value={name}
+          ></CustomTextField>
         </View>
-
-        <View>
-          <Button
-            title = '확인'
-            type = 'big'
-            onPress = {onBtnPress}
-            disabled = {true}
-          ></Button>
+        <View style={styles1.textField}>
+          <CustomTextField
+            placeholder="이메일을 입력해주세요."
+            maxLength={40}
+            onChangeText={handleEmailChange}
+            value={email}
+          ></CustomTextField>
+          <Text style={isEmailError ? styles1.errorText : styles1.successText}>
+            {emailError}
+          </Text>
         </View>
+        <View style={styles1.textField}>
+          <CustomTextField
+            placeholder="비밀번호를 입력해주세요."
+            maxLength={40}
+            onChangeText={handlePasswordChange}
+            value={password}
+            isHidden={true}
+          ></CustomTextField>
+        </View>
+        <View style={styles1.textField}>
+          <CustomTextField
+            placeholder="비밀번호 확인"
+            maxLength={40}
+            onChangeText={handleConfirmPasswordChange}
+            value={confirmPassword}
+            isHidden={true}
+          ></CustomTextField>
+          <Text style={isPasswordError ? styles1.error : styles1.successText}>
+            {passwordError}
+          </Text>
+        </View>
+      </View>
 
+      <View>
+        <Button
+          title="확인"
+          type="big"
+          onPress={onBtnPress}
+          disabled={true}
+        ></Button>
+      </View>
     </View>
   );
 };
@@ -142,26 +138,26 @@ const styles1 = StyleSheet.create({
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
-    marginBottom: 80
+    marginBottom: 80,
   },
   title: {
     justifyContent: "center",
     fontWeight: "900",
     alignItems: "center",
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   subTitle: {
     justifyContent: "center",
-    alignItems : "center",
+    alignItems: "center",
   },
   textField: {
-    padding: 10
+    padding: 10,
   },
   errorText: {
-    color: 'red',
+    color: "red",
   },
   successText: {
-    color: 'green',
+    color: "green",
   },
   box: {
     borderRadius: 30,
