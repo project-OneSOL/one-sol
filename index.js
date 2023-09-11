@@ -7,38 +7,25 @@ import { SignUp } from "./pages/SignUp";
 import { StyleSheet, View, Text, Image } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
-  const [appIsReady, setAppIsReady] = useState(false);
-
   useEffect(() => {
     async function prepare() {
+      setAppIsReady(true);
+    }
+    async function prepare() {
       try {
-        // Artificially delay for two seconds to simulate a slow loading experience.
+        SplashScreen.preventAutoHideAsync();
         await new Promise((resolve) => setTimeout(resolve, 2000));
+        await SplashScreen.hideAsync();
       } catch (e) {
         console.warn(e);
       } finally {
-        // Tell the application to render
-        setAppIsReady(true);
       }
     }
     prepare();
   }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      // This tells the splash screen to hide immediately!
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
 
   return (
     <Stack.Navigator
@@ -59,7 +46,6 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Home"
         component={Home}
-        onLayout={onLayoutRootView}
         options={{
           header: () => <Header />,
           headerStyle: {
