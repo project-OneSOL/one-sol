@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { Button } from "../components/Button";
-import { Title } from "../components/Title";
+import { Button } from "../components/Button.js";
+import { Title } from "../components/Title.js";
 
 export const Home = () => {
   return (
