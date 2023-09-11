@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as SplashScreen from "expo-splash-screen";
+import { StyleSheet, View, Text, Image } from "react-native";
+import { palette } from "./lib/styles/colorPalette";
+
 import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
-import { palette } from "./lib/styles/colorPalette";
 import { SignUp } from "./pages/SignUp";
-import { StyleSheet, View, Text, Image } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
 
 const Stack = createNativeStackNavigator();
 
