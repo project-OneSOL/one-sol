@@ -7,6 +7,7 @@ import { palette } from "./lib/styles/colorPalette";
 import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
 import { SignUp } from "./pages/SignUp";
+import { AuthorizeAccount } from "./pages/AuthorizeAccount";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +31,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="AuthorizeAccount"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -57,6 +58,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SignUp}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AuthorizeAccount"
+        component={AuthorizeAccount}
         options={{
           header: () => <Header />,
           headerStyle: {
