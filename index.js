@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { palette } from "./lib/styles/colorPalette";
 
 import { Header } from "./components/Header";
-import { Home } from "./pages/Home";
-import { SignUp } from "./pages/SignUp";
+import { Home } from "./app/Home";
+import { SignUp } from "./app/SignUp";
+import { Payments } from "./app/Payments";
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
+  const navigation = useNavigation();
+
   useEffect(() => {
     async function prepare() {
       setAppIsReady(true);
@@ -57,6 +61,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SignUp}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="Payments"
+        component={Payments}
         options={{
           header: () => <Header />,
           headerStyle: {
