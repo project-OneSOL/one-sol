@@ -3,7 +3,7 @@ import { palette } from "../lib/styles/colorPalette";
 
 export const Button = (props) => {
   // const { onPress, title = 'Save' } = props;
-  const { title, type, onPress, disabled = "false" } = props;
+  const { title, type, onPress, disabled = false } = props;
   // const [pressed, setPressed] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ export const Button = (props) => {
               backgroundColor: palette.lightgray,
             }
           : {},
-        !disabled && { backgroundColor: palette.lightblue },
+        disabled && { backgroundColor: palette.lightblue },
       ]}
       onPress={onPress}
       disabled={disabled}
