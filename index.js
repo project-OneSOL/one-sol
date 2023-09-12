@@ -7,6 +7,7 @@ import { palette } from "./lib/styles/colorPalette";
 
 import { Header } from "./components/Header";
 import { Home } from "./app/Home";
+import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
@@ -56,6 +57,16 @@ export default function StackNavigator() {
           header: () => <Header />,
           headerStyle: {
             backgroundColor: palette.main,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Owner"
+        component={Owner}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.navy,
           },
         }}
       />
