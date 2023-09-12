@@ -11,6 +11,8 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 export const AuthorizeAccount = () => {
     const [account, setAccount] = useState("");
+    const [bank, setBank] = useState("");
+  
     const [itemOpen, setItemOpen] = useState(false);
     const [itemValue, setItemValue] = useState(null);
     const [items, setItems] = useState([
@@ -30,15 +32,41 @@ export const AuthorizeAccount = () => {
         {label: '수협', value: '007'}
     ]);
 
-    const onItemOpen = useCallback(() => {
-        setItemOpen(false);
-    }, []);
-    
   const handleAccountChange = (account) => {
     setAccount(account);
   };
   
-  const onBtnPress = () => {};
+  // 확인 버튼 누르면 백엔드 API 호출
+  const onBtnPress = () => {
+    const requestData = {
+      dataHeader: {
+        apikey: "2023_Shinhan_SSAFY_Hackathon"
+      },
+      dataBody: {
+        "입금은행코드": itemValue,
+        "입금계좌번호": account,
+        "입금통장메모": "1원계좌이체"
+      }
+    };
+
+    fetch('https://shbhack.shinhan.com/v1/auth/1transfer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // 응답 받은 데이터 백엔드 로직
+        // Handle the response data from the backend here
+        console.log(data);
+      })
+      .catch(error => {
+        // Handle any errors that occur during the API call
+        console.error('API Error:', error);
+      });
+  };
 
   return (
     <View style={styles1.container}>
@@ -65,7 +93,6 @@ export const AuthorizeAccount = () => {
         defaultIndex={0}
         containerStyle={{ height: 60 }}
         placeholder={'은행 선택'}
-        onChangeItem={(item) => console.log(item.label, item.value)}
       />
     </View>
 
@@ -84,7 +111,7 @@ export const AuthorizeAccount = () => {
           title="확인"
           type="big"
           onPress={onBtnPress}
-          disabled={true}
+          // disabled={true}
         ></Button>
       </View>
     </View>
