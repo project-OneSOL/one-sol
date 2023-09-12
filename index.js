@@ -11,6 +11,7 @@ import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
+import { SearchFriend } from "./app/SearchFriend";
 
 const Stack = createNativeStackNavigator();
 
@@ -93,6 +94,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Payments"
         component={Payments}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="SearchFriend"
+        component={SearchFriend}
         options={{
           header: () => <Header />,
           headerStyle: {
