@@ -3,14 +3,14 @@ import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { palette } from "../lib/styles/colorPalette";
 
-export const SearchBar = () => {
+export const SearchBar = ({ text }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
   return (
     <Searchbar
-      placeholder="이메일 아이디로 검색"
+      placeholder={text}
       onChangeText={onChangeSearch}
       value={searchQuery}
       searchIcon={{ size: 24 }}

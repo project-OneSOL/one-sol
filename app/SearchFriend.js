@@ -9,7 +9,7 @@ export const SearchFriend = () => {
   return (
     <Background>
       <TitleContainer text1="검색으로 친구를 찾을 수 있어요" />
-      <SearchBar />
+      <SearchBar text="이메일 아이디로 검색" />
       <Button title="검색" type="big"></Button>
     </Background>
   );
