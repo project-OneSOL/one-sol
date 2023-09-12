@@ -17,15 +17,16 @@ export const Button = (props) => {
             }
           : type === "big"
           ? {
-              borderRadius: 18,
-              paddingVertical: 18,
-              paddingHorizontal: 32,
+              borderRadius: 20,
+              paddingVertical: 22,
+              paddingHorizontal: 68,
             }
           : type === "mid"
           ? {
-              borderRadius: 20,
+              // borderRadius: 20,
               padding: 10,
-              backgroundColor: palette.lightgray,
+              backgroundColor: "transparent",
+              // backgroundColor: palette.lightgray,
             }
           : {},
         disabled && { backgroundColor: palette.lightblue },
@@ -42,7 +43,8 @@ export const Button = (props) => {
               }
             : type === "mid"
             ? {
-                color: palette.gray,
+                // color: palette.gray,
+                color: palette.blue,
                 fontSize: 15,
               }
             : {},
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   btntext: {
     color: palette.white,
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     // letterSpacing: 0.25,
     // lineHeight: 21,
   },

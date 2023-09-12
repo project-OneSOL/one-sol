@@ -35,7 +35,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="AuthorizeAccount"
+      initialRouteName="Home"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
