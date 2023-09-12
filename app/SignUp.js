@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
+import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
@@ -53,7 +54,7 @@ export const SignUp = () => {
   const onBtnPress = () => {};
 
   return (
-    <View style={styles.container}>
+    <Background>
       <TitleContainer
         text1="회원 가입"
         text2="회원 가입에 필요한 정보를 입력해주세요."
@@ -110,17 +111,11 @@ export const SignUp = () => {
           disabled={true}
         ></Button>
       </View>
-    </View>
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-around",
-    backgroundColor: palette.bg,
-    borderTopLeftRadius: 40,
-  },
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",

@@ -1,7 +1,9 @@
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
+import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
+import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState, useCallback } from "react";
@@ -10,64 +12,53 @@ import Constants from "expo-constants";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export const AuthorizeAccount = () => {
-    const [account, setAccount] = useState("");
-    const [itemOpen, setItemOpen] = useState(false);
-    const [itemValue, setItemValue] = useState(null);
-    const [items, setItems] = useState([
-        {label: '신한', value: '088'},
-        {label: 'KB국민', value: '004'},
-        {label: '우리', value: '020'},
-        {label: 'KEB하나', value: '081'},
-        {label: 'SC제일', value: '023'},
-        {label: '경남', value: '039'},
-        {label: '광주', value: '034'},
-        {label: '대구', value: '031'},
-        {label: '부산', value: '032'},
-        {label: '전북', value: '037'},
-        {label: '제주', value: '035'},
-        {label: '기업', value: '003'},
-        {label: 'NH농협', value: '011'},
-        {label: '수협', value: '007'}
-    ]);
+  const [account, setAccount] = useState("");
+  const [itemOpen, setItemOpen] = useState(false);
+  const [itemValue, setItemValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "신한", value: "088" },
+    { label: "KB국민", value: "004" },
+    { label: "우리", value: "020" },
+    { label: "KEB하나", value: "081" },
+    { label: "SC제일", value: "023" },
+    { label: "경남", value: "039" },
+    { label: "광주", value: "034" },
+    { label: "대구", value: "031" },
+    { label: "부산", value: "032" },
+    { label: "전북", value: "037" },
+    { label: "제주", value: "035" },
+    { label: "기업", value: "003" },
+    { label: "NH농협", value: "011" },
+    { label: "수협", value: "007" },
+  ]);
 
-    const onItemOpen = useCallback(() => {
-        setItemOpen(false);
-    }, []);
-    
+  const onItemOpen = useCallback(() => {
+    setItemOpen(false);
+  }, []);
+
   const handleAccountChange = (account) => {
     setAccount(account);
   };
-  
+
   const onBtnPress = () => {};
 
   return (
-    <View style={styles1.container}>
-      <View style={styles1.titleContainer}>
-        <View style={styles1.title}>
-          <Title text="계좌 인증" size="big"></Title>
-        </View>
-        <View style={styles1.subTitle}>
-          <Title
-            text="계좌 정보를 입력해주세요."
-            size="small"
-            color="gray"
-          ></Title>
-        </View>
-          </View>
-    
-    <View style={styles1.container}>
-      <DropDownPicker
-        items={items}
-        open={itemOpen}
-        value={itemValue}
-        setOpen={setItemOpen}
-        setValue={setItemValue}
-        defaultIndex={0}
-        containerStyle={{ height: 60 }}
-        placeholder={'은행 선택'}
-        onChangeItem={(item) => console.log(item.label, item.value)}
-      />
-    </View>
+    <Background>
+      <TitleContainer text1="계좌 인증" text2="계좌 정보를 입력해주세요" />
+
+      <View style={styles1.container}>
+        <DropDownPicker
+          items={items}
+          open={itemOpen}
+          value={itemValue}
+          setOpen={setItemOpen}
+          setValue={setItemValue}
+          defaultIndex={0}
+          containerStyle={{ height: 60 }}
+          placeholder={"은행 선택"}
+          onChangeItem={(item) => console.log(item.label, item.value)}
+        />
+      </View>
 
       <View style={styles1.bodyContainer}>
         <View style={styles1.textField}>
@@ -78,7 +69,7 @@ export const AuthorizeAccount = () => {
             value={account}
           ></CustomTextField>
         </View>
-        </View>
+      </View>
       <View>
         <Button
           title="확인"
@@ -87,7 +78,7 @@ export const AuthorizeAccount = () => {
           disabled={true}
         ></Button>
       </View>
-    </View>
+    </Background>
   );
 };
 
@@ -100,24 +91,10 @@ const styles1 = StyleSheet.create({
     backgroundColor: palette.bg,
     borderTopLeftRadius: 40,
   },
-  titleContainer: {
-    justifyContent: "center",
-    alignContent: "flex-start",
-  },
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
     marginBottom: 80,
-  },
-  title: {
-    justifyContent: "center",
-    fontWeight: "900",
-    alignItems: "center",
-    paddingBottom: 5,
-  },
-  subTitle: {
-    justifyContent: "center",
-    alignItems: "center",
   },
   textField: {
     padding: 10,
