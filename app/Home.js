@@ -18,6 +18,17 @@ export const Home = ({ navigation }) => {
         <Text style={styles.smalltext}>올해 더치페이로 받은 세액공제 금액</Text>
         <Text style={styles.money}>0원</Text>
       </View>
+      <View style={[styles.box, styles.box3]}>
+        <View style={styles.top}>
+          <Title text="대표 카드" size="small"></Title>
+          <Button
+            title="등록"
+            type="small"
+            onPress={toggleBottomNavigationView}
+          ></Button>
+        </View>
+        <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
+      </View>
       <View style={[styles.box, styles.box2]}>
         <Title
           text="언제 어디서든 정산 없이 QR 하나로 더치페이하고 소득공제 받아보세요!"
@@ -33,17 +44,6 @@ export const Home = ({ navigation }) => {
           type="big"
           onPress={() => navigation.push("Payments", { screen: "Payments" })}
         ></Button>
-      </View>
-      <View style={[styles.box, styles.box3]}>
-        <View style={styles.top}>
-          <Title text="대표 카드" size="small"></Title>
-          <Button
-            title="등록"
-            type="small"
-            onPress={toggleBottomNavigationView}
-          ></Button>
-        </View>
-        <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
       </View>
       <CardRegistration
         visible={visible}
