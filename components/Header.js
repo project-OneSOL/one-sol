@@ -5,8 +5,7 @@ import Logo from "../assets/img/Logo";
 export const Header = () => {
   return (
     <View style={styles.header}>
-      {/* <Image style={styles.logo} source={Logo} /> */}
-      <Logo/>
+      <Logo />
       <View style={styles.topRight}>
         <Octicons
           style={{ paddingHorizontal: 20 }}
@@ -21,11 +20,6 @@ export const Header = () => {
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: "#1845FF",
-    paddingHorizontal: 20,
-  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -33,14 +27,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#1845FF",
     marginTop: 60,
     height: 40,
-    marginHorizontal: 10
+    paddingHorizontal: 10,
   },
   topRight: {
     flexDirection: "row",
+    paddingRight: 10,
   },
   logo: {
     flexDirection: "row",
     justifyContent: "start",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

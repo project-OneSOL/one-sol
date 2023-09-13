@@ -1,24 +1,40 @@
+import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
+import { CardRegistration } from "./CardRegistration";
 
 export const Home = ({ navigation }) => {
+  const [visible, setVisible] = useState(false);
+  const toggleBottomNavigationView = () => {
+    setVisible(!visible);
+  };
+
   return (
     <Background>
-      <View style={[styles1.box, styles1.box1]}>
-        <Text style={styles1.smalltext}>
-          올해 더치페이로 받은 세액공제 금액
-        </Text>
-        <Text style={styles1.money}>0원</Text>
+      <View style={[styles.box, styles.box1]}>
+        <Text style={styles.smalltext}>올해 더치페이로 받은 세액공제 금액</Text>
+        <Text style={styles.money}>0원</Text>
       </View>
-      <View style={[styles1.box, styles1.box2]}>
+      <View style={[styles.box, styles.box3]}>
+        <View style={styles.top}>
+          <Title text="대표 카드" size="small"></Title>
+          <Button
+            title="등록"
+            type="small"
+            onPress={toggleBottomNavigationView}
+          ></Button>
+        </View>
+        <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
+      </View>
+      <View style={[styles.box, styles.box2]}>
         <Title
           text="언제 어디서든 정산 없이 QR 하나로 더치페이하고 소득공제 받아보세요!"
           size="mid"
         ></Title>
-        <View style={styles1.texts}>
+        <View style={styles.texts}>
           <Text>1. 같이 결제할 멤버를 초대한다.</Text>
           <Text>2. QR을 생성한다.</Text>
           <Text>3. 멤버들이 모두 수락하면 결제한다.</Text>
@@ -29,18 +45,15 @@ export const Home = ({ navigation }) => {
           onPress={() => navigation.push("Payments", { screen: "Payments" })}
         ></Button>
       </View>
-      <View style={[styles1.box, styles1.box3]}>
-        <View style={styles1.top}>
-          <Title text="대표 카드" size="small"></Title>
-          <Button title="등록" type="small"></Button>
-        </View>
-        <Text style={styles1.emptytext}>대표 카드를 등록해주세요</Text>
-      </View>
+      <CardRegistration
+        visible={visible}
+        toggleBottomNavigationView={toggleBottomNavigationView}
+      ></CardRegistration>
     </Background>
   );
 };
 
-const styles1 = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
     borderRadius: 30,
     padding: 20,

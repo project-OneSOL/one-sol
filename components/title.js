@@ -2,12 +2,14 @@ import { StyleSheet, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import {
   useFonts,
+  Inter_200ExtraLight,
   Inter_600SemiBold,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 
 export const Title = (props) => {
   const [fontsLoaded, fontError] = useFonts({
+    Inter_200ExtraLight,
     Inter_600SemiBold,
     Inter_700Bold,
   });
@@ -16,7 +18,7 @@ export const Title = (props) => {
     return null;
   }
 
-  const { text, size, weight = "bold", color = "black" } = props;
+  const { text, size = "big", weight = "bold", color = "black" } = props;
 
   return (
     <Text
@@ -31,7 +33,9 @@ export const Title = (props) => {
           : { fontSize: 16 },
         weight === "bold"
           ? { fontFamily: "Inter_700Bold" }
-          : { fontFamily: "Inter_600SemiBold" },
+          : weight == "semibold"
+          ? { fontFamily: "Inter_600SemiBold" }
+          : { fontFamily: "Inter_200ExtraLight" },
         color === "black"
           ? { color: palette.black }
           : color === "gray"

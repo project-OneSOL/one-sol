@@ -4,12 +4,14 @@ import { useNavigation } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { palette } from "./lib/styles/colorPalette";
-
 import { Header } from "./components/Header";
+import { DividePay } from "./app/DividePay";
 import { Home } from "./app/Home";
+import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
+import { SearchFriend } from "./app/SearchFriend";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +37,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="AuthorizeAccount"
+      initialRouteName="Home"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -56,6 +58,16 @@ export default function StackNavigator() {
           header: () => <Header />,
           headerStyle: {
             backgroundColor: palette.main,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Owner"
+        component={Owner}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.navy,
           },
         }}
       />
@@ -87,6 +99,26 @@ export default function StackNavigator() {
           headerStyle: {
             backgroundColor: palette.main,
           },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="SearchFriend"
+        component={SearchFriend}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="DividePay"
+        component={DividePay}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          }
         }}
       ></Stack.Screen>
     </Stack.Navigator>

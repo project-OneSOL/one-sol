@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
-    marginTop: 20,
+    marginTop: 10,
     padding: 20,
   },
   title: {
