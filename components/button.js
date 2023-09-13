@@ -3,7 +3,7 @@ import { palette } from "../lib/styles/colorPalette";
 
 export const Button = (props) => {
   // const { onPress, title = 'Save' } = props;
-  const { title, type, onPress, disabled = false } = props;
+  const { title, type = "big", onPress, disabled = false } = props;
   // const [pressed, setPressed] = useState(false);
 
   return (

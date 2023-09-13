@@ -18,7 +18,7 @@ export const Title = (props) => {
     return null;
   }
 
-  const { text, size, weight = "bold", color = "black" } = props;
+  const { text, size = "big", weight = "bold", color = "black" } = props;
 
   return (
     <Text
