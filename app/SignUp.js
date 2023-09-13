@@ -1,7 +1,8 @@
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
+import { Background } from "../components/Background";
 import { Button } from "../components/Button";
-import { Title } from "../components/Title";
+import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
@@ -53,22 +54,14 @@ export const SignUp = () => {
   const onBtnPress = () => {};
 
   return (
-    <View style={styles1.container}>
-      <View style={styles1.titleContainer}>
-        <View style={styles1.title}>
-          <Title text="회원 가입" size="big"></Title>
-        </View>
-        <View style={styles1.subTitle}>
-          <Title
-            text="회원 가입에 필요한 정보를 입력해주세요."
-            size="small"
-            color="gray"
-          ></Title>
-        </View>
-      </View>
+    <Background>
+      <TitleContainer
+        text1="회원 가입"
+        text2="회원 가입에 필요한 정보를 입력해주세요."
+      ></TitleContainer>
 
-      <View style={styles1.bodyContainer}>
-        <View style={styles1.textField}>
+      <View style={styles.bodyContainer}>
+        <View style={styles.textField}>
           <CustomTextField
             placeholder="이름을 입력해주세요."
             maxLength={40}
@@ -76,18 +69,18 @@ export const SignUp = () => {
             value={name}
           ></CustomTextField>
         </View>
-        <View style={styles1.textField}>
+        <View style={styles.textField}>
           <CustomTextField
             placeholder="이메일을 입력해주세요."
             maxLength={40}
             onChangeText={handleEmailChange}
             value={email}
           ></CustomTextField>
-          <Text style={isEmailError ? styles1.errorText : styles1.successText}>
+          <Text style={isEmailError ? styles.errorText : styles.successText}>
             {emailError}
           </Text>
         </View>
-        <View style={styles1.textField}>
+        <View style={styles.textField}>
           <CustomTextField
             placeholder="비밀번호를 입력해주세요."
             maxLength={40}
@@ -96,7 +89,7 @@ export const SignUp = () => {
             isHidden={true}
           ></CustomTextField>
         </View>
-        <View style={styles1.textField}>
+        <View style={styles.textField}>
           <CustomTextField
             placeholder="비밀번호 확인"
             maxLength={40}
@@ -104,7 +97,7 @@ export const SignUp = () => {
             value={confirmPassword}
             isHidden={true}
           ></CustomTextField>
-          <Text style={isPasswordError ? styles1.error : styles1.successText}>
+          <Text style={isPasswordError ? styles.error : styles.successText}>
             {passwordError}
           </Text>
         </View>
@@ -118,37 +111,15 @@ export const SignUp = () => {
           disabled={true}
         ></Button>
       </View>
-    </View>
+    </Background>
   );
 };
 
-const styles1 = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    padding: 20,
-    flex: 1,
-    justifyContent: "space-around",
-    backgroundColor: palette.bg,
-    borderTopLeftRadius: 40,
-  },
-  titleContainer: {
-    justifyContent: "center",
-    alignContent: "flex-start",
-  },
+const styles = StyleSheet.create({
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
     marginBottom: 80,
-  },
-  title: {
-    justifyContent: "center",
-    fontWeight: "900",
-    alignItems: "center",
-    paddingBottom: 5,
-  },
-  subTitle: {
-    justifyContent: "center",
-    alignItems: "center",
   },
   textField: {
     padding: 10,
