@@ -70,17 +70,19 @@ export const AuthorizeAccount = () => {
 
   // 백엔드 로직으로 넘기기
   const sendToBackend = (data) => {
-    fetch('localhost:9000/accounts/api/authorizeAccountOwner', {
+    console.log("백엔드로! ", JSON.stringify(data));
+    fetch('http://localhost:9000/accounts/api/authorizeAccountOwner', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     })
-    .then(response => response.json())
+    // .then(response => response.json())
+    .then(response => console.log("응답 json= " , response.json()))
     .then(processedData => {
         // Handle the processed data from your backend here
-        console.log(processedData);
+        console.log("last data= ", processedData);
     })
     .catch(error => {
         // Handle any errors that occur during the backend API call
