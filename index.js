@@ -13,6 +13,7 @@ import { Payments } from "./app/Payments";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
 import { SearchFriend } from "./app/SearchFriend";
 import { Login } from "./app/Login";
+import { OwnerSignUp } from "./app/OwnerSignUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +39,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="OwnerSignUp"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -79,6 +80,16 @@ export default function StackNavigator() {
           header: () => <Header />,
           headerStyle: {
             backgroundColor: palette.main,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="OwnerSignUp"
+        component={OwnerSignUp}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.navy,
           },
         }}
       />
