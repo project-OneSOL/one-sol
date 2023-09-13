@@ -1,9 +1,7 @@
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
-import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState, useCallback } from "react";
@@ -12,7 +10,6 @@ import Constants from "expo-constants";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export const AuthorizeAccount = () => {
-
     const [account, setAccount] = useState("");
     const [bank, setBank] = useState("");
   
@@ -50,7 +47,6 @@ export const AuthorizeAccount = () => {
         "입금계좌번호": account,
       }
     };
-
 
     // 예금주 실명조회 API 호출
     fetch('https://shbhack.shinhan.com/v1/search/name', {
@@ -93,7 +89,6 @@ export const AuthorizeAccount = () => {
   }
   
   return (
-
     <View style={styles1.container}>
       <View style={styles1.titleContainer}>
         <View style={styles1.title}>
@@ -130,7 +125,7 @@ export const AuthorizeAccount = () => {
             value={account}
           ></CustomTextField>
         </View>
-      </View>
+        </View>
       <View>
         <Button
           title="확인"
@@ -139,7 +134,7 @@ export const AuthorizeAccount = () => {
           // disabled={true}
         ></Button>
       </View>
-    </Background>
+    </View>
   );
 };
 
@@ -152,10 +147,24 @@ const styles1 = StyleSheet.create({
     backgroundColor: palette.bg,
     borderTopLeftRadius: 40,
   },
+  titleContainer: {
+    justifyContent: "center",
+    alignContent: "flex-start",
+  },
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
     marginBottom: 80,
+  },
+  title: {
+    justifyContent: "center",
+    fontWeight: "900",
+    alignItems: "center",
+    paddingBottom: 5,
+  },
+  subTitle: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   textField: {
     padding: 10,

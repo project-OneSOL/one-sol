@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
@@ -7,9 +8,16 @@ import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
 import { UserCard } from "../components/UserCard";
+import { CreateQR } from "./CreateQR";
 
 export const Payments = () => {
   const users = ["이동현", "박기련", "최민수", "김현정"];
+
+  const [visible, setVisible] = useState(false);
+  const toggleBottomNavigationView = () => {
+    setVisible(!visible);
+  };
+
   return (
     <Background>
       <View style={styles.container}>
@@ -50,6 +58,7 @@ export const Payments = () => {
               styles={styles.addBtn}
               title="+ 친구 추가"
               type="mid"
+              onPress={toggleBottomNavigationView}
             ></Button>
           </View>
           <ScrollView showsVerticalScrollIndicator="false">
@@ -68,6 +77,10 @@ export const Payments = () => {
           <Button title="다음" type="big"></Button>
         </View>
       </View>
+      <CreateQR
+        visible={visible}
+        toggleBottomNavigationView={toggleBottomNavigationView}
+      ></CreateQR>
     </Background>
   );
 };
