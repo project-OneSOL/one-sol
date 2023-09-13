@@ -28,13 +28,13 @@ export const Owner = ({ navigation }) => {
         <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
       </View>
       <View style={[styles.box, styles.box2]}>
-        <Title text="QR 스캔 하나로 결제 해보세요!" size="small"></Title>
+        <Title text="복잡한 결제, QR 하나로 해결하세요!" size="mid"></Title>
         <View style={styles.texts}>
-          <Text>1. QR을 스캔한다.</Text>
-          <Text>2. 금액을 입력한다.</Text>
-          <Text>3. 결제 요청하면 자동은 결제된다.</Text>
+          <Text>1. 금액을 입력한다.</Text>
+          <Text>2. QR을 생성한다.</Text>
+          <Text>3. 결제 요청하면 자동으로 결제된다.</Text>
         </View>
-        <Button title="QR 스캔 하러가기" type="big"></Button>
+        <Button title="QR 생성하기" type="big"></Button>
       </View>
 
       <CardRegistration
