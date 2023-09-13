@@ -13,7 +13,7 @@ import { CustomTextField } from "../components/TextField";
 import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
 
-export const CreateQR = (props) => {
+export const AddPayFriend = (props) => {
 
     const { visible, toggleBottomNavigationView } = props;
     return (

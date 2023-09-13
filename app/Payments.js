@@ -8,7 +8,7 @@ import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
 import { UserCard } from "../components/UserCard";
-import { CreateQR } from "./CreateQR";
+import { AddPayFriend } from "./AddPayFriend";
 
 export const Payments = () => {
   const users = ["이동현", "박기련", "최민수", "김현정"];
@@ -78,10 +78,10 @@ export const Payments = () => {
           <Button title="다음" type="big"></Button>
         </View>
       </View>
-      <CreateQR
+      <AddPayFriend
         visible={visible}
         toggleBottomNavigationView={toggleBottomNavigationView}
-      ></CreateQR>
+      ></AddPayFriend>
     </Background>
     
   );
