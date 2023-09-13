@@ -12,6 +12,7 @@ import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
 import { SearchFriend } from "./app/SearchFriend";
+import { Login } from "./app/Login";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +38,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Login"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -74,6 +75,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SignUp}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
         options={{
           header: () => <Header />,
           headerStyle: {
