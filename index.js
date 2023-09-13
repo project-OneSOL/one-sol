@@ -4,8 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { palette } from "./lib/styles/colorPalette";
-
 import { Header } from "./components/Header";
+import { DividePay } from "./app/DividePay";
 import { Home } from "./app/Home";
 import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
@@ -109,6 +109,16 @@ export default function StackNavigator() {
           headerStyle: {
             backgroundColor: palette.main,
           },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="Divide"
+        component={DividePay}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          }
         }}
       ></Stack.Screen>
     </Stack.Navigator>

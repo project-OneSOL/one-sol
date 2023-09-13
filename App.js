@@ -4,6 +4,9 @@ import { StatusBar } from "expo-status-bar";
 import { palette } from "./lib/styles/colorPalette.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from 'expo-notifications';
+import { useEffect } from "react";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -14,6 +17,28 @@ const MyTheme = {
 };
 
 export default function App() {
+  // useEffect(() => {
+  //   const registerForPushNotifications = async () => {
+  //     try{
+  //       const { granted } = await Notifications.requestPermissionsAsync();
+  //       if(!granted){
+  //         console.log('푸시 알림 권한이 거부되었습니다.');
+  //         return ;
+  //       }
+
+  //       // Expo 서버로부터 푸시 토큰 가져오기
+  //       const token = (await Notifications.getExpoPushTokenAsync()).data;
+  //       console.log('Expo Push Token:', token);
+
+  //       // 백엔드 서버애 푸시 토큰을 저장
+  //     } catch (error){
+  //       console.log('푸시 알림 토큰 생성 중 오류: ', error);
+  //     }
+  //   };
+
+  //   registerForPushNotifications();
+  // }, []);
+
   return (
     <NavigationContainer theme={MyTheme}>
       <SafeAreaView style={styles.safeArea}>
