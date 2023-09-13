@@ -5,7 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { palette } from "./lib/styles/colorPalette";
 import { Header } from "./components/Header";
-import { Divide } from "./pages/Divide";
+import { DividePay } from "./app/DividePay";
 import { Home } from "./app/Home";
 import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
@@ -113,7 +113,7 @@ export default function StackNavigator() {
       ></Stack.Screen>
       <Stack.Screen
         name="Divide"
-        component={Divide}
+        component={DividePay}
         options={{
           header: () => <Header />,
           headerStyle: {

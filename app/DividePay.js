@@ -82,7 +82,7 @@ async function registerForPushNotificationAsync(){
     return token;
 }
 
-export const Divide = () => {
+export const DividePay = () => {
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
