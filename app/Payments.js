@@ -73,6 +73,7 @@ export const Payments = () => {
             </View>
           </ScrollView>
         </View>
+        
         <View style={styles.btnContainer}>
           <Button title="다음" type="big"></Button>
         </View>
@@ -82,6 +83,7 @@ export const Payments = () => {
         toggleBottomNavigationView={toggleBottomNavigationView}
       ></CreateQR>
     </Background>
+    
   );
 };
 

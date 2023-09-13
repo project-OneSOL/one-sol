@@ -8,14 +8,13 @@ import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
 import { UserCard } from "../components/UserCard";
-import { useNavigation } from "@react-navigation/native";
+import { CustomTextField } from "../components/TextField";
 
 import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
 
 export const CreateQR = (props) => {
 
-    const navigation = useNavigation();
     const { visible, toggleBottomNavigationView } = props;
     return (
         <BottomSheet
@@ -28,71 +27,45 @@ export const CreateQR = (props) => {
         >
         <View style={styles.container}>
             <View style={styles.title}>
-            <Title text="친구 추가" size="mid" />
+              <Title text="친구 추가" size="mid" />
             </View>
-            <View style={styles.TextField}>
-            <Title text="이름" weight="light" color="gray" />
-          </View>
-          <View style={styles.TextField}>
-            <Title text="핸드폰 번호" weight="light" color="gray" />
+            <View style={styles.textField}>
+              <CustomTextField placeholder="이름" maxLength={10}
+            ></CustomTextField>
+            </View>
+            <View style={styles.textField}>
+              <CustomTextField placeholder="핸드폰 번호" maxLength={20}
+            ></CustomTextField>
             </View>
           <DoubleButton />
         </View>
         </BottomSheet>
     );
-
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingBottom: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    borderRadius: 20,
+    flex: 0.4,
+    backgroundColor: palette.white,
+    paddingHorizontal: 20,
   },
   title: {
     paddingVertical: 20,
     paddingHorizontal: 10,
   },
-  searchContainer: {
-    // paddingVertical: 10,
-    // paddingHorizontal: 10,
+  textField: {
+    padding: 10,
   },
-  chips: {
-    // marginHorizontal: 10,
-    marginVertical: 10,
-  },
-  chip: {
-    margin: 3,
-    backgroundColor: "transparent",
+  cardbox: {
+    borderRadius: 20,
     borderColor: palette.lightblue,
-    borderWidth: 1,
-  },
-  friends: {
-    flex: 1,
-    paddingVertical: 10,
-  },
-  top: {
-    flexDirection: "row",
-    justifyContent: "center",
+    borderWidth: 2,
+    paddingVertical: 30,
     alignItems: "center",
   },
-  switchTitle: {
-    flex: 0.9,
-    paddingVertical: 20,
-    flexDirection: "row",
-    alignItems: "center",
+  addButton: {
+    paddingTop: 7,
   },
-  title: {
-    marginRight: 10,
-  },
-  addBtn: {
-    alignSelf: "flex-end",
-  },
-  friendsList: {
-    paddingHorizontal: 6,
-    flexDirection: "column",
-  },
-  friend: {},
-  btnContainer: {},
+
 });
