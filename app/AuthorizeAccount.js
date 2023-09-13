@@ -31,7 +31,7 @@ export const AuthorizeAccount = () => {
         {label: 'NH농협', value: '011'},
         {label: '수협', value: '007'}
     ]);
-
+  
   const handleAccountChange = (account) => {
     setAccount(account);
   };
