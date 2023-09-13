@@ -112,7 +112,7 @@ export default function StackNavigator() {
         }}
       ></Stack.Screen>
       <Stack.Screen
-        name="Divide"
+        name="DividePay"
         component={DividePay}
         options={{
           header: () => <Header />,
