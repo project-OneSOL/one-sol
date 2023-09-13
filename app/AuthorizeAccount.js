@@ -45,11 +45,11 @@ export const AuthorizeAccount = () => {
       dataBody: {
         "입금은행코드": itemValue,
         "입금계좌번호": account,
-        "입금통장메모": "1원계좌이체"
       }
     };
 
-    fetch('https://shbhack.shinhan.com/v1/auth/1transfer', {
+    // 예금주 실명조회 API 호출
+    fetch('https://shbhack.shinhan.com/v1/search/name', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -58,9 +58,9 @@ export const AuthorizeAccount = () => {
     })
       .then(response => response.json())
       .then(data => {
-        // 응답 받은 데이터 백엔드 로직
         // Handle the response data from the backend here
         console.log(data);
+        sendToBackend(data);
       })
       .catch(error => {
         // Handle any errors that occur during the API call
@@ -68,6 +68,26 @@ export const AuthorizeAccount = () => {
       });
   };
 
+  // 백엔드 로직으로 넘기기
+  const sendToBackend = (data) => {
+    fetch('localhost:9000/accounts/api/authorizeAccountOwner', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(processedData => {
+        // Handle the processed data from your backend here
+        console.log(processedData);
+    })
+    .catch(error => {
+        // Handle any errors that occur during the backend API call
+        console.error('Backend API Error:', error);
+    });
+  }
+  
   return (
     <View style={styles1.container}>
       <View style={styles1.titleContainer}>
