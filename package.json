@@ -39,6 +39,5 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true,
-  "proxy": "https://localhost:9000"
+  "private": true
 }
