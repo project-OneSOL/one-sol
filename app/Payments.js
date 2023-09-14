@@ -7,9 +7,12 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
+
 import { UserCard } from "../components/UserCard";
 import { AddPayFriend } from "./AddPayFriend";
 import { CheckPayFriend } from "./CheckPayFriend";
+
+import { UserList } from "../components/UserList";
 
 export const Payments = () => {
   const users = ["이동현", "박기련", "최민수", "김현정"];
@@ -67,17 +70,7 @@ export const Payments = () => {
               onPress={toggleBottomNavigationView}
             ></Button>
           </View>
-          <ScrollView showsVerticalScrollIndicator="false">
-            <View style={styles.friendsList}>
-              {users.map((user) => (
-                <UserCard
-                  style={styles.friend}
-                  name={user}
-                  phone="010-1234-5678"
-                ></UserCard>
-              ))}
-            </View>
-          </ScrollView>
+          <UserList></UserList>
         </View>
         
         <View style={styles.btnContainer}>
@@ -143,10 +136,5 @@ const styles = StyleSheet.create({
   addBtn: {
     alignSelf: "flex-end",
   },
-  friendsList: {
-    paddingHorizontal: 6,
-    flexDirection: "column",
-  },
-  friend: {},
   btnContainer: {},
 });

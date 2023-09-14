@@ -22,7 +22,12 @@ export const CardRegistration = (props) => {
           <Title text="대표 카드" size="mid" />
         </View>
         <View style={styles.cardbox}>
-          <Title text="대표 카드를 등록해주세요" weight="light" color="gray" />
+          <Title
+            text="대표 카드를 등록해주세요"
+            size="small"
+            weight="light"
+            color="gray"
+          />
         </View>
         <View style={styles.addButton}>
           <Button title="카드 추가" type="mid"></Button>

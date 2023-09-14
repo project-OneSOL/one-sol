@@ -6,7 +6,7 @@ export const DoubleButton = (props) => {
 
   return (
     <View style={styles.buttonContainer}>
-      <Pressable style={[styles.btn, { backgroundColor: palette.lightblue }]}>
+      <Pressable style={[styles.btn, { backgroundColor: palette.lighterblue }]}>
         <Text style={[styles.btntext, { color: palette.blue }]}>{title1}</Text>
       </Pressable>
       <Pressable

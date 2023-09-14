@@ -10,86 +10,87 @@ import Constants from "expo-constants";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export const AuthorizeAccount = () => {
-    const [account, setAccount] = useState("");
-    const [bank, setBank] = useState("");
-  
-    const [itemOpen, setItemOpen] = useState(false);
-    const [itemValue, setItemValue] = useState(null);
-    const [items, setItems] = useState([
-        {label: '신한', value: '088'},
-        {label: 'KB국민', value: '004'},
-        {label: '우리', value: '020'},
-        {label: 'KEB하나', value: '081'},
-        {label: 'SC제일', value: '023'},
-        {label: '경남', value: '039'},
-        {label: '광주', value: '034'},
-        {label: '대구', value: '031'},
-        {label: '부산', value: '032'},
-        {label: '전북', value: '037'},
-        {label: '제주', value: '035'},
-        {label: '기업', value: '003'},
-        {label: 'NH농협', value: '011'},
-        {label: '수협', value: '007'}
-    ]);
-  
+
+  const [account, setAccount] = useState("");
+  const [bank, setBank] = useState("");
+
+  const [itemOpen, setItemOpen] = useState(false);
+  const [itemValue, setItemValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "신한", value: "088" },
+    { label: "KB국민", value: "004" },
+    { label: "우리", value: "020" },
+    { label: "KEB하나", value: "081" },
+    { label: "SC제일", value: "023" },
+    { label: "경남", value: "039" },
+    { label: "광주", value: "034" },
+    { label: "대구", value: "031" },
+    { label: "부산", value: "032" },
+    { label: "전북", value: "037" },
+    { label: "제주", value: "035" },
+    { label: "기업", value: "003" },
+    { label: "NH농협", value: "011" },
+    { label: "수협", value: "007" },
+  ]);
+
   const handleAccountChange = (account) => {
     setAccount(account);
   };
-  
+
   // 확인 버튼 누르면 백엔드 API 호출
   const onBtnPress = () => {
     const requestData = {
       dataHeader: {
-        apikey: "2023_Shinhan_SSAFY_Hackathon"
+        apikey: "2023_Shinhan_SSAFY_Hackathon",
       },
       dataBody: {
-        "입금은행코드": itemValue,
-        "입금계좌번호": account,
-      }
+        입금은행코드: itemValue,
+        입금계좌번호: account,
+      },
     };
 
     // 예금주 실명조회 API 호출
-    fetch('https://shbhack.shinhan.com/v1/search/name', {
-      method: 'POST',
+    fetch("https://shbhack.shinhan.com/v1/search/name", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Content-Type": "application/json;charset=UTF-8",
       },
       body: JSON.stringify(requestData),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // Handle the response data from the backend here
         console.log(data);
         sendToBackend(data);
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle any errors that occur during the API call
-        console.error('API Error:', error);
+        console.error("API Error:", error);
       });
   };
 
   // 백엔드 로직으로 넘기기
   const sendToBackend = (data) => {
-    fetch('http://localhost:9000/accounts/api/authorizeAccountOwner', {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+    fetch("http://localhost:9000/accounts/api/authorizeAccountOwner", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-    // .then(response => response.json())
-    .then(processedData => {
+      // .then(response => response.json())
+      .then((processedData) => {
         // Handle the processed data from your backend here
         console.log("last data= ", processedData);
-    })
-    .catch(error => {
+      })
+      .catch((error) => {
         // Handle any errors that occur during the backend API call
-        console.error('Backend API Error:', error);
-    });
-  }
-  
+        console.error("Backend API Error:", error);
+      });
+  };
+
   return (
-    <View style={styles1.container}>
+    <Background>
       <View style={styles1.titleContainer}>
         <View style={styles1.title}>
           <Title text="계좌 인증" size="big"></Title>
@@ -101,20 +102,20 @@ export const AuthorizeAccount = () => {
             color="gray"
           ></Title>
         </View>
-          </View>
-    
-    <View style={styles1.container}>
-      <DropDownPicker
-        items={items}
-        open={itemOpen}
-        value={itemValue}
-        setOpen={setItemOpen}
-        setValue={setItemValue}
-        defaultIndex={0}
-        containerStyle={{ height: 60 }}
-        placeholder={'은행 선택'}
-      />
-    </View>
+      </View>
+
+      <View style={styles1.container}>
+        <DropDownPicker
+          items={items}
+          open={itemOpen}
+          value={itemValue}
+          setOpen={setItemOpen}
+          setValue={setItemValue}
+          defaultIndex={0}
+          containerStyle={{ height: 60 }}
+          placeholder={"은행 선택"}
+        />
+      </View>
 
       <View style={styles1.bodyContainer}>
         <View style={styles1.textField}>

@@ -7,6 +7,14 @@ import { StyleSheet } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from 'expo-notifications';
 import { useEffect } from "react";
+import React from 'react';
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -40,12 +48,14 @@ export default function App() {
   // }, []);
 
   return (
-    <NavigationContainer theme={MyTheme}>
-      <SafeAreaView style={styles.safeArea}>
-        <StatusBar style="auto" />
-        <StackNavigator />
-      </SafeAreaView>
-    </NavigationContainer>
+    <RecoilRoot>
+      <NavigationContainer theme={MyTheme}>
+        <SafeAreaView style={styles.safeArea}>
+          <StatusBar style="auto" />
+          <StackNavigator />
+        </SafeAreaView>
+      </NavigationContainer>
+    </RecoilRoot>
   );
 }
 

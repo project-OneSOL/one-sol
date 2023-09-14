@@ -36,8 +36,8 @@ export const Home = ({ navigation }) => {
         ></Title>
         <View style={styles.texts}>
           <Text>1. 같이 결제할 멤버를 초대한다.</Text>
-          <Text>2. QR을 생성한다.</Text>
-          <Text>3. 멤버들이 모두 수락하면 결제한다.</Text>
+          <Text>2. QR을 스캔한다.</Text>
+          <Text>3. 멤버들이 모두 수락하면 결제된다.</Text>
         </View>
         <Button
           title="더치페이 하러가기"

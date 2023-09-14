@@ -1,11 +1,17 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import Logo from "../assets/img/Logo";
 
 export const Header = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      <Logo />
+      <Pressable
+        onPress={() => navigation.navigate("Home", { screen: "Home" })}
+      >
+        <Logo />
+      </Pressable>
       <View style={styles.topRight}>
         <Octicons
           style={{ paddingHorizontal: 20 }}
