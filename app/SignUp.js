@@ -1,3 +1,4 @@
+import axios from "axios";
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
@@ -6,6 +7,9 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
+import * as Api from "../dtos/request/api/Connection";
+
+const ipAdress = "192.168.0.100:9000"; // 자기 와이파이 IP주소 + Port 번호
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -51,7 +55,31 @@ export const SignUp = () => {
     }
   };
 
-  const onBtnPress = () => {};
+  const onBtnPress = async () => {
+    const memberData = {
+      name: name,
+      email: email,
+      password: password
+    };
+    // console.log(JSON.stringify(memberData));
+
+    await fetch(`http://${ipAdress}/auth/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(memberData),
+    })
+      .then(response => response.json)
+      .then((processedData) => {
+        // Handle the processed data from your backend here
+        console.log("last data= ", processedData);
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
+  };
 
   return (
     <Background>
@@ -108,7 +136,7 @@ export const SignUp = () => {
           title="확인"
           type="big"
           onPress={onBtnPress}
-          disabled={true}
+          // disabled={true}
         ></Button>
       </View>
     </Background>

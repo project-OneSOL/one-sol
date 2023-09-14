@@ -43,7 +43,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="SignUp"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
