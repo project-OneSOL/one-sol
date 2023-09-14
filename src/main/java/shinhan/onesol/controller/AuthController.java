@@ -28,8 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signUp")
-    public void signUp(@RequestBody SignUp signUp) {
+    public ResponseEntity<Void> signUp(@RequestBody SignUp signUp) {
         authService.signUp(signUp);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/auth/login")

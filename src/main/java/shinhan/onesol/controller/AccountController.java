@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import shinhan.onesol.domain.Account;
 import shinhan.onesol.domain.Member;
+import shinhan.onesol.dto.request.AuthorizeAccountOwner;
 import shinhan.onesol.repository.AccountRepository;
 import shinhan.onesol.security.PrincipalDetails;
 import shinhan.onesol.service.AccountService;
@@ -40,4 +41,17 @@ public class AccountController {
 
         return new ResponseEntity<>(accountForm, HttpStatus.OK);
     }
+
+    @PostMapping("/api/authorizeAccountOwner")
+    public ResponseEntity<String> processAccountRequest(@RequestBody String requestData) {
+//        String bankCode = requestData.getBankCode();
+//        String accountNum = requestData.getAccountNum();
+
+        log.info("api called!!");
+
+        // Return a response as needed
+//        return ResponseEntity.ok("Bankcode: " + bankCode + "Account Number: " + accountNum);
+        return ResponseEntity.ok("api called");
+    }
+
 }
