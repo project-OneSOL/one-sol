@@ -22,6 +22,8 @@ public class Member {
     private Long id;
 
     private String name;
+    private String storeName; // 점주 - 가게명
+    private String corpRegisterNum; // 점주 - 사업자 번호
 
     @Enumerated(value = EnumType.STRING)
     private MemberTypeEnum type;
