@@ -11,4 +11,4 @@ class PaymentMemberDto{
     }
 }
 
-export default PayMember;
+export default PayMember; 
