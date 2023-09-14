@@ -93,7 +93,7 @@ async function registerForPushNotificationAsync(){
     return token;
 }
 
-export const DividePay = () => {
+export const DividePay = ({navigation}) => {
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
@@ -136,6 +136,7 @@ export const DividePay = () => {
             "id": 1,
             "name": "이동현",
             "amount": 10000,
+            "status": "INIT",
             "cardNumber": "111-222-333",
             "cardExpirationYear": "25",
             "cardExpirationMonth": "04",
@@ -145,6 +146,7 @@ export const DividePay = () => {
             "id": 2,
             "name": "박기련",
             "amount": 10000,
+            "status": "INIT",
             "cardNumber": "222-333-444",
             "cardExpirationYear": "26",
             "cardExpirationMonth": "08",
@@ -154,6 +156,7 @@ export const DividePay = () => {
             "id": 3,
             "name": "최민수",
             "amount": 10000,
+            "status": "COMPLETE",
             "cardNumber": "333-444-555",
             "cardExpirationYear": "28",
             "cardExpirationMonth": "12",
@@ -163,6 +166,7 @@ export const DividePay = () => {
             "id": 4,
             "name": "김현정",
             "amount": 10000,
+            "status": "COMPLETE",
             "cardNumber": "333-444-555",
             "cardExpirationYear": "28",
             "cardExpirationMonth": "12",
@@ -216,6 +220,7 @@ export const DividePay = () => {
                                 bankName={member.bankName}
                                 cardNumber={member.cardNumber}
                                 amount = {String(member.amount)}
+                                isEditable = {true}
                             >
                             </MemorizedUserCardWithMoney>
                         ))}
@@ -233,6 +238,7 @@ export const DividePay = () => {
             onPress={async () => {
                 if(isValidTotalPrice(Number(getSumOfAmount(members)), totalPrice)){
                     await sendPushNotification(expoPushToken);
+                    navigation.navigate('RequestPay');
                 } else {
                     showConfirmation();
                 }
