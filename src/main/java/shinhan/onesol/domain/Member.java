@@ -28,24 +28,22 @@ public class Member {
 
     private String email;
     private String password;
+    private String phoneNumber;
 
     @Enumerated(value = EnumType.STRING)
-    private MemberStatusEnum status;
-
-    @Enumerated(value = EnumType.STRING)
-    private ProviderEnum provider;
+    private MemberStatusEnum status; // 카드 등록 여부
 
     @OneToMany(mappedBy = "friend")
     private List<MemberFriend> friends = new ArrayList<>();
 
     @Builder
-    public Member(String name, MemberTypeEnum type, String email, String password, MemberStatusEnum status, ProviderEnum provider){
+    public Member(String name, MemberTypeEnum type, String email, String password, MemberStatusEnum status, String phoneNumber){
         this.name = name;
         this.type = type;
         this.email = email;
         this.password = password;
         this.status = status;
-        this.provider = provider;
+        this.phoneNumber = phoneNumber;
     }
 
 
