@@ -72,9 +72,14 @@ export const RequestPay = ({navigation, route}) => {
             </View>
         </View>
 
-        <DoubleButton>
-
-        </DoubleButton>
+        <DoubleButton
+            press1 = {() => {
+                navigation.navigate('CancelPayment');
+            }}
+            press2 = {() => {
+                navigation.navigate('CompletePayment');
+            }}
+        ></DoubleButton>
 
       </Background>
     );

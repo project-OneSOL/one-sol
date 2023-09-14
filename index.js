@@ -21,6 +21,8 @@ import { SelectSignUp } from "./app/SelectSignUp";
 import { RequestPay } from "./app/RequestPay";
 import { CardRegistration } from "./app/CardRegistration";
 import { CheckPayFriend } from "./app/CheckPayFriend";
+import { CompletePayment } from "./app/CompletePayment";
+import { CancelPayment } from "./app/CancelPayment";
 import { AddPayFriend } from "./app/AddPayFriend";
 import { ScanQR } from "./app/ScanQR";
 
@@ -48,7 +50,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="DividePay"
+      initialRouteName="Home"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -233,6 +235,29 @@ export default function StackNavigator() {
           },
         }}
       ></Stack.Screen>
+
+      <Stack.Screen
+        name = "CompletePayment"
+        component={CompletePayment}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+
+      <Stack.Screen
+        name = "CancelPayment"
+        component={CancelPayment}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+
     </Stack.Navigator>
   );
 }
