@@ -7,8 +7,9 @@ export const Background = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    padding: 20,
+    marginTop: 7,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     flex: 1,
     justifyContent: "space-around",
     backgroundColor: palette.bg,

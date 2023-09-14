@@ -6,8 +6,11 @@ import { Title } from "../components/Title";
 import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
 
-export const CardRegistration = (props) => {
-  const { visible, toggleBottomNavigationView } = props;
+export const CardRegistration = ({
+  visible,
+  toggleBottomNavigationView,
+  navigation,
+}) => {
   return (
     <BottomSheet
       visible={visible}
@@ -30,9 +33,19 @@ export const CardRegistration = (props) => {
           />
         </View>
         <View style={styles.addButton}>
-          <Button title="카드 추가" type="mid"></Button>
+          <Button
+            title="카드 추가"
+            type="mid"
+            onPress={() => {
+              toggleBottomNavigationView();
+              navigation.push("CardSelection", { screen: "CardSelection" });
+            }}
+          ></Button>
         </View>
-        <DoubleButton />
+        <DoubleButton
+          press1={toggleBottomNavigationView}
+          press2={toggleBottomNavigationView}
+        />
       </View>
     </BottomSheet>
   );

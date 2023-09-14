@@ -10,6 +10,7 @@ import { Home } from "./app/Home";
 import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
+import { CardSelection } from "./app/CardSelection";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
 import { SearchFriend } from "./app/SearchFriend";
 import { OwnerPayment } from "./app/OwnerPayment";
@@ -18,6 +19,8 @@ import { Login } from "./app/Login";
 import { OwnerSignUp } from "./app/OwnerSignUp";
 import { SelectSignUp } from "./app/SelectSignUp";
 import { RequestPay } from "./app/RequestPay";
+import { CardRegistration } from "./app/CardRegistration";
+import { CheckPayFriend } from "./app/CheckPayFriend";
 
 const Stack = createNativeStackNavigator();
 
@@ -138,6 +141,26 @@ export default function StackNavigator() {
         }}
       ></Stack.Screen>
       <Stack.Screen
+        name="CardRegistration"
+        component={CardRegistration}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CardSelection"
+        component={CardSelection}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
         name="SearchFriend"
         component={SearchFriend}
         options={{
@@ -178,6 +201,17 @@ export default function StackNavigator() {
         }}
       ></Stack.Screen>
       <Stack.Screen
+        name="CheckPayFriend"
+        component={CheckPayFriend}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+
+      <Stack.Screen
         name="RequestPay"
         component={RequestPay}
         options={{
@@ -187,6 +221,7 @@ export default function StackNavigator() {
           },
         }}
       ></Stack.Screen>
+
     </Stack.Navigator>
   );
 }

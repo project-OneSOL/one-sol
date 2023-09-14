@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Title } from "./Title";
 
 export const TitleContainer = (props) => {
-  const { text1, text2, text3 } = props;
+  const { text1, text2, text3, text4 } = props;
   return (
     <View style={styles.titleContainer}>
       <View style={styles.title}>
@@ -16,6 +16,11 @@ export const TitleContainer = (props) => {
       {text3 && (
         <View style={styles.extraTitle}>
           <Title text={text3} size="mid" color="blue"></Title>
+        </View>
+      )}
+      {text4 && (
+        <View style={styles.extraTitle}>
+          <Title text={text4} size="small" weight="bold" color="gray"></Title>
         </View>
       )}
     </View>

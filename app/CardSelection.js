@@ -1,14 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Button } from "../components/Button.js";
 import { Title } from "../components/Title.js";
 import { TitleContainer } from "../components/TitleContainer";
 
-import { Background } from '../components/Background';
+import { Background } from "../components/Background";
 
-export const ChooseCard = () => {
-
+export const CardSelection = () => {
   // 3x3 짜리 신한카드 박스들의 데이터
   const shinhancardData = [
     { id: 1, name: "신한카드" },
@@ -22,9 +21,9 @@ export const ChooseCard = () => {
     { id: 9, name: "신한카드" },
     { id: 10, name: "신한카드" },
     { id: 11, name: "신한카드" },
-    { id: 12, name: "신한카드" }
+    { id: 12, name: "신한카드" },
   ];
-  
+
   return (
     <Background>
       <TitleContainer text1="추가할 카드를 선택해주세요" />
@@ -40,12 +39,13 @@ export const ChooseCard = () => {
         )}
       />
       <Button title="확인" type="big"></Button>
-    </Background>  
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
-  box: { // 신한카드
+  box: {
+    // 신한카드
     flex: 10,
     margin: 5,
     justifyContent: "center",
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     width: 200,
-    height: 60
+    height: 60,
   },
 });

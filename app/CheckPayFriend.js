@@ -12,27 +12,19 @@ import { CustomTextField } from "../components/TextField";
 
 import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
+import { UserList } from "../components/UserList";
 
-export const CheckPayFriend = (props) => {
-
-    const { checkFriendVisible, toggleBottomNavigationView } = props;
-    return (
-        <BottomSheet
-        checkFriendVisible={checkFriendVisible}
-        //setting the visibility state of the bottom shee
-        onBackButtonPress={toggleBottomNavigationView}
-        //Toggling the visibility state on the click of the back botton
-        onBackdropPress={toggleBottomNavigationView}
-        //Toggling the visibility state on the clicking out side of the sheet
-        >
-        <View style={styles.container}>
-            <View style={styles.title}>
-              <Title text="함께 결제할 친구" size="mid" />
-            </View>
-            
-          <DoubleButton />
-        </View>
-        </BottomSheet>
+export const CheckPayFriend = () => {
+  return (
+    <Background>
+      <TitleContainer
+        text1="함께 결제할 친구"
+        text2="함께 결제할 친구를 확인해주세요."
+        text3="2명"
+      ></TitleContainer>
+        <UserList />
+        <DoubleButton />
+      </Background>
     );
 };
 
