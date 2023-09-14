@@ -15,10 +15,10 @@ import { DoubleButton } from "../components/DoubleButton";
 
 export const CheckPayFriend = (props) => {
 
-    const { checkFriendVisible, toggleBottomNavigationView } = props;
+    const { visible, toggleBottomNavigationView } = props;
     return (
         <BottomSheet
-        checkFriendVisible={checkFriendVisible}
+        visible={visible}
         //setting the visibility state of the bottom shee
         onBackButtonPress={toggleBottomNavigationView}
         //Toggling the visibility state on the click of the back botton
@@ -29,7 +29,9 @@ export const CheckPayFriend = (props) => {
             <View style={styles.title}>
               <Title text="함께 결제할 친구" size="mid" />
             </View>
-            
+            <View>
+          <UserList />
+          </View>
           <DoubleButton />
         </View>
         </BottomSheet>
