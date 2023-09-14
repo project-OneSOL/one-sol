@@ -10,6 +10,7 @@ import { Home } from "./app/Home";
 import { Owner } from "./app/Owner";
 import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
+import { CardSelection } from "./app/CardSelection";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
 import { SearchFriend } from "./app/SearchFriend";
 import { OwnerPayment } from "./app/OwnerPayment";
@@ -17,6 +18,7 @@ import { GenerateQR } from "./app/GenerateQR";
 import { Login } from "./app/Login";
 import { OwnerSignUp } from "./app/OwnerSignUp";
 import { SelectSignUp } from "./app/SelectSignUp";
+import { CardRegistration } from "./app/CardRegistration";
 
 const Stack = createNativeStackNavigator();
 
@@ -129,6 +131,26 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Payments"
         component={Payments}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CardRegistration"
+        component={CardRegistration}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CardSelection"
+        component={CardSelection}
         options={{
           header: () => <Header />,
           headerStyle: {
