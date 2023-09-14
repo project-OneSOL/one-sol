@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
@@ -6,10 +7,26 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
+
+import { UserCard } from "../components/UserCard";
+import { AddPayFriend } from "./AddPayFriend";
+import { CheckPayFriend } from "./CheckPayFriend";
+
 import { UserList } from "../components/UserList";
 
 export const Payments = () => {
   const users = ["이동현", "박기련", "최민수", "김현정"];
+
+  const [visible, setVisible] = useState(false);
+  const [checkVisible, setCheckVisible] = useState(false);
+  const toggleBottomNavigationView = () => {
+    setVisible(!visible);
+    // setAddFriendVisible(!addFriendVisible);
+  };
+  // const toggleBottomNavigationViewCheckFriend = () => {
+  //   setCheckFriendVisible(!checkFriendVisible);
+  // };
+
   return (
     <Background>
       <View style={styles.container}>
@@ -19,7 +36,7 @@ export const Payments = () => {
           text3="0명"
         ></TitleContainer>
         <View style={styles.searchContainer}>
-          <SearchBar text="이름 또는 이메일 검색" />
+          <SearchBar text="이름 또는 핸드폰 번호 검색" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -50,15 +67,27 @@ export const Payments = () => {
               styles={styles.addBtn}
               title="+ 친구 추가"
               type="mid"
+              onPress={toggleBottomNavigationView}
             ></Button>
           </View>
           <UserList></UserList>
         </View>
+        
         <View style={styles.btnContainer}>
-          <Button title="다음" type="big"></Button>
+          <Button title="다음" type="big"
+          onPress={toggleBottomNavigationView}></Button>
         </View>
       </View>
+      <AddPayFriend
+        visible={visible}
+        toggleBottomNavigationView={toggleBottomNavigationView}
+      ></AddPayFriend>
+      {/* <CheckPayFriend
+        checkVisible={checkVisible}
+        toggleBottomNavigationView={toggleBottomNavigationView}
+      ></CheckPayFriend> */}
     </Background>
+    
   );
 };
 
