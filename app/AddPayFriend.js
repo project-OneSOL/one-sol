@@ -1,46 +1,38 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { Background } from "../components/Background";
-import { Button } from "../components/Button";
-import { TitleContainer } from "../components/TitleContainer";
-import { TextField } from "../components/TextField";
 import { Title } from "../components/Title";
-import { SearchBar } from "../components/SearchBar";
-import { Chip } from "react-native-paper";
-import { UserCard } from "../components/UserCard";
 import { CustomTextField } from "../components/TextField";
 
 import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
 
-export const AddPayFriend = (props) => {
-
-    const { visible, toggleBottomNavigationView } = props;
-    return (
-        <BottomSheet
-        visible={visible}
-        //setting the visibility state of the bottom shee
-        onBackButtonPress={toggleBottomNavigationView}
-        //Toggling the visibility state on the click of the back botton
-        onBackdropPress={toggleBottomNavigationView}
-        //Toggling the visibility state on the clicking out side of the sheet
-        >
-        <View style={styles.container}>
-            <View style={styles.title}>
-              <Title text="친구 추가" size="mid" />
-            </View>
-            <View style={styles.textField}>
-              <CustomTextField placeholder="이름" maxLength={10}
-            ></CustomTextField>
-            </View>
-            <View style={styles.textField}>
-              <CustomTextField placeholder="핸드폰 번호" maxLength={20}
-            ></CustomTextField>
-            </View>
-          <DoubleButton />
+export const AddPayFriend = ({
+  visible,
+  toggleBottomNavigationView,
+  navigation,
+}) => {
+  return (
+    <BottomSheet visible={visible} onBackdropPress={toggleBottomNavigationView}>
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <Title text="친구 추가" size="mid" />
         </View>
-        </BottomSheet>
-    );
+        <View style={styles.textField}>
+          <CustomTextField placeholder="이름" maxLength={10}></CustomTextField>
+        </View>
+        <View style={styles.textField}>
+          <CustomTextField
+            placeholder="핸드폰 번호"
+            maxLength={20}
+          ></CustomTextField>
+        </View>
+        <DoubleButton
+          press1={toggleBottomNavigationView}
+          press2={toggleBottomNavigationView}
+        />
+      </View>
+    </BottomSheet>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -67,5 +59,4 @@ const styles = StyleSheet.create({
   addButton: {
     paddingTop: 7,
   },
-
 });

@@ -5,7 +5,7 @@ import { UserCard } from "./UserCard";
 export const UserList = () => {
   const users = ["이동현", "박기련", "최민수", "김현정"];
   return (
-    <ScrollView showsVerticalScrollIndicator="false">
+    <ScrollView bounces="false" showsVerticalScrollIndicator="false">
       <View style={styles.friendsList}>
         {users.map((user) => (
           <UserCard

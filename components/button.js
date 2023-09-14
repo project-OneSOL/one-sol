@@ -3,7 +3,13 @@ import { palette } from "../lib/styles/colorPalette";
 
 export const Button = (props) => {
   // const { onPress, title = 'Save' } = props;
-  const { title, type = "big", onPress, disabled = false } = props;
+  const {
+    title,
+    type = "big",
+    color = "blue",
+    onPress,
+    disabled = false,
+  } = props;
   // const [pressed, setPressed] = useState(false);
 
   return (
@@ -29,6 +35,9 @@ export const Button = (props) => {
               // backgroundColor: palette.lightgray,
             }
           : {},
+        color == "blue"
+          ? { backgroundColor: palette.blue }
+          : { backgroundColor: palette.lighterblue },
         disabled && { backgroundColor: palette.lightblue },
       ]}
       onPress={onPress}
@@ -48,6 +57,7 @@ export const Button = (props) => {
                 fontSize: 15,
               }
             : {},
+          color === "blue" ? {} : { color: palette.blue },
         ]}
       >
         {title}
@@ -58,9 +68,10 @@ export const Button = (props) => {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: palette.blue,
+    // backgroundColor: palette.blue,
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 5,
     // elevation: 3,
   },
   btntext: {

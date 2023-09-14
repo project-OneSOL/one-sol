@@ -42,7 +42,10 @@ export const CardRegistration = ({
             }}
           ></Button>
         </View>
-        <DoubleButton />
+        <DoubleButton
+          press1={toggleBottomNavigationView}
+          press2={toggleBottomNavigationView}
+        />
       </View>
     </BottomSheet>
   );
