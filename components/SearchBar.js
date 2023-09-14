@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { palette } from "../lib/styles/colorPalette";
 
-export const SearchBar = ({ text }) => {
+export const SearchBar = ({ text, setSearchVal, searchVal }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
@@ -11,8 +11,8 @@ export const SearchBar = ({ text }) => {
   return (
     <Searchbar
       placeholder={text}
-      onChangeText={onChangeSearch}
-      value={searchQuery}
+      onChangeText={(query) => setSearchVal(query)}
+      value={searchVal}
       searchIcon={{ size: 24 }}
       style={styles.searchbar}
     />
