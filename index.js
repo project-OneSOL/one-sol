@@ -18,6 +18,7 @@ import { GenerateQR } from "./app/GenerateQR";
 import { Login } from "./app/Login";
 import { OwnerSignUp } from "./app/OwnerSignUp";
 import { SelectSignUp } from "./app/SelectSignUp";
+import { RequestPay } from "./app/RequestPay";
 import { CardRegistration } from "./app/CardRegistration";
 import { CheckPayFriend } from "./app/CheckPayFriend";
 
@@ -45,7 +46,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="DividePay"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -209,6 +210,18 @@ export default function StackNavigator() {
           },
         }}
       ></Stack.Screen>
+
+      <Stack.Screen
+        name="RequestPay"
+        component={RequestPay}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+
     </Stack.Navigator>
   );
 }

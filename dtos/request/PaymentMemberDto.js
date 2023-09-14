@@ -19,5 +19,4 @@ class PaymentMemberDto {
     this.customerIdentityNumber = customerIdentityNumber;
   }
 }
-
-export default PayMember;
+export default PayMember; 
