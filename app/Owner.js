@@ -5,6 +5,7 @@ import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
 import { CardRegistration } from "./CardRegistration";
+import { OwnerPayment } from "./OwnerPayment";
 
 export const Owner = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -34,7 +35,13 @@ export const Owner = ({ navigation }) => {
           <Text>2. QR을 생성한다.</Text>
           <Text>3. 결제 요청하면 자동으로 결제된다.</Text>
         </View>
-        <Button title="QR 생성하기" type="big"></Button>
+        <Button
+          title="QR 생성하기"
+          type="big"
+          onPress={() =>
+            navigation.push("OwnerPayment", { screen: "OwnerPayment" })
+          }
+        ></Button>
       </View>
 
       <CardRegistration
