@@ -14,6 +14,7 @@ import { AuthorizeAccount } from "./app/AuthorizeAccount";
 import { SearchFriend } from "./app/SearchFriend";
 import { Login } from "./app/Login";
 import { OwnerSignUp } from "./app/OwnerSignUp";
+import { SelectSignUp } from "./app/SelectSignUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="OwnerSignUp"
+      initialRouteName="Home"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -66,6 +67,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Owner"
         component={Owner}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.navy,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="SelectSignUp"
+        component={SelectSignUp}
         options={{
           header: () => <Header />,
           headerStyle: {
