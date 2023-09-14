@@ -23,6 +23,8 @@ import { CardRegistration } from "./app/CardRegistration";
 import { CheckPayFriend } from "./app/CheckPayFriend";
 import { CompletePayment } from "./app/CompletePayment";
 import { CancelPayment } from "./app/CancelPayment";
+import { AddPayFriend } from "./app/AddPayFriend";
+import { ScanQR } from "./app/ScanQR";
 
 const Stack = createNativeStackNavigator();
 
@@ -173,6 +175,26 @@ export default function StackNavigator() {
         }}
       ></Stack.Screen>
       <Stack.Screen
+        name="AddPayFriend"
+        component={AddPayFriend}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CheckPayFriend"
+        component={CheckPayFriend}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
         name="OwnerPayment"
         component={OwnerPayment}
         options={{
@@ -192,6 +214,7 @@ export default function StackNavigator() {
           },
         }}
       ></Stack.Screen>
+      <Stack.Screen name="ScanQR" component={ScanQR}></Stack.Screen>
       <Stack.Screen
         name="DividePay"
         component={DividePay}
@@ -202,17 +225,6 @@ export default function StackNavigator() {
           },
         }}
       ></Stack.Screen>
-      <Stack.Screen
-        name="CheckPayFriend"
-        component={CheckPayFriend}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
-
       <Stack.Screen
         name="RequestPay"
         component={RequestPay}
