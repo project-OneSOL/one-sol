@@ -135,7 +135,7 @@ export const AuthorizeAccount = () => {
           // disabled={true}
         ></Button>
       </View>
-    </View>
+    </Background>
   );
 };
 
