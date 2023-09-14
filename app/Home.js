@@ -48,6 +48,7 @@ export const Home = ({ navigation }) => {
       <CardRegistration
         visible={visible}
         toggleBottomNavigationView={toggleBottomNavigationView}
+        navigation={navigation}
       ></CardRegistration>
     </Background>
   );

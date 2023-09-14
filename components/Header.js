@@ -16,10 +16,10 @@ export const Header = () => {
         <Octicons
           style={{ paddingHorizontal: 20 }}
           name="bell-fill"
-          size={24}
+          size={20}
           color="white"
         />
-        <Ionicons name="person" size={24} color="white" />
+        <Ionicons name="person" size={22} color="white" />
       </View>
     </View>
   );

@@ -7,7 +7,7 @@ import { memberState } from "../atoms";
 import React from "react";
 
 export const UserCardWithMoney = (props) => {
-  const { key, idx, name, bankName, cardNumber, amount } = props;
+  const { key, idx, name, bankName, cardNumber, amount, isEditable } = props;
   const [members, setMembers] = useRecoilState(memberState);
   console.log({idx}, {amount});
 
@@ -35,17 +35,43 @@ export const UserCardWithMoney = (props) => {
                 <Text>{bankName} {cardNumber}</Text>
             </View>
           </View>
-            <View style={styles.amount}>
-                <CustomTextField
-                    onChangeText={(newAmount) => handleAmountChange(newAmount) }
-                    value={amount}
-                ></CustomTextField>
-                <Text>원</Text>
-            </View>
+
+          {isEditable ? 
+            <EditableUserCard 
+                amount={amount} 
+                handleAmountChange={handleAmountChange}/> 
+            : 
+            <NotEditableUserCard
+                amount = {amount}
+                currentMember = {members[idx]}
+            />}
         </View>
     </View>
   );
 };
+
+const EditableUserCard = ({amount, handleAmountChange}) => {
+    return(
+        <View style={styles.amount}>        
+            <CustomTextField
+                onChangeText={ (newAmount) => handleAmountChange(newAmount) }
+                value={amount}
+            ></CustomTextField>
+            <Text>원</Text>
+        </View>
+    )
+}
+
+const NotEditableUserCard = ({amount, currentMember}) => {
+    return(
+        <View style={styles.amount}>        
+            <Text> {amount} </Text>
+            <Text>원</Text>
+            {currentMember.status === "COMPLETE" ? 
+                <Text style = {styles.complete}>완료</Text> : <Text style={styles.notComplete}>미완료</Text>}
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +106,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     flex:1,
+  },
+  complete: {
+    marginLeft: 10,
+    color: palette.main
+  }, 
+  notComplete: {
+    marginLeft: 10,
+    color: palette.gray
   }
 });
 
