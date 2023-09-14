@@ -19,6 +19,7 @@ import { Login } from "./app/Login";
 import { OwnerSignUp } from "./app/OwnerSignUp";
 import { SelectSignUp } from "./app/SelectSignUp";
 import { CardRegistration } from "./app/CardRegistration";
+import { CheckPayFriend } from "./app/CheckPayFriend";
 
 const Stack = createNativeStackNavigator();
 
@@ -191,6 +192,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="DividePay"
         component={DividePay}
+        options={{
+          header: () => <Header />,
+          headerStyle: {
+            backgroundColor: palette.main,
+          },
+        }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CheckPayFriend"
+        component={CheckPayFriend}
         options={{
           header: () => <Header />,
           headerStyle: {
