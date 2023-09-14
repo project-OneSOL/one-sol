@@ -126,7 +126,6 @@ export const AuthorizeAccount = () => {
             value={account}
           ></CustomTextField>
         </View>
-        </View>
       <View>
         <Button
           title="확인"
@@ -135,7 +134,8 @@ export const AuthorizeAccount = () => {
           // disabled={true}
         ></Button>
       </View>
-    </View>
+      </View>
+      </Background>
   );
 };
 
