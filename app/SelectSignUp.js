@@ -6,7 +6,9 @@ import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 
-export const SelectSignUp = () => {
+export const SelectSignUp = ({ navigation }) => {
+
+  const ipAdress = "192.168.0.100:9000"; // 자기 와이파이 IP주소 + Port 번호
 
   return (
     <Background>
@@ -20,19 +22,21 @@ export const SelectSignUp = () => {
       <View style={styles.bodyContainer}>
         <Pressable
             style = {styles.blueBtn}
-            onPress={() => {
-
+          onPress={() => {
+            // 일반 유저 회원가입
+            navigation.push("SignUp", { screen: "SignUp" })
             }}
         >
-            <Text style = {styles.btnText}>일반 유저로 회원가입 하기</Text>
+            <Text style = {styles.btnText}>일반 유저로 회원가입</Text>
         </Pressable>
         <Pressable
             style = {styles.navyBtn}
             onPress={() => {
-
+              // 점주 유저 회원가입
+              navigation.push("OwnerSignUp", { screen: "OwnerSignUp" })
             }}
         >
-            <Text style = {styles.btnText}>점주로 회원가입 하기</Text>
+            <Text style = {styles.btnText}>점주로 회원가입</Text>
         </Pressable>
       </View>
     </Background>
