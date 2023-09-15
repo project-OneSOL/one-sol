@@ -7,9 +7,7 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
-import * as Api from "../dtos/request/api/Connection";
-
-const ipAdress = "192.168.0.100:9000"; // 자기 와이파이 IP주소 + Port 번호
+import { ipAdress } from "../dtos/request/api/Connection";
 
 export const SignUp = () => {
   const [name, setName] = useState("");

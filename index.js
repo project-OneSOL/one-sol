@@ -48,7 +48,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="DividePay"
+      initialRouteName="SelectSignUp"
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,

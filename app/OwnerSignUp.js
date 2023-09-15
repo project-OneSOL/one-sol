@@ -7,6 +7,7 @@ import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 
+// 점주 유저 회원가입
 export const OwnerSignUp = () => {
   const [shopName, setShopName] = useState("");
   const [corpRegisterNum, setCorpRegisterNum] = useState("");
