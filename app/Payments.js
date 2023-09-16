@@ -5,18 +5,48 @@ import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
 import { SearchBar } from "../components/SearchBar";
-import { Chip } from "react-native-paper";
 import { AddPayFriend } from "./AddPayFriend";
 import { SearchResult } from "./SearchResult";
 import { FriendSelection } from "./FriendSelection";
+import { ActivityIndicator, Chip } from "react-native-paper";
+import { UserCard } from "../components/UserCard";
+import { useRecoilState } from "recoil";
+import { memberState } from "../atoms";
+import { paymentMemberState } from "../atoms";
+import { friendState } from "../atoms";
+import { ipAddress } from "../dtos/request/api/Connection";
 
 export const Payments = ({ navigation }) => {
-  // 검색한 단어
-  const [searchVal, setSearchVal] = useState("");
-  // 검색 여부
-  const [viewResult, setViewResult] = useState(false);
-  // 검색 결과
-  const [searchResult, setSearchResult] = useState([]);
+  const members = useRecoilState(memberState); // members
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState); // 함께 결제할 멤버들
+  const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
+
+  // 화면 렌더링 시, 내 친구 전체 목록 불러오기
+  useEffect(() => {
+    // Get Friends List
+    async function fetchData() {
+      await fetch(`http://${ipAddress}/api/friend/1/getList`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((processedData) => {
+          // Handle the processed data from your backend here
+          console.log("last data= ", processedData);
+          setFriends(processedData);
+        })
+        .catch((error) => {
+          // Handle any errors that occur during the backend API call
+          console.error("my API Error:", error);
+        });
+    }
+
+    fetchData();
+  }, []);
 
   const initialData = [
     { name: "이동현", phone: "010-1234-5678" },
@@ -26,9 +56,16 @@ export const Payments = ({ navigation }) => {
   ];
 
   // 함께 결제할 회원 (초기값: 자기 자신)
-  const [members, setMembers] = useState([
-    { name: "이동현", phone: "010-1234-5678" },
-  ]);
+  // const [members, setMembers] = useState([
+  //   { name: "이동현", phone: "010-1234-5678" },
+  // ]);
+
+  // 검색한 단어
+  const [searchVal, setSearchVal] = useState("");
+  // 검색 여부
+  const [viewResult, setViewResult] = useState(false);
+  // 검색 결과
+  const [searchResult, setSearchResult] = useState([]);
 
   // 친구 추가 bottomsheet Modal
   const [visible, setVisible] = useState(false);
@@ -55,7 +92,7 @@ export const Payments = ({ navigation }) => {
         <TitleContainer
           text1="누구와 함께 계산하시나요?"
           text2="함께 결제할 인원을 선택해주세요"
-          text3={`${members.length}명`}
+          text3={`${paymentMembers.length}명`}
         ></TitleContainer>
         <View style={styles.searchContainer}>
           <SearchBar
@@ -68,13 +105,14 @@ export const Payments = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
             style={styles.chips}
           >
-            {members.map((user) => (
+            {paymentMembers.map((paymentMember, idx) => (
               <Chip
+                key={idx}
                 style={styles.chip}
-                onPress={() => console.log("Pressed", user)}
+                onPress={() => console.log("Pressed", paymentMember)}
                 onClose
               >
-                {user.name}
+                {paymentMember}
               </Chip>
             ))}
           </ScrollView>
@@ -98,7 +136,7 @@ export const Payments = ({ navigation }) => {
             onPress={() =>
               navigation.push("CheckPayFriend", { screen: "CheckPayFriend" })
             }
-            disabled={members.length <= 1}
+            disabled={paymentMembers.length <= 1}
           ></Button>
         </View>
       </View>

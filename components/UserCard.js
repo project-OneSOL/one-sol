@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export const UserCard = (props) => {
   const { name, phone, children } = props;
+  console.log(name + phone);
   return (
     <View style={styles.container}>
       <View style={styles.basic}>
@@ -25,6 +26,11 @@ export const UserCard = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginVertical: 10,
+  },
+  checkedContainer: {
     borderColor: palette.blue,
     borderWidth: 1,
     borderRadius: 10,
@@ -37,6 +43,14 @@ const styles = StyleSheet.create({
   basic: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  unCheckedContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    flexDirection: "row",
+    marginVertical: 3,
   },
   profile: {
     paddingHorizontal: 5,

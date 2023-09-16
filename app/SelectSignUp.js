@@ -5,9 +5,9 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
+import { ipAddress } from "../dtos/request/api/Connection";
 
-export const SelectSignUp = () => {
-
+export const SelectSignUp = ({ navigation }) => {
   return (
     <Background>
         <View style={styles.headContainer}>
@@ -20,19 +20,21 @@ export const SelectSignUp = () => {
       <View style={styles.bodyContainer}>
         <Pressable
             style = {styles.blueBtn}
-            onPress={() => {
-
+          onPress={() => {
+            // 일반 유저 회원가입
+            navigation.push("SignUp", { screen: "SignUp" })
             }}
         >
-            <Text style = {styles.btnText}>일반 유저로 회원가입 하기</Text>
+            <Text style = {styles.btnText}>일반 유저로 회원가입</Text>
         </Pressable>
         <Pressable
             style = {styles.navyBtn}
             onPress={() => {
-
+              // 점주 유저 회원가입
+              navigation.push("OwnerSignUp", { screen: "OwnerSignUp" })
             }}
         >
-            <Text style = {styles.btnText}>점주로 회원가입 하기</Text>
+            <Text style = {styles.btnText}>점주로 회원가입</Text>
         </Pressable>
       </View>
     </Background>

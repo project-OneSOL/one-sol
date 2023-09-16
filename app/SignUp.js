@@ -7,15 +7,17 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
-import * as Api from "../dtos/request/api/Connection";
+import { ipAddress } from "../dtos/request/api/Connection";
 
-const ipAdress = "192.168.0.100:9000"; // 자기 와이파이 IP주소 + Port 번호
-
+// 일반 유저 회원가입
 export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [isPhoneNumberError, setIsPhoneNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setpasswordError] = useState("");
@@ -24,6 +26,10 @@ export const SignUp = () => {
   const handleNameChange = (name) => {
     setName(name);
   };
+  const handlePhoneNumberChange = (phoneNumber) => {
+    setPhoneNumber(phoneNumber);
+  };
+  
   const handleEmailChange = (email) => {
     setEmail(email);
 
@@ -59,18 +65,21 @@ export const SignUp = () => {
     const memberData = {
       name: name,
       email: email,
-      password: password
+      password: password,
+      phoneNumber: phoneNumber,
+      type: "GENERAL"
+
     };
     // console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAdress}/auth/signUp`, {
+    await fetch(`http://${ipAddress}/auth/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(memberData),
     })
-      .then(response => response.json)
+      .then(response => response.json())
       .then((processedData) => {
         // Handle the processed data from your backend here
         console.log("last data= ", processedData);
@@ -106,6 +115,17 @@ export const SignUp = () => {
           ></CustomTextField>
           <Text style={isEmailError ? styles.errorText : styles.successText}>
             {emailError}
+          </Text>
+        </View>
+        <View style={styles.textField}>
+          <CustomTextField
+            placeholder="휴대폰 번호를 입력해주세요."
+            maxLength={40}
+            onChangeText={handlePhoneNumberChange}
+            value={phoneNumber}
+          ></CustomTextField>
+          <Text style={isPhoneNumberError ? styles.errorText : styles.successText}>
+            {phoneNumberError}
           </Text>
         </View>
         <View style={styles.textField}>

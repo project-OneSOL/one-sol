@@ -6,7 +6,9 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
+import { ipAddress } from "../dtos/request/api/Connection";
 
+// 점주 유저 회원가입
 export const OwnerSignUp = () => {
   const [shopName, setShopName] = useState("");
   const [corpRegisterNum, setCorpRegisterNum] = useState("");
@@ -14,6 +16,9 @@ export const OwnerSignUp = () => {
   const [corpRegisterError, setCorpRegisterError] = useState("");
   const [email, setEmail] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isPhoneNumberError, setIsPhoneNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,6 +27,10 @@ export const OwnerSignUp = () => {
 
   const handleShopNameChange = (shopName) => {
     setShopName(shopName);
+  };
+
+  const handlePhoneNumberChange = (phoneNumber) => {
+    setPhoneNumber(phoneNumber);
   };
 
   const handleCorpRegisterNumChange = (corpRegisterNum) => {
@@ -69,8 +78,34 @@ export const OwnerSignUp = () => {
     }
   };
 
-  const onBtnPress = () => {
-    // TODO: SignUp API Call
+  const onBtnPress = async () => {
+    const memberData = {
+      name: shopName,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+      corpRegisterNum: corpRegisterNum,
+      type: "OWNER"
+      
+    };
+    // console.log(JSON.stringify(memberData));
+
+    await fetch(`http://${ipAddress}/auth/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(memberData),
+    })
+      .then(response => response.json())
+      .then((processedData) => {
+        // Handle the processed data from your backend here
+        console.log("last data= ", processedData);
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
   };
 
   return (
@@ -98,6 +133,17 @@ export const OwnerSignUp = () => {
           ></CustomTextField>
           <Text style={isEmailError ? styles.errorText : styles.successText}>
             {emailError}
+          </Text>
+        </View>
+        <View style={styles.textField}>
+          <CustomTextField
+            placeholder="휴대폰 번호를 입력해주세요."
+            maxLength={40}
+            onChangeText={handlePhoneNumberChange}
+            value={phoneNumber}
+          ></CustomTextField>
+          <Text style={isPhoneNumberError ? styles.errorText : styles.successText}>
+            {phoneNumberError}
           </Text>
         </View>
         <View style={styles.textField}>
