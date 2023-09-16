@@ -37,6 +37,8 @@ export const Button = (props) => {
           : {},
         color == "blue"
           ? { backgroundColor: palette.blue }
+          : color == "transparent"
+          ? { backgroundColor: "transparent" }
           : { backgroundColor: palette.lighterblue },
         disabled && { backgroundColor: palette.lightblue },
       ]}

@@ -36,6 +36,7 @@ export const CardRegistration = ({
           <Button
             title="카드 추가"
             type="mid"
+            color="transparent"
             onPress={() => {
               toggleBottomNavigationView();
               navigation.push("CardSelection", { screen: "CardSelection" });

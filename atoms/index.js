@@ -1,9 +1,9 @@
 import { atom } from "recoil";
 
 export const memberState = atom({
-    key: "memberState",
-    default: []
-})
+  key: "memberState",
+  default: [],
+});
 
 export const todoState = atom({
   key: "todoState",
