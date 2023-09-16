@@ -7,9 +7,9 @@ import { Button } from "./Button";
 import { FlatList } from "react-native";
 
 export const UserList = ({ data }) => {
-  const renderItem = ({ item }) => {
+  const renderItem = (user) => {
     return (
-      <UserCard name={item.name} phone={item.phone}>
+      <UserCard user={user} name={user.name} phone={user.phoneNumber}>
         <Button title="친구 추가" type="small" color="blue"></Button>
       </UserCard>
     );
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginVertical: 3,
   },
   basic: {
