@@ -39,3 +39,13 @@ application.properties
 
 ### VS Code ###
 .vscode/
+
+### http
+http/
+
+### env
+env/
+
+# macOS
+.DS_Store
+*.pem
