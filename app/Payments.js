@@ -31,7 +31,14 @@ export const Payments = ({ navigation }) => {
         Accept: "application/json",
         Authorization: "Bearer " + `${accessToken}`,
       },
-    }).catch((error) => {
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setStateFunction(data);
+      setDataLoaded(true);
+    })
+    
+    .catch((error) => {
       // Handle any errors that occur during the backend API call
       console.error("my API Error:", error);
     });
@@ -46,8 +53,9 @@ export const Payments = ({ navigation }) => {
     useEffect(() => {
       // Get Friends List
       console.log(paymentMembers);
-      fetchData(`http://${ipAddress}/api/friend/${paymentMembers[0].id}/getList`, setFriends);
-      fetchData(`http://${ipAddress}/api/search/latest/${paymentMembers[0].id}`, setRecentUsers);
+      fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
+      fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
+      
     }, []);
 
   // 검색한 단어

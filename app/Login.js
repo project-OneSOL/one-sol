@@ -113,7 +113,7 @@ export const Login = ({ navigation }) => {
               // 여기서 memberData에는 로그인한 Member 정보가 포함됩니다.
               console.log("Logged In Member Data:", memberData);
               
-              setPaymentMembers([memberData]);
+              setPaymentMembers((prevMembers) => [...prevMembers, memberData]);
               navigation.navigate("Home");
             })
             .catch((error) => {
