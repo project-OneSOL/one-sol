@@ -8,12 +8,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shinhan.onesol.domain.Member;
-import shinhan.onesol.domain.MemberFriend;
+import shinhan.onesol.domain.*;
 import shinhan.onesol.dto.TokenInfo;
 import shinhan.onesol.dto.response.FriendDto;
+import shinhan.onesol.enums.CardStatusEnum;
+import shinhan.onesol.exception.CardNotRegisterException;
+import shinhan.onesol.exception.NotExistMemberException;
+import shinhan.onesol.exception.NotExistSubPaymentException;
+import shinhan.onesol.repository.CardRepository;
 import shinhan.onesol.repository.MemberFriendRepository;
 import shinhan.onesol.repository.MemberRepository;
+import shinhan.onesol.repository.SubPaymentRepository;
 import shinhan.onesol.security.JwtTokenProvider;
 
 import java.util.ArrayList;
@@ -32,6 +37,8 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final MemberFriendRepository memberFriendRepository;
+    private final CardRepository cardRepository;
+    private final SubPaymentRepository subPaymentRepository;
 
     // jwt 로그인
     public TokenInfo login(String email, String password) {
@@ -85,25 +92,62 @@ public class MemberService {
     }
 
     // 친구 목록 조회 - Member id 리스트를 리턴
-    public ResponseEntity<List<Long>> getFriends(Long id) {
-        Optional<Member> requesterOptional = memberRepository.findById(id);
-        if (!requesterOptional.isPresent()) {
-            return ResponseEntity.badRequest().body(new ArrayList<>());
+    public List<FriendDto> getFriends(Long id) {
+        Member requester = memberRepository.findById(id)
+                .orElseThrow(NotExistMemberException::new);
+
+        List<Member> requesterFriend = new ArrayList<>();
+
+        List<MemberFriend> memberFriends = memberFriendRepository.findAllByMember(requester);
+        for (MemberFriend memberFriend : memberFriends) {
+            requesterFriend.add(memberFriend.getFriend());
         }
 
-        List<MemberFriend> friends = memberFriendRepository.findAllByMember(requesterOptional.get());
-//        friends.stream()
-//                .map(f -> {
-//                    Member member = f.getMember();
-//
-//                    new FriendDto(member.getId(), member.getName(), member.getPhoneNumber())
-//
-//                })
+        return requesterFriend.stream()
+                .map(f -> {
+                    List<Card> cards = cardRepository.findAllByMember(f);
+                    Card card = cards.stream()
+                            .filter(c -> c.getStatus().equals(CardStatusEnum.CHECKED))
+                            .findAny()
+                            .orElseThrow(CardNotRegisterException::new);
+
+                    return new FriendDto(
+                            f.getId(),
+                            f.getName(),
+                            f.getPhoneNumber(),
+                            card.getCardNumber(),
+                            card.getCardExpirationYear(),
+                            card.getCardExpirationMonth(),
+                            card.getCustomerIdentityNumber());
+                }).toList();
+    }
+
+    public List<FriendDto> searchLatestDetails(Long subPaymentId) {
+        SubPayment subPayment = subPaymentRepository.findById(subPaymentId)
+                .orElseThrow(NotExistSubPaymentException::new);
+
+        Payment payment = subPayment.getPayment();
+        Long paymentId = payment.getId();
+        List<SubPayment> subPayments = subPaymentRepository.findByPaymentIdOrderByDateDesc(paymentId);
+        return subPayments.stream()
+                .map(sp -> {
+                    Member friend = sp.getMember();
+                    Card card = cardRepository.findAllByMember(friend).stream()
+                            .filter(c -> c.getStatus().equals(CardStatusEnum.CHECKED))
+                            .findAny()
+                            .orElseThrow(CardNotRegisterException::new);
 
 
-        return ResponseEntity.ok(friends.stream()
-                .map(i -> i.getFriend().getId())
-                .collect(Collectors.toList()));
+                    return new FriendDto(
+                            friend.getId(),
+                            friend.getName(),
+                            friend.getPhoneNumber(),
+                            card.getCardNumber(),
+                            card.getCardExpirationYear(),
+                            card.getCardExpirationMonth(),
+                            card.getCustomerIdentityNumber());
+                })
+                .collect(Collectors.toList());
     }
 
 }

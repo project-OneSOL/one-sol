@@ -3,14 +3,19 @@ package shinhan.onesol.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shinhan.onesol.domain.Card;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.Payment;
 import shinhan.onesol.domain.SubPayment;
 import shinhan.onesol.dto.SubPaymentDetailsDto;
 import shinhan.onesol.dto.SubPaymentDto;
+import shinhan.onesol.dto.response.FriendDto;
 import shinhan.onesol.dto.response.PaymentDto;
+import shinhan.onesol.enums.CardStatusEnum;
+import shinhan.onesol.exception.CardNotRegisterException;
 import shinhan.onesol.exception.NotExistMemberException;
 import shinhan.onesol.exception.NotExistSubPaymentException;
+import shinhan.onesol.repository.CardRepository;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.repository.PaymentRepository;
 import shinhan.onesol.repository.SubPaymentRepository;
@@ -60,4 +65,5 @@ public class SubPaymentService {
                 ))
                 .collect(Collectors.toList());
     }
+
 }
