@@ -166,4 +166,23 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
+    public FriendDto findLoginMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(NotExistMemberException::new);
+        Card card = cardRepository.findAllByMember(member).stream()
+                .filter(c -> c.getStatus().equals(CardStatusEnum.CHECKED))
+                .findAny()
+                .orElseThrow(CardNotRegisterException::new);
+
+        return new FriendDto(
+                member.getId(),
+                member.getName(),
+                member.getPhoneNumber(),
+                card.getCardNumber(),
+                card.getCardExpirationYear(),
+                card.getCardExpirationMonth(),
+                card.getCustomerIdentityNumber());
+
+
+    }
 }
