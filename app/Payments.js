@@ -19,32 +19,23 @@ export const Payments = ({ navigation }) => {
   const accessToken = useRecoilValue(accessTokenState);
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
-    const [recentUsers, setRecentUsers] = useRecoilState(recentState);
-    const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
-    const [dataLoaded, setDataLoaded] = useState(false);
+  const [recentUsers, setRecentUsers] = useRecoilState(recentState);
+  const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-    async function fetchData(apiUrl, setStateFunction) {
-      await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + `${accessToken}`
-        },
-      })
-        .then((response) => response.json())
-        .then((processedData) => {
-          // Handle the processed data from your backend here
-          console.log("last data= ", processedData);
-          setStateFunction(processedData);
-          // setRecentUsers(processedData);
-          setDataLoaded(true);
-        })
-        .catch((error) => {
-          // Handle any errors that occur during the backend API call
-          console.error("my API Error:", error);
-        });
-    }
+  async function fetchData(apiUrl, setStateFunction) {
+    await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + `${accessToken}`,
+      },
+    }).catch((error) => {
+      // Handle any errors that occur during the backend API call
+      console.error("my API Error:", error);
+    });
+  }
 
     // useEffect(() => {
     //   // Get Friends List
@@ -67,17 +58,19 @@ export const Payments = ({ navigation }) => {
   const [searchResult, setSearchResult] = useState([]);
 
   // 친구 추가 bottomsheet Modal
-  const [visible, setVisible] = useState(false);
-  const toggleBottomNavigationView = () => {
-    setVisible(!visible);
-  };
+  // const [visible, setVisible] = useState(false);
+  // const toggleBottomNavigationView = () => {
+  //   setVisible(!visible);
+  // };
 
   useEffect(() => {
     if (searchVal !== "" && recentUsers.length) {
       setViewResult(true);
-      setSearchResult(recentUsers.filter((item) =>
-      item.name.toLowerCase().includes(searchVal.toLowerCase())
-    ));
+      setSearchResult(
+        recentUsers.filter((item) =>
+          item.name.toLowerCase().includes(searchVal.toLowerCase())
+        )
+      );
     } else {
       setViewResult(false);
     }
@@ -110,7 +103,7 @@ export const Payments = ({ navigation }) => {
                   const userIndex = paymentMembers.findIndex(
                     (member) => member.id === paymentMember.id
                   );
-              
+
                   if (userIndex !== -1) {
                     // 이미 목록에 있다면 제거
                     const updatedMembers = [...paymentMembers];
@@ -131,12 +124,12 @@ export const Payments = ({ navigation }) => {
         </View>
         <View style={styles.friends}>
           {viewResult ? (
-            <SearchResult
-              searchResult={searchResult}
-            ></SearchResult>
+            <SearchResult searchResult={searchResult}></SearchResult>
           ) : (
             <FriendSelection
-              recentUsers={recentUsers} friends={friends} toggleBottomNavigationView={toggleBottomNavigationView}
+              recentUsers={recentUsers}
+              friends={friends}
+              navigation={navigation}
             />
           )}
         </View>
@@ -151,10 +144,10 @@ export const Payments = ({ navigation }) => {
           ></Button>
         </View>
       </View>
-      <AddPayFriend
+      {/* <AddPayFriend
         visible={visible}
         toggleBottomNavigationView={toggleBottomNavigationView}
-      ></AddPayFriend>
+      ></AddPayFriend> */}
     </Background>
   );
 };
