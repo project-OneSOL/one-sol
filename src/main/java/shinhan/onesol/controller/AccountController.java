@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import shinhan.onesol.domain.Account;
 import shinhan.onesol.domain.Member;
-import shinhan.onesol.dto.request.AuthorizeAccountOwner;
+import shinhan.onesol.dto.request.AccountForm;
 import shinhan.onesol.repository.AccountRepository;
 import shinhan.onesol.security.PrincipalDetails;
 import shinhan.onesol.service.AccountService;

@@ -1,4 +1,4 @@
-package shinhan.onesol.controller;
+package shinhan.onesol.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

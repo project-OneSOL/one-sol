@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import shinhan.onesol.controller.AccountForm;
 import shinhan.onesol.domain.Account;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.repository.AccountRepository;
