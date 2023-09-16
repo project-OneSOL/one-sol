@@ -51,9 +51,9 @@ export const CardInfo = ({ navigation }) => {
       setIsCardExpirationYear(true);
       setCardExpirationYearError("정확한 연도를 입력해주세요.");
     } else if (
-      2000+parseInt(cardExpirationYear) < todayYear ||
-      ((2000+parseInt(cardExpirationYear) === todayYear) &&
-        (parseInt(cardExpirationMonth) < todayMonth))
+      2000 + parseInt(cardExpirationYear) < todayYear ||
+      (2000 + parseInt(cardExpirationYear) === todayYear &&
+        parseInt(cardExpirationMonth) < todayMonth)
     ) {
       // 과거년도 일 경우 (월까지 계산)
       setIsCardExpirationYear(true);
@@ -103,19 +103,23 @@ export const CardInfo = ({ navigation }) => {
         cardExpirationYear: cardExpirationYear,
         cardExpirationMonth: cardExpirationMonth,
         customerIdentityNumber: customerIdentityNumber,
-        status: "CHECKED"
+        status: "CHECKED",
       };
 
       await fetch(`http://${ipAddress}/accounts/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + `${accessToken}`
+          Authorization: "Bearer " + `${accessToken}`,
         },
         body: JSON.stringify(requestData),
+<<<<<<< HEAD
+      }).then((response) => console.log(response));
+=======
       })
         .then(response => navigation.navigate("Home"));
       
+>>>>>>> 2cdb1c950f32fc0a38d30a446ab1d3de7bba9d94
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
       Alert.alert("오류 발생", "서버 요청 중 오류가 발생했습니다.");
@@ -184,11 +188,7 @@ export const CardInfo = ({ navigation }) => {
       </View>
 
       <View>
-        <Button
-          title="다음"
-          type="big"
-          onPress={onBtnPress}
-        ></Button>
+        <Button title="다음" type="big" onPress={onBtnPress}></Button>
       </View>
     </Background>
   );
@@ -200,9 +200,9 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
     marginBottom: 80,
   },
-  textField: {
-    padding: 10,
-  },
+  // textField: {
+  //   padding: 10,
+  // },
   errorText: {
     color: "red",
   },

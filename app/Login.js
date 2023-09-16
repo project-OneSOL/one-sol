@@ -73,7 +73,7 @@ export const Login = ({ navigation }) => {
       type: memberType,
     };
 
-    await fetch(`http://${ipAddress}/api/auth/login`, {
+    await fetch(`http://${ipAddress}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -218,9 +218,10 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
     marginBottom: 80,
   },
-  textField: {
-    padding: 10,
-  },
+  // textField: {
+  //   paddingBottom: 7,
+  //   paddingHorizontal: 20,
+  // },
   blueBtn: {
     justifyContent: "center",
     alignContent: "center",
