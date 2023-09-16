@@ -4,8 +4,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 export const UserCard = (props) => {
   const { name, phone, children } = props;
+  console.log(name + phone);
   return (
-    <View style={styles.container}>
+    <View style={styles.unCheckedContainer}>
       <Ionicons
         style={styles.profile}
         name="person-circle-sharp"
@@ -23,7 +24,20 @@ export const UserCard = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginVertical: 10,
+  },
+  checkdeContainer: {
     borderColor: palette.blue,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    flexDirection: "row",
+    marginVertical: 3,
+  },
+  unCheckedContainer: {
     borderWidth: 1,
     borderRadius: 10,
     paddingVertical: 10,

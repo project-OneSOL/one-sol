@@ -14,6 +14,7 @@ import { MemorizedUserCardWithMoney, UserCardWithMoney } from '../components/Use
 import { useRecoilState } from 'recoil';
 import { memberState } from '../atoms';
 import { IosAlertStyle } from 'expo-notifications';
+import { ipAdress } from '../dtos/request/api/Connection';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -174,6 +175,11 @@ export const DividePay = ({navigation}) => {
         },      
     ];
 
+    const paymentMemberRequest = {
+        "totalPrice": totalPrice,
+        "paymentMembers": data
+    }
+
     useEffect(() => {
         console.log("rerender");
         setMembers(data);
@@ -237,7 +243,27 @@ export const DividePay = ({navigation}) => {
             type = "big"
             onPress={async () => {
                 if(isValidTotalPrice(Number(getSumOfAmount(members)), totalPrice)){
+                    // push notification
                     await sendPushNotification(expoPushToken);
+
+                    // api call (init)
+                    await fetch(`http://${ipAdress}/api/payments/init`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(paymentMemberRequest),
+                    })
+                    .then(response => response.json)
+                    .then((processedData) => {
+                        // Handle the processed data from your backend here
+                        console.log("last data= ", processedData);
+                      })
+                      .catch((error) => {
+                        // Handle any errors that occur during the backend API call
+                        console.error("my API Error:", error);
+                      });
+
                     navigation.navigate('RequestPay');
                 } else {
                     showConfirmation();
