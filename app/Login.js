@@ -9,7 +9,7 @@ import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
 import { accessTokenState } from "../atoms/index";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [memberType, setMemberType] = useState("");
@@ -29,6 +29,37 @@ export const Login = () => {
     console.log("button Pressed: ", "OWNER");
   };
 
+  const showAlert = (title, message, buttons = [{ text: '확인' }], options = { cancelable: false }) => {
+    Alert.alert(
+      title,
+      message,
+      buttons,
+      options
+    );
+  };
+
+  // 사용 예제
+const showConfirmation = () => {
+    const buttons = [
+      {
+        text: '확인',
+        onPress: () => {
+          console.log('확인 버튼을 눌렀습니다.');
+        },
+      },
+      {
+        text: '취소',
+        onPress: () => {
+          console.log('취소 버튼을 눌렀습니다.');
+        },
+        style: 'cancel',
+      },
+    ];
+  
+    showAlert('로그인 실패', '존재하지 않는 유저입니다.', buttons, {cancelable: false});
+  };
+
+
   const onBtnPress = async () => {
     // TODO: Login API Call
     const memberData = {
@@ -47,8 +78,13 @@ export const Login = () => {
     })
       .then(response => response.json())
       .then((processedData) => {
+        if (processedData.accessToken == undefined) {
+          showConfirmation();
+          return;
+        }
         console.log("Access Token =", processedData.accessToken);
         accessTokenState.key = processedData.accessToken;
+        navigation.navigate("Home");
       })
       .catch((error) => {
         // Handle any errors that occur during the backend API call
