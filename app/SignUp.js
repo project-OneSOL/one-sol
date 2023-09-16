@@ -10,7 +10,7 @@ import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
 
 // 일반 유저 회원가입
-export const SignUp = () => {
+export const SignUp = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -68,9 +68,8 @@ export const SignUp = () => {
       password: password,
       phoneNumber: phoneNumber,
       type: "GENERAL"
-
     };
-    // console.log(JSON.stringify(memberData));
+    console.log(JSON.stringify(memberData));
 
     await fetch(`http://${ipAddress}/auth/signUp`, {
       method: "POST",
@@ -79,10 +78,8 @@ export const SignUp = () => {
       },
       body: JSON.stringify(memberData),
     })
-      .then(response => response.json())
-      .then((processedData) => {
-        // Handle the processed data from your backend here
-        console.log("last data= ", processedData);
+      .then(response => {
+        navigation.navigate("Login");
       })
       .catch((error) => {
         // Handle any errors that occur during the backend API call
