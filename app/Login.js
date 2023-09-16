@@ -8,8 +8,10 @@ import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
 import { accessTokenState } from "../atoms/index";
+import { useRecoilState } from "recoil";
 
 export const Login = ({ navigation }) => {
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [memberType, setMemberType] = useState("");
@@ -65,7 +67,7 @@ const showConfirmation = () => {
     const memberData = {
       email: email,
       password: password,
-      type: memberType      
+      type: memberType
     };
     // console.log(JSON.stringify(memberData));
 
@@ -78,12 +80,13 @@ const showConfirmation = () => {
     })
       .then(response => response.json())
       .then((processedData) => {
+        console.log(processedData);
         if (processedData.accessToken == undefined) {
           showConfirmation();
           return;
         }
         console.log("Access Token =", processedData.accessToken);
-        accessTokenState.key = processedData.accessToken;
+        setAccessToken(processedData.accessToken);
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -128,6 +131,12 @@ const showConfirmation = () => {
           onPress={handleTypeChangeOwner} // 점주 유저 로그인
         >
             <Text style = {styles.btnText}>점주</Text>
+        </Pressable>
+        <Pressable
+            style = {styles.blueBtn}
+          onPress={() => navigation.navigate("SelectSignUp", { screen: "SelectSignUp" })} // 회원가입
+        >
+            <Text style = {styles.btnText}>회원가입</Text>
         </Pressable>
       </View>
 

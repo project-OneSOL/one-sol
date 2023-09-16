@@ -5,9 +5,13 @@ import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
+import { ipAddress } from "../dtos/request/api/Connection";
 import { useState } from "react";
+import { accessTokenState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export const CardInfo = ({ navigation }) => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [cardNumber, setCardNumber] = useState("");
   const [isCardNumber, setIsCardNumber] = useState(true);
   const [cardNumberError, setCardNumberError] = useState("");
@@ -39,17 +43,17 @@ export const CardInfo = ({ navigation }) => {
   };
   const handleCardExpirationYearChange = (cardExpirationYear) => {
     const today = new Date();
-    const todayYear = today.getFullYear();
-    const todayMonth = today.getMonth() + 1;
+    const todayYear = parseInt(today.getFullYear());
+    const todayMonth = parseInt(today.getMonth() + 1);
     setCardExpirationYear(cardExpirationYear);
     // 년도가 네자리가 아닐 경우
-    if (cardExpirationYear.length != 4) {
+    if (cardExpirationYear.length != 2) {
       setIsCardExpirationYear(true);
       setCardExpirationYearError("정확한 연도를 입력해주세요.");
     } else if (
-      parseInt(cardExpirationYear) < todayYear ||
-      (parseInt(cardExpirationYear) == todayYear &&
-        parseInt(cardExpirationMonth) < todayMonth)
+      2000+parseInt(cardExpirationYear) < todayYear ||
+      ((2000+parseInt(cardExpirationYear) === todayYear) &&
+        (parseInt(cardExpirationMonth) < todayMonth))
     ) {
       // 과거년도 일 경우 (월까지 계산)
       setIsCardExpirationYear(true);
@@ -89,7 +93,34 @@ export const CardInfo = ({ navigation }) => {
     }
   };
 
-  const onBtnPress = () => {};
+  const onBtnPress = async () => {
+    try {
+      // 입력값의 유효성 검사 로직 추가
+      // ...
+
+      const requestData = {
+        cardNumber: cardNumber,
+        cardExpirationYear: cardExpirationYear,
+        cardExpirationMonth: cardExpirationMonth,
+        customerIdentityNumber: customerIdentityNumber,
+        status: "CHECKED"
+      };
+
+      await fetch(`http://${ipAddress}/accounts/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + `${accessToken}`
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then(response => console.log(response));
+      
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+      Alert.alert("오류 발생", "서버 요청 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <Background>
@@ -125,7 +156,7 @@ export const CardInfo = ({ navigation }) => {
         <View style={styles.textField}>
           <CustomTextField
             placeholder="유효기간 (년도)"
-            maxLength={4}
+            maxLength={2}
             onChangeText={handleCardExpirationYearChange}
             value={cardExpirationYear}
           ></CustomTextField>
@@ -156,7 +187,7 @@ export const CardInfo = ({ navigation }) => {
         <Button
           title="다음"
           type="big"
-          onPress={() => navigation.navigate("Home")}
+          onPress={onBtnPress}
         ></Button>
       </View>
     </Background>
