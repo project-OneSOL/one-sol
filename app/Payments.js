@@ -9,44 +9,14 @@ import { AddPayFriend } from "./AddPayFriend";
 import { SearchResult } from "./SearchResult";
 import { FriendSelection } from "./FriendSelection";
 import { ActivityIndicator, Chip } from "react-native-paper";
-import { UserCard } from "../components/UserCard";
 import { useRecoilState } from "recoil";
 import { memberState } from "../atoms";
 import { paymentMemberState } from "../atoms";
-import { friendState } from "../atoms";
-import { ipAddress } from "../dtos/request/api/Connection";
 
 export const Payments = ({ navigation }) => {
   const members = useRecoilState(memberState); // members
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
-  const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
-
-  // 화면 렌더링 시, 내 친구 전체 목록 불러오기
-  useEffect(() => {
-    // Get Friends List
-    async function fetchData() {
-      await fetch(`http://${ipAddress}/api/friend/1/getList`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((processedData) => {
-          // Handle the processed data from your backend here
-          console.log("last data= ", processedData);
-          setFriends(processedData);
-        })
-        .catch((error) => {
-          // Handle any errors that occur during the backend API call
-          console.error("my API Error:", error);
-        });
-    }
-
-    fetchData();
-  }, []);
 
   const initialData = [
     { name: "이동현", phone: "010-1234-5678" },

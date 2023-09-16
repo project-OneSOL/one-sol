@@ -279,7 +279,7 @@ export const DividePay = ({ navigation }) => {
                 console.error("my API Error:", error);
               });
 
-            navigation.navigate("RequestPay");
+            navigation.navigate("MemberPayment");
           } else {
             showConfirmation();
           }

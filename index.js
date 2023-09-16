@@ -1,31 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { useNavigation } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet } from "react-native";
 import { palette } from "./lib/styles/colorPalette";
 import { Header } from "./components/Header";
-import { DividePay } from "./app/DividePay";
+
 import { Home } from "./app/Home";
 import { Owner } from "./app/Owner";
+
+import { SelectSignUp } from "./app/SelectSignUp";
+import { OwnerSignUp } from "./app/OwnerSignUp";
 import { SignUp } from "./app/SignUp";
-import { Payments } from "./app/Payments";
-import { CardSelection } from "./app/CardSelection";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
+import { Login } from "./app/Login";
+
+import { CardSelection } from "./app/CardSelection";
+import { CardRegistration } from "./app/CardRegistration";
+import { CardInfo } from "./app/CardInfo";
+
+import { Payments } from "./app/Payments";
+import { AddPayFriend } from "./app/AddPayFriend";
 import { SearchResult } from "./app/SearchResult";
+import { CheckPayFriend } from "./app/CheckPayFriend";
+
 import { OwnerPayment } from "./app/OwnerPayment";
 import { GenerateQR } from "./app/GenerateQR";
-import { Login } from "./app/Login";
-import { OwnerSignUp } from "./app/OwnerSignUp";
-import { SelectSignUp } from "./app/SelectSignUp";
+import { ScanQR } from "./app/ScanQR";
+import { DividePay } from "./app/DividePay";
+import { MemberPayment } from "./app/MemberPayment";
 import { RequestPay } from "./app/RequestPay";
-import { CardRegistration } from "./app/CardRegistration";
-import { CheckPayFriend } from "./app/CheckPayFriend";
 import { CompletePayment } from "./app/CompletePayment";
 import { CancelPayment } from "./app/CancelPayment";
-import { AddPayFriend } from "./app/AddPayFriend";
-import { ScanQR } from "./app/ScanQR";
-import { CardInfo } from "./app/CardInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,7 +57,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="DividePay"
       screenOptions={{
         // animation: "none",
         header: () => <Header />,
@@ -141,6 +147,7 @@ export default function StackNavigator() {
       <Stack.Screen name="GenerateQR" component={GenerateQR}></Stack.Screen>
       <Stack.Screen name="ScanQR" component={ScanQR}></Stack.Screen>
       <Stack.Screen name="DividePay" component={DividePay}></Stack.Screen>
+      <Stack.Screen name="MemberPayment" component={MemberPayment} />
       <Stack.Screen name="RequestPay" component={RequestPay}></Stack.Screen>
       <Stack.Screen
         name="CompletePayment"
