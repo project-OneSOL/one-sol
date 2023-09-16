@@ -30,6 +30,9 @@ public class SecurityConfig {
             "/auth/**",
             "/oauth2/**",
             "/login/**",
+
+            // 수정 필요
+            "/api/payments/**"
     };
 
     @Bean

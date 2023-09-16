@@ -1,18 +1,18 @@
-package shinhan.onesol.dto;
+package shinhan.onesol.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import shinhan.onesol.enums.CardStatusEnum;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @AllArgsConstructor
-public class CardRegisterDto {
-
+@NoArgsConstructor
+public class FriendDto {
+    private Long id;
+    private String name;
+    private String phoneNumber;
     private String cardNumber;
     private String cardExpirationYear;
     private String cardExpirationMonth;
     private String customerIdentityNumber;
-    private CardStatusEnum status;
 }
