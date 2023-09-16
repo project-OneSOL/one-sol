@@ -3,11 +3,12 @@ import { palette } from "../lib/styles/colorPalette";
 import { UserCard } from "./UserCard";
 
 export const UserList = ({ users }) => {
+  console.log(users);
   return (
     <ScrollView bounces="false" showsVerticalScrollIndicator="false">
       <View style={styles.friendsList}>
-        {users.map(({ name, phoneNumber }) => (
-          <UserCard style={styles.friend} name={name} phone={phoneNumber}></UserCard>
+        {users.map((user) => (
+          <UserCard name={user.name} phone={user.phoneNumber}></UserCard>
         ))}
       </View>
     </ScrollView>
