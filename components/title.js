@@ -24,7 +24,6 @@ export const Title = (props) => {
     <Text
       style={[
         styles.text,
-
         size === "huge"
           ? { fontSize: 36 }
           : size === "big"

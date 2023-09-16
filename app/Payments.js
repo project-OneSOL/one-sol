@@ -16,43 +16,38 @@ import { ipAddress } from "../dtos/request/api/Connection";
 export const Payments = ({ navigation }) => {
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
-    const [recentUsers, setRecentUsers] = useRecoilState(recentState);
-    const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
-    const [dataLoaded, setDataLoaded] = useState(false);
+  const [recentUsers, setRecentUsers] = useRecoilState(recentState);
+  const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-    async function fetchData(apiUrl, setStateFunction) {
-      await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+  async function fetchData(apiUrl, setStateFunction) {
+    await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((processedData) => {
+        // Handle the processed data from your backend here
+        console.log("last data= ", processedData);
+        setStateFunction(processedData);
+        // setRecentUsers(processedData);
+        setDataLoaded(true);
       })
-        .then((response) => response.json())
-        .then((processedData) => {
-          // Handle the processed data from your backend here
-          console.log("last data= ", processedData);
-          setStateFunction(processedData);
-          // setRecentUsers(processedData);
-          setDataLoaded(true);
-        })
-        .catch((error) => {
-          // Handle any errors that occur during the backend API call
-          console.error("my API Error:", error);
-        });
-    }
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
+  }
 
-    // useEffect(() => {
-    //   // Get Friends List
-      
-    // }, []);
-  
-    // 화면 렌더링 시, 내 친구 전체 목록 불러오기
-    useEffect(() => {
-      // Get Friends List
-      fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
-      fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
-    }, []);
+  // 화면 렌더링 시, 내 친구 전체 목록 불러오기
+  useEffect(() => {
+    // Get Friends List
+    fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
+    fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
+  }, []);
 
   // 검색한 단어
   const [searchVal, setSearchVal] = useState("");
@@ -62,17 +57,19 @@ export const Payments = ({ navigation }) => {
   const [searchResult, setSearchResult] = useState([]);
 
   // 친구 추가 bottomsheet Modal
-  const [visible, setVisible] = useState(false);
-  const toggleBottomNavigationView = () => {
-    setVisible(!visible);
-  };
+  // const [visible, setVisible] = useState(false);
+  // const toggleBottomNavigationView = () => {
+  //   setVisible(!visible);
+  // };
 
   useEffect(() => {
     if (searchVal !== "") {
       setViewResult(true);
-      setSearchResult(recentUsers.filter((item) =>
-      item.name.toLowerCase().includes(searchVal.toLowerCase())
-    ));
+      setSearchResult(
+        recentUsers.filter((item) =>
+          item.name.toLowerCase().includes(searchVal.toLowerCase())
+        )
+      );
     } else {
       setViewResult(false);
     }
@@ -105,7 +102,7 @@ export const Payments = ({ navigation }) => {
                   const userIndex = paymentMembers.findIndex(
                     (member) => member.item.id === paymentMember.item.id
                   );
-              
+
                   if (userIndex !== -1) {
                     // 이미 목록에 있다면 제거
                     const updatedMembers = [...paymentMembers];
@@ -125,12 +122,12 @@ export const Payments = ({ navigation }) => {
         </View>
         <View style={styles.friends}>
           {viewResult ? (
-            <SearchResult
-              searchResult={searchResult}
-            ></SearchResult>
+            <SearchResult searchResult={searchResult}></SearchResult>
           ) : (
             <FriendSelection
-              recentUsers={recentUsers} friends={friends} toggleBottomNavigationView={toggleBottomNavigationView}
+              recentUsers={recentUsers}
+              friends={friends}
+              navigation={navigation}
             />
           )}
         </View>
@@ -145,10 +142,10 @@ export const Payments = ({ navigation }) => {
           ></Button>
         </View>
       </View>
-      <AddPayFriend
+      {/* <AddPayFriend
         visible={visible}
         toggleBottomNavigationView={toggleBottomNavigationView}
-      ></AddPayFriend>
+      ></AddPayFriend> */}
     </Background>
   );
 };

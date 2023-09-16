@@ -1,10 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
-import { Title } from "../components/Title";
 import { CustomTextField } from "../components/TextField";
-
-import { BottomSheet } from "react-native-btr";
 import { DoubleButton } from "../components/DoubleButton";
+import { Background } from "../components/Background";
+import { TitleContainer } from "../components/TitleContainer";
 
 export const AddPayFriend = ({
   visible,
@@ -12,42 +11,27 @@ export const AddPayFriend = ({
   navigation,
 }) => {
   return (
-    <BottomSheet visible={visible} onBackdropPress={toggleBottomNavigationView}>
-      <View style={styles.container}>
-        <View style={styles.title}>
-          <Title text="친구 추가" size="mid" />
-        </View>
-        <View style={styles.textField}>
-          <CustomTextField placeholder="이름" maxLength={10}></CustomTextField>
-        </View>
-        <View style={styles.textField}>
-          <CustomTextField
-            placeholder="핸드폰 번호"
-            maxLength={20}
-          ></CustomTextField>
-        </View>
-        <DoubleButton
-          press1={toggleBottomNavigationView}
-          press2={toggleBottomNavigationView}
-        />
+    <Background>
+      <TitleContainer text1="친구 추가" />
+      <View style={styles.textField}>
+        <CustomTextField placeholder="이름" maxLength={10}></CustomTextField>
+        <CustomTextField
+          placeholder="핸드폰 번호"
+          maxLength={20}
+        ></CustomTextField>
       </View>
-    </BottomSheet>
+      <DoubleButton
+        press1={toggleBottomNavigationView}
+        press2={toggleBottomNavigationView}
+      />
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    borderRadius: 20,
-    flex: 0.4,
-    backgroundColor: palette.white,
-    paddingHorizontal: 20,
-  },
-  title: {
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-  },
   textField: {
-    padding: 10,
+    paddingHorizontal: 30,
+    justifyContent: "space-around",
   },
   cardbox: {
     borderRadius: 20,

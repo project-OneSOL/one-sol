@@ -6,12 +6,11 @@ import { UserList } from "../components/UserCard";
 import { friendState, recentState } from "../atoms";
 import { useRecoilState } from "recoil";
 
-
-export const FriendSelection = ({ recentUsers, friends, toggleBottomNavigationView }) => {
+export const FriendSelection = ({ recentUsers, friends, navigation }) => {
   // 최근 함께 결제한 회원
-  
+
   const [switchTitle, setSwitchTitle] = useState(false);
-  
+
   return (
     <View>
       <View style={styles.top}>
@@ -42,7 +41,9 @@ export const FriendSelection = ({ recentUsers, friends, toggleBottomNavigationVi
           title="+ 새로운 친구 추가"
           type="mid"
           color="transparent"
-          onPress={toggleBottomNavigationView}
+          onPress={() =>
+            navigation.push("AddPayFriend", { screen: "AddPayFriend" })
+          }
         ></Button>
       </View>
       {/* <ScrollView showsVerticalScrollIndicator="false"> */}
