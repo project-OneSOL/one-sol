@@ -6,8 +6,8 @@ export const UserList = ({ users }) => {
   return (
     <ScrollView bounces="false" showsVerticalScrollIndicator="false">
       <View style={styles.friendsList}>
-        {users.map(({ name, phone }) => (
-          <UserCard style={styles.friend} name={name} phone={phone}></UserCard>
+        {users.map(({ name, phoneNumber }) => (
+          <UserCard style={styles.friend} name={name} phone={phoneNumber}></UserCard>
         ))}
       </View>
     </ScrollView>
