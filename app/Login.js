@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Alert } from "react-native";
+import { StyleSheet, View, Text, Alert, Pressable } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
@@ -6,10 +6,13 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
+import { ipAddress } from "../dtos/request/api/Connection";
+import { accessTokenState } from "../atoms/index";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [memberType, setMemberType] = useState("");
 
   const handleEmailChange = (email) => {
     setEmail(email);
@@ -17,10 +20,40 @@ export const Login = () => {
   const handlePasswordChange = (password) => {
     setPassword(password);
   };
+  const handleTypeChangeGeneral = (memberType) => {
+    setMemberType("GENERAL");
+    console.log("button Pressed: ", "GENERAL");
+  };
+  const handleTypeChangeOwner = (memberType) => {
+    setMemberType("OWNER");
+    console.log("button Pressed: ", "OWNER");
+  };
 
-  const onBtnPress = () => {
+  const onBtnPress = async () => {
     // TODO: Login API Call
+    const memberData = {
+      email: email,
+      password: password,
+      type: memberType      
+    };
+    // console.log(JSON.stringify(memberData));
 
+    await fetch(`http://${ipAddress}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(memberData),
+    })
+      .then(response => response.json())
+      .then((processedData) => {
+        console.log("Access Token =", processedData.accessToken);
+        accessTokenState.key = processedData.accessToken;
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
   };
 
   return (
@@ -48,6 +81,18 @@ export const Login = () => {
             isHidden={true}
           ></CustomTextField>
         </View>
+        <Pressable
+            style = {styles.blueBtn}
+          onPress={handleTypeChangeGeneral} // 일반 유저 로그인
+        >
+            <Text style = {styles.btnText}>일반 유저</Text>
+        </Pressable>
+        <Pressable
+            style = {styles.navyBtn}
+          onPress={handleTypeChangeOwner} // 점주 유저 로그인
+        >
+            <Text style = {styles.btnText}>점주</Text>
+        </Pressable>
       </View>
 
       <View>
@@ -69,6 +114,31 @@ const styles = StyleSheet.create({
   },
   textField: {
     padding: 10,
+  },
+  blueBtn: {
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: palette.main,
+    borderRadius: 20,
+    width: 80,
+    height: 50,
+    margin: 20
+  },
+  navyBtn: {
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: palette.navy,
+    borderRadius: 20,
+    width: 80,
+    height: 50,
+    margin: 20,
+  },
+  btnText:{
+    color: palette.white,
+    fontWeight: "bold",
+    fontSize: 18
   },
   box: {
     borderRadius: 30,

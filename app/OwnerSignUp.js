@@ -6,7 +6,7 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
-import { ipAdress } from "../dtos/request/api/Connection";
+import { ipAddress } from "../dtos/request/api/Connection";
 
 // 점주 유저 회원가입
 export const OwnerSignUp = () => {
@@ -90,14 +90,14 @@ export const OwnerSignUp = () => {
     };
     // console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAdress}/auth/signUp`, {
+    await fetch(`http://${ipAddress}/auth/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(memberData),
     })
-      .then(response => response.json)
+      .then(response => response.json())
       .then((processedData) => {
         // Handle the processed data from your backend here
         console.log("last data= ", processedData);
