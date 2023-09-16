@@ -71,9 +71,8 @@ export const Login = ({ navigation }) => {
       password: password,
       type: memberType,
     };
-    // console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAddress}/auth/login`, {
+    await fetch(`http://${ipAddress}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +92,7 @@ export const Login = ({ navigation }) => {
       })
       .catch((error) => {
         // Handle any errors that occur during the backend API call
-        console.error("my API Error:", error);
+        console.error("Login Error:", error);
       });
   };
 

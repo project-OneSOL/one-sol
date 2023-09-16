@@ -12,14 +12,18 @@ import { ActivityIndicator, Chip } from "react-native-paper";
 import { useRecoilState } from "recoil";
 import { paymentMemberState, recentState, friendState } from "../atoms";
 import { ipAddress } from "../dtos/request/api/Connection";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../atoms";
 
 export const Payments = ({ navigation }) => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
   const [recentUsers, setRecentUsers] = useRecoilState(recentState);
   const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
   const [dataLoaded, setDataLoaded] = useState(false);
 
+<<<<<<< HEAD
   async function fetchData(apiUrl, setStateFunction) {
     await fetch(apiUrl, {
       method: "GET",
@@ -35,6 +39,16 @@ export const Payments = ({ navigation }) => {
         setStateFunction(processedData);
         // setRecentUsers(processedData);
         setDataLoaded(true);
+=======
+    async function fetchData(apiUrl, setStateFunction) {
+      await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + `${accessToken}`
+        },
+>>>>>>> 17b60716e73bbf18e36caa65a556c5b9501201af
       })
       .catch((error) => {
         // Handle any errors that occur during the backend API call
@@ -63,7 +77,7 @@ export const Payments = ({ navigation }) => {
   // };
 
   useEffect(() => {
-    if (searchVal !== "") {
+    if (searchVal !== "" && recentUsers.length) {
       setViewResult(true);
       setSearchResult(
         recentUsers.filter((item) =>
@@ -100,7 +114,7 @@ export const Payments = ({ navigation }) => {
                 style={styles.chip}
                 onPress={() => {
                   const userIndex = paymentMembers.findIndex(
-                    (member) => member.item.id === paymentMember.item.id
+                    (member) => member.id === paymentMember.id
                   );
 
                   if (userIndex !== -1) {
@@ -115,7 +129,8 @@ export const Payments = ({ navigation }) => {
                 }}
                 onClose={() => {}}
               >
-                {paymentMember.item.name}
+                {paymentMember.name}
+                {console.log(paymentMember)}
               </Chip>
             ))}
           </ScrollView>

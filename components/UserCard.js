@@ -7,9 +7,9 @@ import { Button } from "./Button";
 import { FlatList } from "react-native";
 
 export const UserList = ({ users }) => {
-  const renderItem = (user) => {
+  const renderItem = ({item, index}) => {
     return (
-      <UserCard user={user}>
+      <UserCard user={item}>
         <Button title="친구 추가" type="small" color="blue"></Button>
       </UserCard>
     );
@@ -18,7 +18,7 @@ export const UserList = ({ users }) => {
     <FlatList
       data={users}
       renderItem={renderItem}
-      // keyExtractor={(item) => item.name}
+      keyExtractor={(item) => item.index}
     />
   );
 };
@@ -26,14 +26,17 @@ export const UserList = ({ users }) => {
 export const UserCard = (props) => {
   
   const { checked, children, user } = props;
+  console.log(user);
   // console.log("user", user);
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState);
 
   const handlePress = () => {
+    console.log("handlePress");
+    console.log(paymentMembers);
     // 사용자가 이미 목록에 있는지 확인
     const userIndex = paymentMembers.findIndex(
-      (member) => member.item.id === user.item.id
+      (member) => member.id === user.id
     );
 
     if (userIndex !== -1) {
