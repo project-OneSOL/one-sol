@@ -12,7 +12,7 @@ import { SignUp } from "./app/SignUp";
 import { Payments } from "./app/Payments";
 import { CardSelection } from "./app/CardSelection";
 import { AuthorizeAccount } from "./app/AuthorizeAccount";
-import { SearchFriend } from "./app/SearchFriend";
+import { SearchResult } from "./app/SearchResult";
 import { OwnerPayment } from "./app/OwnerPayment";
 import { GenerateQR } from "./app/GenerateQR";
 import { Login } from "./app/Login";
@@ -25,6 +25,7 @@ import { CompletePayment } from "./app/CompletePayment";
 import { CancelPayment } from "./app/CancelPayment";
 import { AddPayFriend } from "./app/AddPayFriend";
 import { ScanQR } from "./app/ScanQR";
+import { CardInfo } from "./app/CardInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,13 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="Home"
+      screenOptions={{
+        // animation: "none",
+        header: () => <Header />,
+        headerStyle: {
+          backgroundColor: palette.main,
+        },
+      }}
       //   headerMode="screen"
       // screenOptions={{
       //   headerShown: false,
@@ -68,10 +76,7 @@ export default function StackNavigator() {
         name="Home"
         component={Home}
         options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
+          animation: "none",
         }}
       />
       <Stack.Screen
@@ -94,16 +99,7 @@ export default function StackNavigator() {
           },
         }}
       />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      />
+      <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen
         name="OwnerSignUp"
         component={OwnerSignUp}
@@ -114,150 +110,46 @@ export default function StackNavigator() {
           },
         }}
       />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen
         name="AuthorizeAccount"
         component={AuthorizeAccount}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
-      <Stack.Screen
-        name="Payments"
-        component={Payments}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
+      <Stack.Screen name="Payments" component={Payments}></Stack.Screen>
       <Stack.Screen
         name="CardRegistration"
         component={CardRegistration}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
       <Stack.Screen
         name="CardSelection"
         component={CardSelection}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
+      <Stack.Screen name="CardInfo" component={CardInfo}></Stack.Screen>
       <Stack.Screen
-        name="SearchFriend"
-        component={SearchFriend}
+        name="SearchResult"
+        component={SearchResult}
         options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
+          animation: "none",
         }}
       ></Stack.Screen>
-      <Stack.Screen
-        name="AddPayFriend"
-        component={AddPayFriend}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
+      <Stack.Screen name="AddPayFriend" component={AddPayFriend}></Stack.Screen>
       <Stack.Screen
         name="CheckPayFriend"
         component={CheckPayFriend}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
-      <Stack.Screen
-        name="OwnerPayment"
-        component={OwnerPayment}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
-      <Stack.Screen
-        name="GenerateQR"
-        component={GenerateQR}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
+      <Stack.Screen name="OwnerPayment" component={OwnerPayment}></Stack.Screen>
+      <Stack.Screen name="GenerateQR" component={GenerateQR}></Stack.Screen>
       <Stack.Screen name="ScanQR" component={ScanQR}></Stack.Screen>
+      <Stack.Screen name="DividePay" component={DividePay}></Stack.Screen>
+      <Stack.Screen name="RequestPay" component={RequestPay}></Stack.Screen>
       <Stack.Screen
-        name="DividePay"
-        component={DividePay}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
-      <Stack.Screen
-        name="RequestPay"
-        component={RequestPay}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
-      ></Stack.Screen>
-
-      <Stack.Screen
-        name = "CompletePayment"
+        name="CompletePayment"
         component={CompletePayment}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
-
       <Stack.Screen
-        name = "CancelPayment"
+        name="CancelPayment"
         component={CancelPayment}
-        options={{
-          header: () => <Header />,
-          headerStyle: {
-            backgroundColor: palette.main,
-          },
-        }}
       ></Stack.Screen>
-
     </Stack.Navigator>
   );
 }
