@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
+import { KeyboardAvoidingView } from "react-native";
 
 export const CustomTextField = ({
   placeholder,
@@ -41,16 +42,25 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "100%",
     borderBottomWidth: 1,
-    padding: 10,
+    borderColor: palette.gray,
+    // padding: 10,
+    paddingBottom: 7,
+    paddingLeft: 2,
+    fontSize: 18,
   },
   focusedInput: {
     backgroundColor: "white",
     width: "100%",
     borderBottomWidth: 2,
     borderBottomColor: palette.blue,
-    padding: 10,
+    // padding: 10,
+    paddingBottom: 7,
+    paddingLeft: 2,
+    fontSize: 18,
   },
   container: {
     paddingVertical: 20,
+    paddingBottom: 7,
+    paddingHorizontal: 20,
   },
 });
