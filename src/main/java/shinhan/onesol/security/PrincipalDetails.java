@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import shinhan.onesol.domain.Member;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,12 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USER"));
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(() -> String.valueOf(member.getType()));
+        return authorities;
     }
+
+
 
     @Override
     public String getPassword() {

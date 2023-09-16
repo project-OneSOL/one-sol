@@ -28,12 +28,12 @@ Content-Type: application/json
   "password": "5678"
 }
 
-#
 #### 로그인
-#POST {{baseUrl}}/auth/login
-#Content-Type: application/json
-#
-#{
-#  "email": "choi@gmail.com",
-#  "password": "1234"
-#}
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "general@gmail.com",
+  "password": "qqq",
+  "type": "GENERAL"
+}
