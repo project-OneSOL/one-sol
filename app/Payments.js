@@ -10,25 +10,49 @@ import { SearchResult } from "./SearchResult";
 import { FriendSelection } from "./FriendSelection";
 import { ActivityIndicator, Chip } from "react-native-paper";
 import { useRecoilState } from "recoil";
-import { memberState } from "../atoms";
-import { paymentMemberState } from "../atoms";
+import { paymentMemberState, recentState, friendState } from "../atoms";
+import { ipAddress } from "../dtos/request/api/Connection";
 
 export const Payments = ({ navigation }) => {
-  const members = useRecoilState(memberState); // members
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
+    const [recentUsers, setRecentUsers] = useRecoilState(recentState);
+    const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
+    const [dataLoaded, setDataLoaded] = useState(false);
 
-  const initialData = [
-    { name: "이동현", phone: "010-1234-5678" },
-    { name: "박기련", phone: "010-1234-5678" },
-    { name: "최민수", phone: "010-1234-5678" },
-    { name: "김현정", phone: "010-1234-5678" },
-  ];
+    async function fetchData(apiUrl, setStateFunction) {
+      await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((processedData) => {
+          // Handle the processed data from your backend here
+          console.log("last data= ", processedData);
+          setStateFunction(processedData);
+          // setRecentUsers(processedData);
+          setDataLoaded(true);
+        })
+        .catch((error) => {
+          // Handle any errors that occur during the backend API call
+          console.error("my API Error:", error);
+        });
+    }
 
-  // 함께 결제할 회원 (초기값: 자기 자신)
-  // const [members, setMembers] = useState([
-  //   { name: "이동현", phone: "010-1234-5678" },
-  // ]);
+    // useEffect(() => {
+    //   // Get Friends List
+      
+    // }, []);
+  
+    // 화면 렌더링 시, 내 친구 전체 목록 불러오기
+    useEffect(() => {
+      // Get Friends List
+      fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
+      fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
+    }, []);
 
   // 검색한 단어
   const [searchVal, setSearchVal] = useState("");
@@ -46,11 +70,9 @@ export const Payments = ({ navigation }) => {
   useEffect(() => {
     if (searchVal !== "") {
       setViewResult(true);
-      setSearchResult(
-        initialData.filter((item) =>
-          item.name.toLowerCase().includes(searchVal.toLowerCase())
-        )
-      );
+      setSearchResult(recentUsers.filter((item) =>
+      item.name.toLowerCase().includes(searchVal.toLowerCase())
+    ));
     } else {
       setViewResult(false);
     }
@@ -79,10 +101,24 @@ export const Payments = ({ navigation }) => {
               <Chip
                 key={idx}
                 style={styles.chip}
-                onPress={() => console.log("Pressed", paymentMember)}
-                onClose
+                onPress={() => {
+                  const userIndex = paymentMembers.findIndex(
+                    (member) => member.item.id === paymentMember.item.id
+                  );
+              
+                  if (userIndex !== -1) {
+                    // 이미 목록에 있다면 제거
+                    const updatedMembers = [...paymentMembers];
+                    updatedMembers.splice(userIndex, 1);
+                    setPaymentMembers(updatedMembers);
+                  } else {
+                    // 목록에 없다면 추가
+                    setPaymentMembers([...paymentMembers, paymentMember]);
+                  }
+                }}
+                onClose={() => {}}
               >
-                {paymentMember.name}
+                {paymentMember.item.name}
               </Chip>
             ))}
           </ScrollView>
@@ -90,12 +126,11 @@ export const Payments = ({ navigation }) => {
         <View style={styles.friends}>
           {viewResult ? (
             <SearchResult
-              searchVal={searchVal}
               searchResult={searchResult}
             ></SearchResult>
           ) : (
             <FriendSelection
-              toggleBottomNavigationView={toggleBottomNavigationView}
+              recentUsers={recentUsers} friends={friends} toggleBottomNavigationView={toggleBottomNavigationView}
             />
           )}
         </View>

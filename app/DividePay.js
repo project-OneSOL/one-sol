@@ -22,7 +22,7 @@ import {
   UserCardWithMoney,
 } from "../components/UserCardWithMoney";
 import { useRecoilState } from "recoil";
-import { memberState } from "../atoms";
+import { paymentMemberState } from "../atoms";
 import { IosAlertStyle } from "expo-notifications";
 import { ipAdress } from "../dtos/request/api/Connection";
 
@@ -147,7 +147,7 @@ export const DividePay = ({ navigation }) => {
   //         await sendPushNotification(expoPushToken);
   //     }
   // };
-  const [members, setMembers] = useRecoilState(memberState);
+  const [paymentMember, setPaymentMembers] = useRecoilState(paymentMemberState);
 
   const totalPrice = 40000;
   const data = [
@@ -200,10 +200,10 @@ export const DividePay = ({ navigation }) => {
 
   useEffect(() => {
     console.log("rerender");
-    setMembers(data);
+    setPaymentMembers(data);
   }, []);
 
-  let memberAmountSum = Number(getSumOfAmount(members));
+  let memberAmountSum = Number(getSumOfAmount(paymentMembers));
 
   return (
     <Background>
@@ -231,15 +231,15 @@ export const DividePay = ({ navigation }) => {
       <View style={styles.friends}>
         <View style={styles.friendsList}>
           <ScrollView vertical showsHorizontalScrollIndicator={false}>
-            {members.map((member, idx) => (
+            {paymentMembers.map((paymentMember, idx) => (
               <MemorizedUserCardWithMoney
                 key={idx}
                 idx={idx}
                 style={styles.friend}
-                name={member.name}
-                bankName={member.bankName}
-                cardNumber={member.cardNumber}
-                amount={String(member.amount)}
+                name={paymentMember.name}
+                bankName={paymentMember.bankName}
+                cardNumber={paymentMember.cardNumber}
+                amount={String(paymentMember.amount)}
                 isEditable={true}
               ></MemorizedUserCardWithMoney>
             ))}
@@ -257,7 +257,7 @@ export const DividePay = ({ navigation }) => {
         title="확인"
         type="big"
         onPress={async () => {
-          if (isValidTotalPrice(Number(getSumOfAmount(members)), totalPrice)) {
+          if (isValidTotalPrice(Number(getSumOfAmount(paymentMembers)), totalPrice)) {
             // push notification
             await sendPushNotification(expoPushToken);
 

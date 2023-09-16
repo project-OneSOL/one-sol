@@ -5,12 +5,12 @@ import { Background } from "../components/Background";
 import { TitleContainer } from "../components/TitleContainer";
 import { UserCardWithMoney } from "../components/UserCardWithMoney";
 import { useRecoilState } from "recoil";
-import { memberState } from "../atoms";
+import { paymentMemberState } from "../atoms";
 import { CustomProgressBar } from "../components/ProgressBar";
 import { DoubleButton } from "../components/DoubleButton";
 
 export const RequestPay = ({ navigation }) => {
-  const [members, setMembers] = useRecoilState(memberState);
+  const [members, setMembers] = useRecoilState(paymentMemberState);
 
   const totalPrice = 40000;
 

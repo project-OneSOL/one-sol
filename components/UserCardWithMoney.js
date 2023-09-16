@@ -3,12 +3,12 @@ import { palette } from "../lib/styles/colorPalette";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomTextField } from "./TextField";
 import { useRecoilState } from "recoil";
-import { memberState } from "../atoms";
+import { paymentMemberState } from "../atoms";
 import React from "react";
 
 export const UserCardWithMoney = (props) => {
   const { key, idx, name, bankName, cardNumber, amount, isEditable } = props;
-  const [members, setMembers] = useRecoilState(memberState);
+  const [members, setMembers] = useRecoilState(paymentMemberState);
   console.log({idx}, {amount});
 
   const handleAmountChange = (newAmount) => {

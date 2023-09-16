@@ -17,7 +17,7 @@ export const SearchResult = ({ searchResult }) => {
       ></Title>
       {searchResult.length ? (
         <View style={styles.top}>
-          <UserList data={searchResult} />
+          <UserList users={searchResult} />
         </View>
       ) : (
         <TitleContainer text4="존재하지 않는 회원입니다"></TitleContainer>
