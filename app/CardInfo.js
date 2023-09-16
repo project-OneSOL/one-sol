@@ -114,7 +114,7 @@ export const CardInfo = ({ navigation }) => {
         },
         body: JSON.stringify(requestData),
       })
-        .then(response => console.log(response));
+        .then(response => navigation.navigate("Home"));
       
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
