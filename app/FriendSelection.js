@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Pressable,
+  FlatList,
+} from "react-native";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
-import { UserList } from "../components/UserList";
+import { UserList } from "../components/UserCard";
 import { friendState } from "../atoms";
 import { useRecoilState } from "recoil";
 import { ipAddress } from "../dtos/request/api/Connection";
@@ -79,15 +85,15 @@ export const FriendSelection = ({ toggleBottomNavigationView }) => {
           onPress={toggleBottomNavigationView}
         ></Button>
       </View>
-      <ScrollView showsVerticalScrollIndicator="false">
-        <View style={styles.friendsList}>
-          {switchTitle ? (
-            <UserList users={friends} />
-          ) : (
-            <UserList users={recentUsers} />
-          )}
-        </View>
-      </ScrollView>
+      {/* <ScrollView showsVerticalScrollIndicator="false"> */}
+      <View style={styles.friendsList}>
+        {switchTitle ? (
+          <UserList data={friends} />
+        ) : (
+          <UserList data={recentUsers} />
+        )}
+      </View>
+      {/* </ScrollView> */}
     </View>
   );
 };

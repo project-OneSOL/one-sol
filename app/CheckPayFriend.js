@@ -3,9 +3,12 @@ import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { TitleContainer } from "../components/TitleContainer";
 import { DoubleButton } from "../components/DoubleButton";
-import { UserList } from "../components/UserList";
+import { UserList } from "../components/UserCard";
+import { paymentMemberState } from "../atoms";
 
 export const CheckPayFriend = ({ navigation }) => {
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState);
   return (
     <Background>
       <TitleContainer
@@ -13,7 +16,7 @@ export const CheckPayFriend = ({ navigation }) => {
         text2="함께 결제할 멤버를 확인해주세요."
         text3="2명"
       ></TitleContainer>
-      <UserList />
+      <UserList data={paymentMemberState} />
       <DoubleButton
         press1={() => navigation.goBack()}
         press2={() => navigation.push("ScanQR", { screen: "ScanQR" })}

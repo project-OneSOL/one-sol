@@ -1,10 +1,28 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Ionicons } from "@expo/vector-icons";
+import { FlatList } from "react-native";
+
+export const UserList = ({ data }) => {
+  const renderItem = ({ item }) => {
+    return (
+      <UserCard name={item.name} phone={item.phone}>
+        <Button title="친구 추가" type="small" color="blue"></Button>
+      </UserCard>
+    );
+  };
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.name}
+    />
+  );
+};
 
 export const UserCard = (props) => {
   const { name, phone, checked, children } = props;
-  console.log(name + phone);
+
   return (
     <View
       style={[styles.container, checked ? palette.blue : palette.lightblue]}

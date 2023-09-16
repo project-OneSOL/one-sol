@@ -3,17 +3,9 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
-import { UserCard } from "../components/UserCard";
+import { UserList, UserCard } from "../components/UserCard";
 
-export const SearchResult = ({ searchVal, searchResult }) => {
-  const renderItem = ({ item }) => {
-    return (
-      <UserCard name={item.name} phone={item.phone}>
-        <Button title="친구 추가" type="small"></Button>
-      </UserCard>
-    );
-  };
-
+export const SearchResult = ({ searchResult }) => {
   return (
     <View style={styles.container}>
       <Title
@@ -25,11 +17,7 @@ export const SearchResult = ({ searchVal, searchResult }) => {
       ></Title>
       {searchResult.length ? (
         <View style={styles.top}>
-          <FlatList
-            data={searchResult}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.name}
-          />
+          <UserList data={searchResult} />
         </View>
       ) : (
         <TitleContainer text4="존재하지 않는 회원입니다"></TitleContainer>

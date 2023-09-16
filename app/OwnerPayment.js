@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
-import { UserList } from "../components/UserList";
 
 export const OwnerPayment = ({ navigation }) => {
   const [cost, setCost] = useState("");
@@ -34,15 +33,11 @@ export const OwnerPayment = ({ navigation }) => {
             onChangeText={handleInputChange}
             value={addComma(cost)}
           ></TextInput>
-          {/* <Text style={styles.input}>원</Text> */}
         </View>
       </View>
       <View>
-        <UserList />
-      </View>
-      <View>
         <Button
-          title="결제 요청하기"
+          title="QR 코드 생성"
           disabled={disableBtn}
           onPress={() =>
             navigation.push("GenerateQR", { screen: "GenerateQR" })
