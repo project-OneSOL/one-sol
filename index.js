@@ -57,7 +57,7 @@ export default function StackNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="DividePay"
+      initialRouteName="Home"
       screenOptions={{
         // animation: "none",
         header: () => <Header />,

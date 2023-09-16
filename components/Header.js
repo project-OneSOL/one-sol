@@ -19,7 +19,10 @@ export const Header = () => {
           size={20}
           color="white"
         />
-        <Ionicons name="person" size={22} color="white" />
+        <Ionicons name="person"
+          size={22}
+          color="white"
+          onPress={() => navigation.navigate("Login", { screen: "Login" })}/>
       </View>
     </View>
   );
