@@ -30,6 +30,8 @@ public class Member {
     private String email;
     private String password;
     private String phoneNumber;
+    private String bankCode;
+    private String accountNumber;
 
     @Enumerated(value = EnumType.STRING)
     private MemberStatusEnum status; // 카드 등록 여부
@@ -50,4 +52,21 @@ public class Member {
     public void setCorpRegisterNum(String corpRegisterNum) {
         this.corpRegisterNum = corpRegisterNum;
     }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
 }

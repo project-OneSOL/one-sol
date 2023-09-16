@@ -45,3 +45,7 @@ http/
 
 ### env
 env/
+
+# macOS
+.DS_Store
+*.pem
