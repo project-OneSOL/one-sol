@@ -107,7 +107,7 @@ export const Payments = ({ navigation }) => {
                 style={styles.chip}
                 onPress={() => {
                   const userIndex = paymentMembers.findIndex(
-                    (member) => member.item.id === paymentMember.item.id
+                    (member) => member.id === paymentMember.id
                   );
               
                   if (userIndex !== -1) {
@@ -122,7 +122,8 @@ export const Payments = ({ navigation }) => {
                 }}
                 onClose={() => {}}
               >
-                {paymentMember.item.name}
+                {paymentMember.name}
+                {console.log(paymentMember)}
               </Chip>
             ))}
           </ScrollView>

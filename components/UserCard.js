@@ -32,9 +32,11 @@ export const UserCard = (props) => {
     useRecoilState(paymentMemberState);
 
   const handlePress = () => {
+    console.log("handlePress");
+    console.log(paymentMembers);
     // 사용자가 이미 목록에 있는지 확인
     const userIndex = paymentMembers.findIndex(
-      (member) => member.item.id === user.item.id
+      (member) => member.id === user.id
     );
 
     if (userIndex !== -1) {
