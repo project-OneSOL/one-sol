@@ -6,15 +6,17 @@ export const UserCard = (props) => {
   const { name, phone, children } = props;
   return (
     <View style={styles.container}>
-      <Ionicons
-        style={styles.profile}
-        name="person-circle-sharp"
-        size={30}
-        color="black"
-      />
-      <View style={styles.info}>
-        <Text>{name}</Text>
-        <Text>{phone}</Text>
+      <View style={styles.basic}>
+        <Ionicons
+          style={styles.profile}
+          name="person-circle-sharp"
+          size={30}
+          color="black"
+        />
+        <View style={styles.info}>
+          <Text>{name}</Text>
+          <Text>{phone}</Text>
+        </View>
       </View>
       <View>{children}</View>
     </View>
@@ -29,7 +31,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     flexDirection: "row",
+    justifyContent: "space-between",
     marginVertical: 3,
+  },
+  basic: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   profile: {
     paddingHorizontal: 5,

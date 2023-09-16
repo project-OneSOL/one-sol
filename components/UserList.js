@@ -2,17 +2,12 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { UserCard } from "./UserCard";
 
-export const UserList = () => {
-  const users = ["이동현", "박기련", "최민수", "김현정"];
+export const UserList = ({ users }) => {
   return (
     <ScrollView bounces="false" showsVerticalScrollIndicator="false">
       <View style={styles.friendsList}>
-        {users.map((user) => (
-          <UserCard
-            style={styles.friend}
-            name={user}
-            phone="010-1234-5678"
-          ></UserCard>
+        {users.map(({ name, phone }) => (
+          <UserCard style={styles.friend} name={name} phone={phone}></UserCard>
         ))}
       </View>
     </ScrollView>
