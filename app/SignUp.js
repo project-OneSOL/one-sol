@@ -7,7 +7,7 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
-import { ipAdress } from "../dtos/request/api/Connection";
+import { ipAddress } from "../dtos/request/api/Connection";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -61,7 +61,7 @@ export const SignUp = () => {
     };
     // console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAdress}/auth/signUp`, {
+    await fetch(`http://${ipAddress}/auth/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
