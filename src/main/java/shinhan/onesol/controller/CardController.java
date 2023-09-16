@@ -40,6 +40,7 @@ public class CardController {
     @GetMapping("/representativeCard")
     public ResponseEntity<CardDto> getRepresentativeCard(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Member member = principalDetails.getMember();
+        log.info("member={}", member.getName());
         CardDto representativeCard = cardService.getRepresentativeCardForMember(member);
         if (representativeCard != null) {
             return new ResponseEntity<>(representativeCard, HttpStatus.OK);

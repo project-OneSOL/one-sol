@@ -21,15 +21,20 @@ public class CardService {
 
     // 카드 등록
     public void registerCard(Member member, String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status) {
-        Card card = Card.builder()
-                .cardNumber(cardNumber)
-                .cardExpirationYear(cardExpirationYear)
-                .cardExpirationMonth(cardExpirationMonth)
-                .customerIdentityNumber(customerIdentityNumber)
-                .member(member)
-                .status(status)
-                .build();
-        cardRepository.save(card);
+        Card existingCard = cardRepository.findByCardNumber(cardNumber);
+        if (existingCard == null) {
+            Card card = Card.builder()
+                    .cardNumber(cardNumber)
+                    .cardExpirationYear(cardExpirationYear)
+                    .cardExpirationMonth(cardExpirationMonth)
+                    .customerIdentityNumber(customerIdentityNumber)
+                    .member(member)
+                    .status(status)
+                    .build();
+            cardRepository.save(card);
+        } else {
+            throw new IllegalArgumentException("이미 카드가 등록되어 있습니다.");
+        }
     }
 
     // 카드 리스트 조회
