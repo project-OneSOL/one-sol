@@ -135,14 +135,17 @@ public class MemberService {
                 }).toList();
     }
 
-    public List<FriendDto> searchLatestDetails(Long subPaymentId) {
+    public List<FriendDto> searchLatestDetails(Long subPaymentId, Long memberId) {
         SubPayment subPayment = subPaymentRepository.findById(subPaymentId)
                 .orElseThrow(NotExistSubPaymentException::new);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(NotExistMemberException::new);
 
         Payment payment = subPayment.getPayment();
         Long paymentId = payment.getId();
         List<SubPayment> subPayments = subPaymentRepository.findByPaymentIdOrderByDateDesc(paymentId);
         return subPayments.stream()
+                .filter(sp -> !sp.getMember().equals(member))
                 .map(sp -> {
                     Member friend = sp.getMember();
                     Card card = cardRepository.findAllByMember(friend).stream()
