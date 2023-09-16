@@ -33,7 +33,8 @@ public class SecurityConfig {
 
             // 수정 필요
             "/api/payments/**",
-            "/api/**"
+            "/api/**",
+            "/**"
     };
 
     @Bean

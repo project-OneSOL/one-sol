@@ -5,7 +5,9 @@ Content-Type: application/json
 {
   "name": "minsoo",
   "email": "choi@gmail.com",
-  "password": "1234"
+  "phoneNumber": "01011112222",
+  "password": "1234",
+  "type": "GENERAL"
 }
 
 ### 회원가입 - 멤버2
