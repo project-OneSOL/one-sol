@@ -1,6 +1,14 @@
 import { StyleSheet, Pressable, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 
+// export const MiniBlueButton = (title) => {
+//   return (
+//     <Pressable style={styles.btn}>
+//       <Text style={styles.btntext}>{title}</Text>
+//     </Pressable>
+//   );
+// };
+
 export const Button = (props) => {
   // const { onPress, title = 'Save' } = props;
   const {

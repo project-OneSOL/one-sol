@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { Button } from "./Button";
 import { palette } from "../lib/styles/colorPalette";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
