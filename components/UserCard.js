@@ -1,7 +1,9 @@
-import { StyleSheet, View, Text } from "react-native";
-import { Button } from "./Button";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Ionicons } from "@expo/vector-icons";
+import { paymentMemberState } from "../atoms";
+import { useRecoilState } from "recoil";
+import { Button } from "./Button";
 import { FlatList } from "react-native";
 
 export const UserList = ({ data }) => {
@@ -22,23 +24,44 @@ export const UserList = ({ data }) => {
 };
 
 export const UserCard = (props) => {
-  const { name, phone, checked, children } = props;
+  const { name, phone, checked, children, user } = props;
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState);
+
+  const handlePress = () => {
+    // 사용자가 이미 목록에 있는지 확인
+    const userIndex = paymentMembers.findIndex(
+      (member) => member.id === user.id
+    );
+
+    if (userIndex !== -1) {
+      // 이미 목록에 있다면 제거
+      const updatedMembers = [...paymentMembers];
+      updatedMembers.splice(userIndex, 1);
+      setPaymentMembers(updatedMembers);
+    } else {
+      // 목록에 없다면 추가
+      setPaymentMembers([...paymentMembers, user]);
+    }
+  };
 
   return (
     <View
       style={[styles.container, checked ? palette.blue : palette.lightblue]}
     >
       <View style={styles.basic}>
-        <Ionicons
-          style={styles.profile}
-          name="person-circle-sharp"
-          size={30}
-          color="black"
-        />
-        <View style={styles.info}>
-          <Text>{name}</Text>
-          <Text>{phone}</Text>
-        </View>
+        <Pressable onPress={handlePress}>
+          <Ionicons
+            style={styles.profile}
+            name="person-circle-sharp"
+            size={30}
+            color="black"
+          />
+          <View style={styles.info}>
+            <Text>{name}</Text>
+            <Text>{phone}</Text>
+          </View>
+        </Pressable>
       </View>
       <View>{children}</View>
     </View>
