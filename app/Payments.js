@@ -1,85 +1,104 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
-import { Title } from "../components/Title";
 import { SearchBar } from "../components/SearchBar";
 import { Chip } from "react-native-paper";
-import { UserCard } from "../components/UserCard";
 import { AddPayFriend } from "./AddPayFriend";
-import { CheckPayFriend } from "./CheckPayFriend";
+import { SearchResult } from "./SearchResult";
+import { FriendSelection } from "./FriendSelection";
 
 export const Payments = ({ navigation }) => {
-  const users = ["이동현", "박기련", "최민수", "김현정"];
+  // 검색한 단어
+  const [searchVal, setSearchVal] = useState("");
+  // 검색 여부
+  const [viewResult, setViewResult] = useState(false);
+  // 검색 결과
+  const [searchResult, setSearchResult] = useState([]);
 
+  const initialData = [
+    { name: "이동현", phone: "010-1234-5678" },
+    { name: "박기련", phone: "010-1234-5678" },
+    { name: "최민수", phone: "010-1234-5678" },
+    { name: "김현정", phone: "010-1234-5678" },
+  ];
+
+  // 함께 결제할 회원 (초기값: 자기 자신)
+  const [members, setMembers] = useState([
+    { name: "이동현", phone: "010-1234-5678" },
+  ]);
+
+  // 친구 추가 bottomsheet Modal
   const [visible, setVisible] = useState(false);
   const toggleBottomNavigationView = () => {
     setVisible(!visible);
   };
-  
+
+  useEffect(() => {
+    if (searchVal !== "") {
+      setViewResult(true);
+      setSearchResult(
+        initialData.filter((item) =>
+          item.name.toLowerCase().includes(searchVal.toLowerCase())
+        )
+      );
+    } else {
+      setViewResult(false);
+    }
+  }, [searchVal]);
+
   return (
     <Background>
       <View style={styles.container}>
         <TitleContainer
-          text1="누구와 함께 계산 하시나요?"
+          text1="누구와 함께 계산하시나요?"
           text2="함께 결제할 인원을 선택해주세요"
-          text3="0명"
+          text3={`${members.length}명`}
         ></TitleContainer>
         <View style={styles.searchContainer}>
-          <SearchBar text="이름 또는 핸드폰 번호 검색" />
+          <SearchBar
+            text="이름 검색"
+            setSearchVal={setSearchVal}
+            searchVal={searchVal}
+          />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={styles.chips}
           >
-            {users.map((user) => (
+            {members.map((user) => (
               <Chip
                 style={styles.chip}
                 onPress={() => console.log("Pressed", user)}
                 onClose
               >
-                {user}
+                {user.name}
               </Chip>
             ))}
           </ScrollView>
         </View>
         <View style={styles.friends}>
-          <View style={styles.top}>
-            <View style={styles.switchTitle}>
-              <View style={styles.title}>
-                <Title text="최근" size="mid" weight="semibold"></Title>
-              </View>
-              <View style={styles.title}>
-                <Title text="친구 목록" size="mid" weight="semibold"></Title>
-              </View>
-            </View>
-            <Button
-              styles={styles.addBtn}
-              title="+ 친구 추가"
-              type="mid"
-              onPress={toggleBottomNavigationView}
-            ></Button>
-          </View>
-          <ScrollView showsVerticalScrollIndicator="false">
-            <View style={styles.friendsList}>
-              {users.map((user) => (
-                <UserCard
-                  style={styles.friend}
-                  name={user}
-                  phone="010-1234-5678"
-                ></UserCard>
-              ))}
-            </View>
-          </ScrollView>
+          {viewResult ? (
+            <SearchResult
+              searchVal={searchVal}
+              searchResult={searchResult}
+            ></SearchResult>
+          ) : (
+            <FriendSelection
+              toggleBottomNavigationView={toggleBottomNavigationView}
+            />
+          )}
         </View>
-        
         <View style={styles.btnContainer}>
-          <Button title="다음" type="big"
-          onPress={() =>
-            navigation.push("CheckPayFriend", { screen: "CheckPayFriend" })
-          }
+          <Button
+            title="다음"
+            type="big"
+            onPress={() =>
+              navigation.push("CheckPayFriend", { screen: "CheckPayFriend" })
+            }
+            disabled={members.length <= 1}
           ></Button>
         </View>
       </View>
@@ -88,8 +107,7 @@ export const Payments = ({ navigation }) => {
         toggleBottomNavigationView={toggleBottomNavigationView}
       ></AddPayFriend>
     </Background>
-    
-  );  
+  );
 };
 
 const styles = StyleSheet.create({
@@ -120,27 +138,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 10,
   },
-  top: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  switchTitle: {
-    flex: 0.9,
-    paddingVertical: 20,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  title: {
-    marginRight: 10,
-  },
-  addBtn: {
-    alignSelf: "flex-end",
-  },
-  friendsList: {
-    paddingHorizontal: 6,
-    flexDirection: "column",
-  },
-  friend: {},
   btnContainer: {},
 });

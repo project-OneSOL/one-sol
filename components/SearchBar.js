@@ -4,10 +4,6 @@ import { Searchbar } from "react-native-paper";
 import { palette } from "../lib/styles/colorPalette";
 
 export const SearchBar = ({ text, setSearchVal, searchVal }) => {
-  const [searchQuery, setSearchQuery] = React.useState("");
-
-  const onChangeSearch = (query) => setSearchQuery(query);
-
   return (
     <Searchbar
       placeholder={text}
