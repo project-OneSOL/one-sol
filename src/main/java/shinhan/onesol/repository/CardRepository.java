@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
+    Card findByCardNumber(String cardNumber);
     List<Card> findAllByMember(Member member);
     Card findByMemberAndStatus(Member member, CardStatusEnum status);
 }

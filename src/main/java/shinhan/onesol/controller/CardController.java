@@ -6,9 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import shinhan.onesol.domain.Card;
 import shinhan.onesol.domain.Member;
-import shinhan.onesol.dto.CardRegisterDto;
+import shinhan.onesol.dto.CardDto;
 import shinhan.onesol.repository.CardRepository;
 import shinhan.onesol.security.PrincipalDetails;
 import shinhan.onesol.service.CardService;
@@ -24,23 +23,23 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerCard(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody CardRegisterDto cardRegisterDto) {
+    public ResponseEntity<Void> registerCard(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody CardDto cardDto) {
         Member member = principalDetails.getMember();
-        cardService.registerCard(member, cardRegisterDto.getCardNumber(), cardRegisterDto.getCardExpirationYear(), cardRegisterDto.getCardExpirationMonth(), cardRegisterDto.getCustomerIdentityNumber(), cardRegisterDto.getStatus());
+        cardService.registerCard(member, cardDto.getCardNumber(), cardDto.getCardExpirationYear(), cardDto.getCardExpirationMonth(), cardDto.getCustomerIdentityNumber(), cardDto.getStatus());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/cards")
-    public ResponseEntity<List<Card>> getCardList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<List<CardDto>> getCardList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Member member = principalDetails.getMember();
-        List<Card> cardList = cardService.getCardListForMember(member);
+        List<CardDto> cardList = cardService.getCardListForMember(member);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
     }
 
     @GetMapping("/representativeCard")
-    public ResponseEntity<Card> getRepresentativeCard(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<CardDto> getRepresentativeCard(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Member member = principalDetails.getMember();
-        Card representativeCard = cardService.getRepresentativeCardForMember(member);
+        CardDto representativeCard = cardService.getRepresentativeCardForMember(member);
         if (representativeCard != null) {
             return new ResponseEntity<>(representativeCard, HttpStatus.OK);
         } else {

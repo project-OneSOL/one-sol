@@ -1,18 +1,16 @@
 package shinhan.onesol.service;
 
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 import shinhan.onesol.domain.Card;
 import shinhan.onesol.domain.Member;
+import shinhan.onesol.dto.CardDto;
 import shinhan.onesol.enums.CardStatusEnum;
 import shinhan.onesol.repository.CardRepository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,13 +33,29 @@ public class CardService {
     }
 
     // 카드 리스트 조회
-    public List<Card> getCardListForMember(Member member) {
-        return cardRepository.findAllByMember(member);
+    public List<CardDto> getCardListForMember(Member member) {
+        List<Card> cards = cardRepository.findAllByMember(member);
+        return cards.stream()
+                .map(card -> new CardDto(
+                        card.getCardNumber(),
+                        card.getCardExpirationYear(),
+                        card.getCardExpirationMonth(),
+                        card.getCustomerIdentityNumber(),
+                        card.getStatus()
+                ))
+                .collect(Collectors.toList());
     }
 
     // 대표 카드 조회
-    public Card getRepresentativeCardForMember(Member member) {
-        return cardRepository.findByMemberAndStatus(member, CardStatusEnum.CHECKED);
+    public CardDto getRepresentativeCardForMember(Member member) {
+        Card card = cardRepository.findByMemberAndStatus(member, CardStatusEnum.CHECKED);
+        return  new CardDto(
+                card.getCardNumber(),
+                card.getCardExpirationYear(),
+                card.getCardExpirationMonth(),
+                card.getCustomerIdentityNumber(),
+                card.getStatus()
+        );
     }
 
 

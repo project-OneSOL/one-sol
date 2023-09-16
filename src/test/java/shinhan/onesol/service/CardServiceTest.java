@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.Card;
 import shinhan.onesol.domain.Member;
+import shinhan.onesol.dto.CardDto;
 import shinhan.onesol.enums.CardStatusEnum;
 import shinhan.onesol.enums.MemberStatusEnum;
 import shinhan.onesol.enums.MemberTypeEnum;
@@ -45,8 +46,8 @@ class CardServiceTest {
         cardService.registerCard(member, cardNumber, cardExpirationYear, cardExpirationMonth, customerIdentityNumber, CardStatusEnum.CHECKED);
 
         // 등록된 카드 확인
-        List<Card> cardList = cardService.getCardListForMember(member);
-        for (Card card : cardList) {
+        List<CardDto> cardList = cardService.getCardListForMember(member);
+        for (CardDto card : cardList) {
             System.out.println(card.getCardNumber());
             System.out.println(card.getCardExpirationYear());
             System.out.println(card.getCardExpirationMonth());
@@ -54,11 +55,12 @@ class CardServiceTest {
         }
 
         // 대표 카드로 설정
-        Card card = cardService.getCardListForMember(member).get(0);
+        CardDto cardDto = cardService.getCardListForMember(member).get(0);
+        Card card = cardRepository.findByCardNumber(cardDto.getCardNumber());
         cardRepository.save(card);
 
         // 대표 카드 조회
-        Card representativeCard = cardService.getRepresentativeCardForMember(member);
+        CardDto representativeCard = cardService.getRepresentativeCardForMember(member);
 
         // 대표 카드가 올바르게 조회되었는지 확인
         assertNotNull(representativeCard);
