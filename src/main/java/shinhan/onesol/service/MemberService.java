@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.MemberFriend;
 import shinhan.onesol.dto.TokenInfo;
+import shinhan.onesol.dto.response.FriendDto;
 import shinhan.onesol.repository.MemberFriendRepository;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.security.JwtTokenProvider;
@@ -91,6 +92,15 @@ public class MemberService {
         }
 
         List<MemberFriend> friends = memberFriendRepository.findAllByMember(requesterOptional.get());
+//        friends.stream()
+//                .map(f -> {
+//                    Member member = f.getMember();
+//
+//                    new FriendDto(member.getId(), member.getName(), member.getPhoneNumber())
+//
+//                })
+
+
         return ResponseEntity.ok(friends.stream()
                 .map(i -> i.getFriend().getId())
                 .collect(Collectors.toList()));

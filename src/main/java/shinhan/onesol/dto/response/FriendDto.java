@@ -1,17 +1,16 @@
-package shinhan.onesol.dto;
+package shinhan.onesol.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@Builder
-public class PaymentMemberDto {
+@NoArgsConstructor
+public class FriendDto {
     private Long id;
     private String name;
-    private int amount;
-    private String cvc;
+    private String phoneNumber;
     private String cardNumber;
     private String cardExpirationYear;
     private String cardExpirationMonth;

@@ -49,6 +49,37 @@ public class PaymentService {
     private String tossCardNumberPaymentUrl;
 
     @Transactional
+    public void initPayment(PaymentMemberRequest paymentMemberRequest, Long representMemberId){
+        Member representMember = memberRepository.findById(representMemberId)
+                .orElseThrow(NotExistMemberException::new);
+        int totalPrice = paymentMemberRequest.getTotalPrice();
+
+        Payment payment = Payment.builder()
+                .member(representMember)
+                .totalPrice(totalPrice)
+                .status(PaymentStatusEnum.INIT)
+                .build();
+        paymentRepository.save(payment);
+
+        List<PaymentMemberDto> paymentMembers = paymentMemberRequest.getPaymentMembers();
+
+        for (PaymentMemberDto paymentMember : paymentMembers) {
+            Member member = memberRepository.findById(paymentMember.getId())
+                    .orElseThrow(() -> new NotExistMemberException());
+            SubPayment subPayment = SubPayment.builder()
+                    .payment(payment)
+                    .price(paymentMember.getAmount())
+                    .status(PaymentStatusEnum.INIT)
+                    .member(member)
+                    .date(LocalDateTime.now())
+                    .build();
+
+            subPaymentRepository.save(subPayment);
+        }
+
+    }
+
+    @Transactional
     public void doPayment(PaymentMemberRequest paymentMemberRequest, Long representMemberId){
         // validation
         validateTotalPrice(paymentMemberRequest);
