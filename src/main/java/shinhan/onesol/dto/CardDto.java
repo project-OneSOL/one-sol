@@ -8,7 +8,7 @@ import shinhan.onesol.enums.CardStatusEnum;
 @Getter
 @Builder
 @AllArgsConstructor
-public class CardRegisterDto {
+public class CardDto {
 
     private String cardNumber;
     private String cardExpirationYear;
