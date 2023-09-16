@@ -82,7 +82,7 @@ export const Payments = ({ navigation }) => {
                 onPress={() => console.log("Pressed", paymentMember)}
                 onClose
               >
-                {paymentMember}
+                {paymentMember.name}
               </Chip>
             ))}
           </ScrollView>

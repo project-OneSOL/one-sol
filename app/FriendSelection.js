@@ -14,7 +14,6 @@ export const FriendSelection = ({ toggleBottomNavigationView }) => {
   const [switchTitle, setSwitchTitle] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-
   async function fetchData(apiUrl, setStateFunction) {
     await fetch(apiUrl, {
       method: "GET",
