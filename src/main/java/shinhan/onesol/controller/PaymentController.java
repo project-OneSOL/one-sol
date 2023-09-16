@@ -22,9 +22,15 @@ import java.util.List;
 public class PaymentController {
     private final PaymentService paymentService;
 
+    @PostMapping("/init")
+    public ResponseEntity<Void> initPayment(@RequestBody PaymentMemberRequest paymentMemberRequest, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        Long representMemberId = principalDetails.getMember().getId();
+        paymentService.initPayment(paymentMemberRequest, representMemberId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/pay")
     public ResponseEntity<Void> doPayment(@RequestBody PaymentMemberRequest paymentMemberRequest, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        log.info("-----start Payment-----");
         Long representMemberId = principalDetails.getMember().getId();
         paymentService.doPayment(paymentMemberRequest, representMemberId);
         return new ResponseEntity<>(HttpStatus.OK);
