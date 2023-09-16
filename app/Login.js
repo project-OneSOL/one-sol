@@ -7,11 +7,12 @@ import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
-import { accessTokenState } from "../atoms/index";
+import { accessTokenState, paymentMemberState } from "../atoms/index";
 import { useRecoilState } from "recoil";
 import { Title } from "../components/Title";
 
 export const Login = ({ navigation }) => {
+  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -88,11 +89,40 @@ export const Login = ({ navigation }) => {
         }
         console.log("Access Token =", processedData.accessToken);
         setAccessToken(processedData.accessToken);
-        navigation.navigate("Home");
+        return processedData.accessToken;
+      })
+      .then((accessToken) => {
+        console.log(accessToken);
+        if (accessToken) {
+          // 새로운 API 요청을 보낼 URL 설정
+          const apiUrl = `http://${ipAddress}/api/auth/login`;
+      
+          // 서버에 요청을 보내기 위한 옵션 설정
+          const requestOptions = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // AccessToken을 헤더에 추가
+              "Content-Type": "application/json",
+            },
+          };
+      
+          // API 요청 보내기
+          fetch(apiUrl, requestOptions)
+            .then((response) => response.json())
+            .then((memberData) => {
+              // 여기서 memberData에는 로그인한 Member 정보가 포함됩니다.
+              console.log("Logged In Member Data:", memberData);
+              
+              setPaymentMembers([memberData]);
+              navigation.navigate("Home");
+            })
+            .catch((error) => {
+              console.error("Error fetching member data:", error);
+            });
+        }
       })
       .catch((error) => {
-        // Handle any errors that occur during the backend API call
-        console.error("Login Error:", error);
+        console.error("Error during login:", error);
       });
   };
 

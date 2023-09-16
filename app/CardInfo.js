@@ -113,7 +113,13 @@ export const CardInfo = ({ navigation }) => {
           Authorization: "Bearer " + `${accessToken}`,
         },
         body: JSON.stringify(requestData),
+<<<<<<< HEAD
       }).then((response) => console.log(response));
+=======
+      })
+        .then(response => navigation.navigate("Home"));
+      
+>>>>>>> 2cdb1c950f32fc0a38d30a446ab1d3de7bba9d94
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
       Alert.alert("오류 발생", "서버 요청 중 오류가 발생했습니다.");

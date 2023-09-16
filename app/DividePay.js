@@ -25,6 +25,8 @@ import { useRecoilState } from "recoil";
 import { paymentMemberState } from "../atoms";
 import { IosAlertStyle } from "expo-notifications";
 import { ipAdress } from "../dtos/request/api/Connection";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../atoms";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -89,6 +91,10 @@ async function registerForPushNotificationAsync() {
     //     projectId: "4b7a8e7d-ab26-4f41-9cb9-eaaf03325a73",
     // });
     console.log(token);
+
+    // api call
+    
+
   } else {
     alert("Must use physical device for Push Notifications");
   }
@@ -105,16 +111,37 @@ async function registerForPushNotificationAsync() {
   return token;
 }
 
-export const DividePay = ({ navigation }) => {
+export const DividePay = ({ navigation, route }) => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
+  const {totalPrice} = route.params;
+
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
+  const accessToken = useRecoilValue(accessTokenState);
+
+  async function fetchData(apiUrl) {
+    await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + `${accessToken}`
+      },
+    })
+      .then((response) => console.log(response))
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
+  }
 
   useEffect(() => {
     registerForPushNotificationAsync().then((token) => {
       setExpoPushToken(token);
-    });
+      fetchData(`http://${ipAddress}/api/pushToken/save`);
+    }, []);
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -147,60 +174,20 @@ export const DividePay = ({ navigation }) => {
   //         await sendPushNotification(expoPushToken);
   //     }
   // };
-  const [paymentMember, setPaymentMembers] = useRecoilState(paymentMemberState);
-
-  const totalPrice = 40000;
-  const data = [
-    {
-      id: 1,
-      name: "이동현",
-      amount: 10000,
-      status: "INIT",
-      cardNumber: "111-222-333",
-      cardExpirationYear: "25",
-      cardExpirationMonth: "04",
-      customIdentityNumber: "990830",
-    },
-    {
-      id: 2,
-      name: "박기련",
-      amount: 10000,
-      status: "INIT",
-      cardNumber: "222-333-444",
-      cardExpirationYear: "26",
-      cardExpirationMonth: "08",
-      customIdentityNumber: "950803",
-    },
-    {
-      id: 3,
-      name: "최민수",
-      amount: 10000,
-      status: "COMPLETE",
-      cardNumber: "333-444-555",
-      cardExpirationYear: "28",
-      cardExpirationMonth: "12",
-      customIdentityNumber: "990215",
-    },
-    {
-      id: 4,
-      name: "김현정",
-      amount: 10000,
-      status: "COMPLETE",
-      cardNumber: "333-444-555",
-      cardExpirationYear: "28",
-      cardExpirationMonth: "12",
-      customIdentityNumber: "990215",
-    },
-  ];
 
   const paymentMemberRequest = {
     totalPrice: totalPrice,
-    paymentMembers: data,
+    paymentMembers: paymentMembers,
   };
 
   useEffect(() => {
-    console.log("rerender");
-    setPaymentMembers(data);
+    const n = paymentMembers.length;
+    const amountPerNumber = totalPrice / n;
+    const updatedPaymentMembers = paymentMembers.map((member) => ({
+      ...member,
+      amount: amountPerNumber,
+    }));
+    setPaymentMembers(updatedPaymentMembers);
   }, []);
 
   let memberAmountSum = Number(getSumOfAmount(paymentMembers));
@@ -258,6 +245,7 @@ export const DividePay = ({ navigation }) => {
         type="big"
         onPress={async () => {
           if (isValidTotalPrice(Number(getSumOfAmount(paymentMembers)), totalPrice)) {
+            console.log(paymentMembers);
             // push notification
             await sendPushNotification(expoPushToken);
 
@@ -266,6 +254,7 @@ export const DividePay = ({ navigation }) => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: "Bearer " + `${accessToken}`
               },
               body: JSON.stringify(paymentMemberRequest),
             })
@@ -279,7 +268,7 @@ export const DividePay = ({ navigation }) => {
                 console.error("my API Error:", error);
               });
 
-            navigation.navigate("MemberPayment");
+            navigation.navigate("MemberPayment", {totalPrice});
           } else {
             showConfirmation();
           }

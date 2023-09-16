@@ -8,8 +8,8 @@ import { paymentMemberState } from "../atoms";
 import { useRecoilState } from "recoil";
 
 export const CheckPayFriend = ({ navigation }) => {
-  const [paymentMembers, setPaymentMembers] =
-    useRecoilState(paymentMemberState);
+  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
+  
   return (
     <Background>
       <TitleContainer

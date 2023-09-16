@@ -21,7 +21,7 @@ export const ScanQR = ({ navigation }) => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    navigation.navigate("DividePay");
+    navigation.navigate("DividePay", {totalPrice: 40000});
   };
 
   if (hasPermission === null) {
