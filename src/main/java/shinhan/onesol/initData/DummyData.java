@@ -78,7 +78,6 @@
 //            memberService.addFriends(member3.getEmail(), member4.getEmail());
 //
 //            // Login
-//            TokenInfo login1 = memberService.login(signup1.getEmail(), signup1.getPassword(), signup1.getType());
 //
 //         };
 //    }
