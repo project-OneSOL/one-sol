@@ -23,37 +23,18 @@ export const Payments = ({ navigation }) => {
   const [friends, setFriends] = useRecoilState(friendState); // 내 친구 전체 목록
   const [dataLoaded, setDataLoaded] = useState(false);
 
-<<<<<<< HEAD
   async function fetchData(apiUrl, setStateFunction) {
     await fetch(apiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: "Bearer " + `${accessToken}`,
       },
-    })
-      .then((response) => response.json())
-      .then((processedData) => {
-        // Handle the processed data from your backend here
-        console.log("last data= ", processedData);
-        setStateFunction(processedData);
-        // setRecentUsers(processedData);
-        setDataLoaded(true);
-=======
-    async function fetchData(apiUrl, setStateFunction) {
-      await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + `${accessToken}`
-        },
->>>>>>> 17b60716e73bbf18e36caa65a556c5b9501201af
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the backend API call
-        console.error("my API Error:", error);
-      });
+    }).catch((error) => {
+      // Handle any errors that occur during the backend API call
+      console.error("my API Error:", error);
+    });
   }
 
   // 화면 렌더링 시, 내 친구 전체 목록 불러오기
