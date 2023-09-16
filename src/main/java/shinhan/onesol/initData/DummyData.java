@@ -5,7 +5,6 @@
 //import org.springframework.context.annotation.Configuration;
 //import shinhan.onesol.domain.Member;
 //import shinhan.onesol.dto.TokenInfo;
-//import shinhan.onesol.enums.MemberTypeEnum;
 //import shinhan.onesol.request.SignUp;
 //import shinhan.onesol.service.AuthService;
 //import shinhan.onesol.service.MemberService;
@@ -79,7 +78,6 @@
 //            memberService.addFriends(member3.getEmail(), member4.getEmail());
 //
 //            // Login
-////            TokenInfo login1 = memberService.login(member1.getEmail(), member1.getPassword(), member1.getType());
 //
 //         };
 //    }

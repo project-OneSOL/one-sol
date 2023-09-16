@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.MemberFriend;
@@ -11,6 +13,7 @@ import shinhan.onesol.dto.SubPaymentDetailsDto;
 import shinhan.onesol.dto.response.FriendDto;
 import shinhan.onesol.repository.MemberFriendRepository;
 import shinhan.onesol.repository.MemberRepository;
+import shinhan.onesol.security.PrincipalDetails;
 import shinhan.onesol.service.MemberService;
 
 import java.util.List;
@@ -45,8 +48,9 @@ public class MemberController {
 
     // 최근 거래한 친구 목록 조회
     @GetMapping("/search/latest/{subPaymentId}")
-    public ResponseEntity<List<FriendDto>> searchLatest(@PathVariable Long subPaymentId){
-        return new ResponseEntity<>(memberService.searchLatestDetails(subPaymentId), HttpStatus.OK);
+    public ResponseEntity<List<FriendDto>> searchLatest(@PathVariable Long subPaymentId, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        Long memberId = principalDetails.getMember().getId();
+        return new ResponseEntity<>(memberService.searchLatestDetails(subPaymentId, memberId), HttpStatus.OK);
 
     }
 }
