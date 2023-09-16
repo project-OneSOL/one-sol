@@ -11,3 +11,7 @@ export const todoState = atom({
 });
 
 // More atoms related to todo
+export const accessTokenState = atom({
+  key: "accessTokenState",
+  default: "",
+});
