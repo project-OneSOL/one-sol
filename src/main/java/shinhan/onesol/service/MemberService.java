@@ -57,6 +57,11 @@ public class MemberService {
         return ResponseEntity.ok().build();
     }
 
+    // 멤버 반환
+    public Member getMember(String email) {
+        return memberRepository.findByEmail(email) != null ? memberRepository.findByEmail(email).get() : null;
+    }
+
     // 친구 관계 설정
     public ResponseEntity<String> addFriends(String requesterEmail, String friendEmail) {
         Optional<Member> requesterOptional = memberRepository.findByEmail(requesterEmail);
