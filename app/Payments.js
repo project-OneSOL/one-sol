@@ -12,8 +12,11 @@ import { ActivityIndicator, Chip } from "react-native-paper";
 import { useRecoilState } from "recoil";
 import { paymentMemberState, recentState, friendState } from "../atoms";
 import { ipAddress } from "../dtos/request/api/Connection";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../atoms";
 
 export const Payments = ({ navigation }) => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState); // 함께 결제할 멤버들
     const [recentUsers, setRecentUsers] = useRecoilState(recentState);
@@ -26,6 +29,7 @@ export const Payments = ({ navigation }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: "Bearer " + `${accessToken}`
         },
       })
         .then((response) => response.json())
@@ -68,7 +72,7 @@ export const Payments = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (searchVal !== "") {
+    if (searchVal !== "" && recentUsers.length) {
       setViewResult(true);
       setSearchResult(recentUsers.filter((item) =>
       item.name.toLowerCase().includes(searchVal.toLowerCase())

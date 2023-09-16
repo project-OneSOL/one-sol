@@ -70,16 +70,18 @@ const showConfirmation = () => {
       password: password,
       type: memberType
     };
-    // console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAddress}/auth/login`, {
+    await fetch(`http://${ipAddress}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(memberData),
     })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
       .then((processedData) => {
         console.log(processedData);
         if (processedData.accessToken == undefined) {
@@ -92,7 +94,7 @@ const showConfirmation = () => {
       })
       .catch((error) => {
         // Handle any errors that occur during the backend API call
-        console.error("my API Error:", error);
+        console.error("Login Error:", error);
       });
   };
 
@@ -103,8 +105,8 @@ const showConfirmation = () => {
         text2="아이디(이메일)와 비밀번호를 입력해주세요."
       ></TitleContainer>
       <View style={styles.toggle}>
-        <Pressable style={styles.btn}><Title text="일반 유저" size="mid" onPress={handleTypeChangeGeneral}/></Pressable>
-        <Pressable><Title text="점주 유저" size="mid" onPress={handleTypeChangeOwner}/></Pressable>
+        <Pressable style={styles.btn}  onPress={handleTypeChangeGeneral}><Title text="일반 유저" size="mid"/></Pressable>
+        <Pressable onPress={handleTypeChangeOwner}><Title text="점주 유저" size="mid" /></Pressable>
       {/* <Pressable
             style = {styles.blueBtn}
           onPress={handleTypeChangeGeneral} // 일반 유저 로그인
