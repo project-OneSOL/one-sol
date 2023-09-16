@@ -54,8 +54,9 @@ export const Payments = ({ navigation }) => {
     // 화면 렌더링 시, 내 친구 전체 목록 불러오기
     useEffect(() => {
       // Get Friends List
-      fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
-      fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
+      console.log(paymentMembers);
+      fetchData(`http://${ipAddress}/api/friend/${paymentMembers[0].id}/getList`, setFriends);
+      fetchData(`http://${ipAddress}/api/search/latest/${paymentMembers[0].id}`, setRecentUsers);
     }, []);
 
   // 검색한 단어
@@ -114,7 +115,7 @@ export const Payments = ({ navigation }) => {
                     // 이미 목록에 있다면 제거
                     const updatedMembers = [...paymentMembers];
                     updatedMembers.splice(userIndex, 1);
-                    setPaymentMembers(updatedMembers);
+                    setPaymentMembers([updatedMembers]);
                   } else {
                     // 목록에 없다면 추가
                     setPaymentMembers([...paymentMembers, paymentMember]);
@@ -144,7 +145,7 @@ export const Payments = ({ navigation }) => {
             title="다음"
             type="big"
             onPress={() =>
-              navigation.push("CheckPayFriend", { screen: "CheckPayFriend" })
+              navigation.push("CheckPayFriend", { screen: "CheckPayFriend", })
             }
             disabled={paymentMembers.length <= 1}
           ></Button>

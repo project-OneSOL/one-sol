@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { useRecoilState } from "recoil";
+import { paymentMemberState } from "../atoms";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
@@ -7,7 +9,10 @@ import { Title } from "../components/Title";
 import { TitleContainer } from "../components/TitleContainer";
 import { CardRegistration } from "./CardRegistration";
 
-export const MemberPayment = ({ navigation }) => {
+export const MemberPayment = ({ navigation, route }) => {
+  const {totalPrice} = route.params;
+  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
+
   const [visible, setVisible] = useState(false);
   const toggleBottomNavigationView = () => {
     setVisible(!visible);
@@ -25,7 +30,7 @@ export const MemberPayment = ({ navigation }) => {
           ></Title>
           <Title text="10,000원" size="huge"></Title>
           <Title
-            text="총 결제 금액 40,000원 (총 4명)"
+            text={`총 결제 금액 ${totalPrice}원 (총 ${paymentMembers.length}명)`}
             size="small"
             weight="semibold"
             style={styles.title}
