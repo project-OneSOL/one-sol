@@ -6,18 +6,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.domain.MemberFriend;
 import shinhan.onesol.dto.TokenInfo;
+import shinhan.onesol.enums.MemberTypeEnum;
+import shinhan.onesol.exception.NotExistMemberException;
 import shinhan.onesol.repository.MemberFriendRepository;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.security.JwtTokenProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,8 +34,15 @@ public class MemberService {
     private final MemberFriendRepository memberFriendRepository;
 
     // jwt 로그인
-    public TokenInfo login(String email, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+    public TokenInfo login(String email, String password, MemberTypeEnum type) {
+        Optional<Member> foundMember = memberRepository.findByEmailAndType(email, type);
+        if (!foundMember.isPresent()) { // 멤버 존재X
+            throw new NotExistMemberException();
+        }
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(() -> String.valueOf(foundMember.get().getType()));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password, authorities);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.generateToken(authentication);
     }
