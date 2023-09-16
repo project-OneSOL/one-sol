@@ -16,4 +16,6 @@ public interface SubPaymentRepository extends JpaRepository<SubPayment, Long> {
     List<SubPayment> findByMember(Member member);
     List<SubPayment> findByPaymentId(Long paymentId);
 
+    List<SubPayment> findByPaymentIdOrderByDateDesc(Long paymentId);
+
 }

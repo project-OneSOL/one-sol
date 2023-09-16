@@ -32,4 +32,5 @@ public class SubPaymentController {
     public ResponseEntity<List<SubPaymentDetailsDto>> searchDetails(@PathVariable Long subPaymentId){
         return new ResponseEntity<>(subPaymentService.searchPaymentDetails(subPaymentId), HttpStatus.OK);
     }
+
 }
