@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.dto.TokenInfo;
+import shinhan.onesol.enums.MemberStatusEnum;
 import shinhan.onesol.exception.DuplicateEmailException;
 import shinhan.onesol.repository.MemberRepository;
 import shinhan.onesol.request.SignUp;
@@ -35,8 +36,14 @@ public class AuthService {
         Member user = Member.builder()
                 .name(signUp.getName())
                 .email(signUp.getEmail())
+                .phoneNumber(signUp.getPhoneNumber())
+                .type(signUp.getType())
+                .status(MemberStatusEnum.UNCHECKED)
                 .password(encodedPassword)
                 .build();
+        if (signUp.getCorpRegisterNum() != null) { // 점주
+            user.setCorpRegisterNum(signUp.getCorpRegisterNum());
+        }
         memberRepository.save(user);
     }
 

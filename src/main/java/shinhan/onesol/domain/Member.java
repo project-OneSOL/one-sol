@@ -21,8 +21,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
-    private String storeName; // 점주 - 가게명
+    private String name; // 점주는 가게명
     private String corpRegisterNum; // 점주 - 사업자 번호
 
     @Enumerated(value = EnumType.STRING)
@@ -48,6 +47,10 @@ public class Member {
         this.password = password;
         this.status = status;
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setCorpRegisterNum(String corpRegisterNum) {
+        this.corpRegisterNum = corpRegisterNum;
     }
 
     public String getBankCode() {

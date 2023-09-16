@@ -43,10 +43,6 @@ public class SecurityConfig {
                 .enableSessionUrlRewriting(true)
                 .and()
 
-        // TODO 소셜로그인 설정
-        //            .oauth2Login()
-        //            .and()
-
                 .authorizeRequests()
                 .antMatchers(PUBLIC_URL).permitAll()
                 .antMatchers("/members/user").hasRole("GENERAL")
@@ -58,8 +54,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-    // TODO 비밀번호 찾기 설정 등록
 
     // 로그인 방식 등록
     @Bean
