@@ -9,6 +9,7 @@ import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
 import { accessTokenState } from "../atoms/index";
 import { useRecoilState } from "recoil";
+import { Title } from "../components/Title";
 
 export const Login = ({ navigation }) => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
@@ -101,7 +102,22 @@ const showConfirmation = () => {
         text1="로그인"
         text2="아이디(이메일)와 비밀번호를 입력해주세요."
       ></TitleContainer>
-
+      <View style={styles.toggle}>
+        <Pressable style={styles.btn}><Title text="일반 유저" size="mid" onPress={handleTypeChangeGeneral}/></Pressable>
+        <Pressable><Title text="점주 유저" size="mid" onPress={handleTypeChangeOwner}/></Pressable>
+      {/* <Pressable
+            style = {styles.blueBtn}
+          onPress={handleTypeChangeGeneral} // 일반 유저 로그인
+        >
+            <Text style = {styles.btnText}>일반 유저</Text>
+        </Pressable>
+        <Pressable
+            style = {styles.navyBtn}
+          onPress={handleTypeChangeOwner} // 점주 유저 로그인
+        >
+            <Text style = {styles.btnText}>점주</Text>
+        </Pressable> */}
+      </View>
       <View style={styles.bodyContainer}>
         <View style={styles.textField}>
           <CustomTextField
@@ -120,27 +136,10 @@ const showConfirmation = () => {
             isHidden={true}
           ></CustomTextField>
         </View>
-        <Pressable
-            style = {styles.blueBtn}
-          onPress={handleTypeChangeGeneral} // 일반 유저 로그인
-        >
-            <Text style = {styles.btnText}>일반 유저</Text>
-        </Pressable>
-        <Pressable
-            style = {styles.navyBtn}
-          onPress={handleTypeChangeOwner} // 점주 유저 로그인
-        >
-            <Text style = {styles.btnText}>점주</Text>
-        </Pressable>
-        <Pressable
-            style = {styles.blueBtn}
-          onPress={() => navigation.navigate("SelectSignUp", { screen: "SelectSignUp" })} // 회원가입
-        >
-            <Text style = {styles.btnText}>회원가입</Text>
-        </Pressable>
+        
       </View>
-
       <View>
+      <Button title="회원가입 하러가기" type="mid" color="transparent" onPress={() => navigation.navigate("SelectSignUp")}></Button>
         <Button
           title="확인"
           type="big"
@@ -152,6 +151,18 @@ const showConfirmation = () => {
 };
 
 const styles = StyleSheet.create({
+  toggle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: palette.lightblue,
+    marginHorizontal: 50,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  btn: {
+    backgroundColor: palette.lightblue,
+  },
   bodyContainer: {
     justifyContent: "center",
     alignContent: "flex-start",
