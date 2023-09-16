@@ -9,12 +9,13 @@ export const CheckPayFriend = ({ navigation }) => {
   return (
     <Background>
       <TitleContainer
-        text1="함께 결제할 친구"
-        text2="함께 결제할 친구를 확인해주세요."
+        text1="함께 결제할 멤버"
+        text2="함께 결제할 멤버를 확인해주세요."
         text3="2명"
       ></TitleContainer>
       <UserList />
       <DoubleButton
+        press1={() => navigation.goBack()}
         press2={() => navigation.push("ScanQR", { screen: "ScanQR" })}
       />
     </Background>

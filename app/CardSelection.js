@@ -7,7 +7,7 @@ import { TitleContainer } from "../components/TitleContainer";
 
 import { Background } from "../components/Background";
 
-export const CardSelection = () => {
+export const CardSelection = ({ navigation }) => {
   // 3x3 짜리 신한카드 박스들의 데이터
   const shinhancardData = [
     { id: 1, name: "신한카드" },
@@ -38,7 +38,11 @@ export const CardSelection = () => {
           </View>
         )}
       />
-      <Button title="확인" type="big"></Button>
+      <Button
+        title="확인"
+        type="big"
+        onPress={() => navigation.push("CardInfo")}
+      ></Button>
     </Background>
   );
 };

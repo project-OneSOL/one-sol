@@ -7,7 +7,7 @@ import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 
-export const RegisterCardInfo = () => {
+export const CardInfo = ({ navigation }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [isCardNumber, setIsCardNumber] = useState(true);
   const [cardNumberError, setCardNumberError] = useState("");
@@ -21,59 +21,71 @@ export const RegisterCardInfo = () => {
   const [cardExpirationMonthError, setCardExpirationMonthError] = useState("");
 
   const [customerIdentityNumber, setCustomerIdentityNumber] = useState("");
-  const [isCustomerIdentityNumber, setIsCustomerIdentityNumber] = useState(true);
-  const [customerIdentityNumberError, setCustomerIdentityNumberError] = useState("");
-
+  const [isCustomerIdentityNumber, setIsCustomerIdentityNumber] =
+    useState(true);
+  const [customerIdentityNumberError, setCustomerIdentityNumberError] =
+    useState("");
 
   const handleCardNumberChange = (cardNumber) => {
     setCardNumber(cardNumber);
     // 카드 번호가 16자리가 아닐 경우
     if (cardNumber.length != 16) {
-      setIsCardNumber(true)
-      setCardNumberError("정확한 카드 번호를 입력해주세요.")
+      setIsCardNumber(true);
+      setCardNumberError("정확한 카드 번호를 입력해주세요.");
     } else {
-      setIsCardNumber(false)
-      setCardNumberError("")
+      setIsCardNumber(false);
+      setCardNumberError("");
     }
   };
   const handleCardExpirationYearChange = (cardExpirationYear) => {
-    const today = new Date(); 
+    const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth() + 1;
     setCardExpirationYear(cardExpirationYear);
     // 년도가 네자리가 아닐 경우
     if (cardExpirationYear.length != 4) {
-      setIsCardExpirationYear(true)
-      setCardExpirationYearError("정확한 연도를 입력해주세요.")
-    } else if ((parseInt(cardExpirationYear) < todayYear) || (parseInt(cardExpirationYear) == todayYear && parseInt(cardExpirationMonth) < todayMonth)){
+      setIsCardExpirationYear(true);
+      setCardExpirationYearError("정확한 연도를 입력해주세요.");
+    } else if (
+      parseInt(cardExpirationYear) < todayYear ||
+      (parseInt(cardExpirationYear) == todayYear &&
+        parseInt(cardExpirationMonth) < todayMonth)
+    ) {
       // 과거년도 일 경우 (월까지 계산)
-      setIsCardExpirationYear(true)
-      setCardExpirationYearError("카드 유효기간이 만료되었습니다. 유효기간을 확인해주세요.")
+      setIsCardExpirationYear(true);
+      setCardExpirationYearError(
+        "카드 유효기간이 만료되었습니다. 유효기간을 확인해주세요."
+      );
     } else {
-      setIsCardExpirationYear(false)
-      setCardExpirationYearError("")
+      setIsCardExpirationYear(false);
+      setCardExpirationYearError("");
     }
   };
   const handleCardExpirationMonthChange = (cardExpirationMonth) => {
     setCardExpirationMonth(cardExpirationMonth);
     // 월이 0이하거나 13이상일 경우
-    if (parseInt(cardExpirationMonth) <= 0 || parseInt(cardExpirationMonth) >= 13) {
-      setIsCardExpirationMonth(true)
-      setCardExpirationMonthError("유효한 월을 입력해주세요.")
+    if (
+      parseInt(cardExpirationMonth) <= 0 ||
+      parseInt(cardExpirationMonth) >= 13
+    ) {
+      setIsCardExpirationMonth(true);
+      setCardExpirationMonthError("유효한 월을 입력해주세요.");
     } else {
-      setIsCardExpirationMonth(false)
-      setCardExpirationMonthError("")
+      setIsCardExpirationMonth(false);
+      setCardExpirationMonthError("");
     }
   };
   const handleCustomerIdentityNumberChange = (customerIdentityNumber) => {
-    setCustomerIdentityNumber(customerIdentityNumber)
+    setCustomerIdentityNumber(customerIdentityNumber);
     // 생년월일이 6자리가 아닐 경우
     if (customerIdentityNumber.length != 6) {
-      setIsCustomerIdentityNumber(true)
-      setCustomerIdentityNumberError("정확한 주민등록번호 6자리를 입력해주세요.")
+      setIsCustomerIdentityNumber(true);
+      setCustomerIdentityNumberError(
+        "정확한 주민등록번호 6자리를 입력해주세요."
+      );
     } else {
-      setIsCustomerIdentityNumber(false)
-      setCustomerIdentityNumberError("")
+      setIsCustomerIdentityNumber(false);
+      setCustomerIdentityNumberError("");
     }
   };
 
@@ -81,9 +93,7 @@ export const RegisterCardInfo = () => {
 
   return (
     <Background>
-      <TitleContainer
-        text1="카드 정보를 입력해주세요"
-      ></TitleContainer>
+      <TitleContainer text1="카드 정보를 입력해주세요"></TitleContainer>
 
       <View style={styles.bodyContainer}>
         <View style={styles.textField}>
@@ -104,7 +114,11 @@ export const RegisterCardInfo = () => {
             onChangeText={handleCardExpirationMonthChange}
             value={cardExpirationMonth}
           ></CustomTextField>
-          <Text style={isCardExpirationMonth ? styles.errorText : styles.successText}>
+          <Text
+            style={
+              isCardExpirationMonth ? styles.errorText : styles.successText
+            }
+          >
             {cardExpirationMonthError}
           </Text>
         </View>
@@ -115,7 +129,9 @@ export const RegisterCardInfo = () => {
             onChangeText={handleCardExpirationYearChange}
             value={cardExpirationYear}
           ></CustomTextField>
-          <Text style={isCardExpirationYear ? styles.errorText : styles.successText}>
+          <Text
+            style={isCardExpirationYear ? styles.errorText : styles.successText}
+          >
             {cardExpirationYearError}
           </Text>
         </View>
@@ -126,7 +142,11 @@ export const RegisterCardInfo = () => {
             onChangeText={handleCustomerIdentityNumberChange}
             value={customerIdentityNumber}
           ></CustomTextField>
-          <Text style={isCustomerIdentityNumber ? styles.errorText : styles.successText}>
+          <Text
+            style={
+              isCustomerIdentityNumber ? styles.errorText : styles.successText
+            }
+          >
             {customerIdentityNumberError}
           </Text>
         </View>
@@ -136,7 +156,7 @@ export const RegisterCardInfo = () => {
         <Button
           title="다음"
           type="big"
-          onPress={onBtnPress}
+          onPress={() => navigation.navigate("Home")}
         ></Button>
       </View>
     </Background>

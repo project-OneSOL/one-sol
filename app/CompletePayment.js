@@ -5,25 +5,21 @@ import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 
-export const CompletePayment = () => {
-
+export const CompletePayment = ({ navigation }) => {
   const onBtnPress = () => {
     // TODO: Login API Call
-
   };
 
   return (
     <Background>
-      <TitleContainer
-        text1="결제가 완료되었습니다"
-      ></TitleContainer>
+      <TitleContainer text1="결제가 완료되었습니다"></TitleContainer>
 
       <View style={styles.bodyContainer}>
         <Ionicons
-            style={styles.check}
-            name="checkmark-circle-outline"
-            size={180}
-            color={palette.main}
+          style={styles.check}
+          name="checkmark-circle-outline"
+          size={180}
+          color={palette.main}
         />
       </View>
 
@@ -31,7 +27,7 @@ export const CompletePayment = () => {
         <Button
           title="확인"
           type="big"
-          onPress={onBtnPress}
+          onPress={() => navigation.navigate("Home")}
         ></Button>
       </View>
     </Background>
@@ -45,5 +41,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 80,
   },
-
 });
