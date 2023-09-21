@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shinhan.onesol.domain.*;
 import shinhan.onesol.dto.TokenInfo;
+import shinhan.onesol.enums.MemberStatusEnum;
 import shinhan.onesol.enums.MemberTypeEnum;
 import shinhan.onesol.exception.NotExistMemberException;
 import shinhan.onesol.dto.response.FriendDto;
