@@ -3,7 +3,6 @@ import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { TitleContainer } from "../components/TitleContainer";
-import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
@@ -12,7 +11,8 @@ import { useRecoilState } from "recoil";
 import { Title } from "../components/Title";
 
 export const Login = ({ navigation }) => {
-  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,7 +73,7 @@ export const Login = ({ navigation }) => {
       type: memberType,
     };
 
-    await fetch(`http://${ipAddress}/auth/login`, {
+    await fetch(`http://${ipAddress}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export const Login = ({ navigation }) => {
         if (accessToken) {
           // 새로운 API 요청을 보낼 URL 설정
           const apiUrl = `http://${ipAddress}/api/auth/login`;
-      
+
           // 서버에 요청을 보내기 위한 옵션 설정
           const requestOptions = {
             method: "GET",
@@ -105,14 +105,14 @@ export const Login = ({ navigation }) => {
               "Content-Type": "application/json",
             },
           };
-      
+
           // API 요청 보내기
           fetch(apiUrl, requestOptions)
             .then((response) => response.json())
             .then((memberData) => {
               // 여기서 memberData에는 로그인한 Member 정보가 포함됩니다.
               console.log("Logged In Member Data:", memberData);
-              
+
               setPaymentMembers((prevMembers) => [...prevMembers, memberData]);
               navigation.navigate("Home");
             })

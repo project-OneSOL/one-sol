@@ -32,31 +32,30 @@ export const Payments = ({ navigation }) => {
         Authorization: "Bearer " + `${accessToken}`,
       },
     })
-    .then((response) => response.json())
-    .then((data) => {
-      setStateFunction(data);
-      setDataLoaded(true);
-    })
-    
-    .catch((error) => {
-      // Handle any errors that occur during the backend API call
-      console.error("my API Error:", error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        setStateFunction(data);
+        setDataLoaded(true);
+        console.log(recentUsers);
+      })
+
+      .catch((error) => {
+        // Handle any errors that occur during the backend API call
+        console.error("my API Error:", error);
+      });
   }
 
-    // useEffect(() => {
-    //   // Get Friends List
-      
-    // }, []);
-  
-    // 화면 렌더링 시, 내 친구 전체 목록 불러오기
-    useEffect(() => {
-      // Get Friends List
-      console.log(paymentMembers);
-      fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
-      fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
-      
-    }, []);
+  // useEffect(() => {
+  //   // Get Friends List
+
+  // }, []);
+
+  // 화면 렌더링 시, 내 친구 전체 목록 불러오기
+  useEffect(() => {
+    // Get Friends List
+    fetchData(`http://${ipAddress}/api/friend/1/getList`, setFriends);
+    fetchData(`http://${ipAddress}/api/search/latest/1`, setRecentUsers);
+  }, []);
 
   // 검색한 단어
   const [searchVal, setSearchVal] = useState("");
@@ -146,7 +145,7 @@ export const Payments = ({ navigation }) => {
             title="다음"
             type="big"
             onPress={() =>
-              navigation.push("CheckPayFriend", { screen: "CheckPayFriend", })
+              navigation.push("CheckPayFriend", { screen: "CheckPayFriend" })
             }
             disabled={paymentMembers.length <= 1}
           ></Button>
