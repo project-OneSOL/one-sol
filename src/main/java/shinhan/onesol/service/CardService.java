@@ -21,6 +21,7 @@ public class CardService {
 
     // 카드 등록
     public void registerCard(Member member, String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status) {
+        // 수정 필요 (Member로 중복 체크)
         Card existingCard = cardRepository.findByCardNumber(cardNumber);
         if (existingCard == null) {
             Card card = Card.builder()
