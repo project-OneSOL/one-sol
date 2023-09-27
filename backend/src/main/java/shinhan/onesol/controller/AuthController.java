@@ -46,6 +46,7 @@ public class AuthController {
     @PostMapping("/auth/login")
     public ResponseEntity<TokenInfo> login(@RequestBody MemberLoginDto memberLoginDto){
         TokenInfo tokenInfo = memberService.login(memberLoginDto.getEmail(), memberLoginDto.getPassword(), MemberTypeEnum.valueOf(memberLoginDto.getType()));
+        log.info("post mapping called");
         return new ResponseEntity<>(tokenInfo, HttpStatus.OK);
     }
 
@@ -53,6 +54,7 @@ public class AuthController {
     public ResponseEntity<FriendDto> getLoginMember(@AuthenticationPrincipal PrincipalDetails principalDetails){
         Long memberId = principalDetails.getMember().getId();
         FriendDto loginMember = memberService.findLoginMember(memberId);
+        log.info("get mapping called" + loginMember.getName());
         return new ResponseEntity<>(loginMember, HttpStatus.OK);
     }
 

@@ -3,10 +3,13 @@ package shinhan.onesol.initData;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import shinhan.onesol.domain.Card;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.dto.TokenInfo;
+import shinhan.onesol.enums.CardStatusEnum;
 import shinhan.onesol.request.SignUp;
 import shinhan.onesol.service.AuthService;
+import shinhan.onesol.service.CardService;
 import shinhan.onesol.service.MemberService;
 
 import static shinhan.onesol.enums.MemberStatusEnum.CHECKED;
@@ -20,7 +23,8 @@ public class DummyData {
     @Bean
     CommandLineRunner initData(
             MemberService memberService,
-            AuthService authService
+            AuthService authService,
+            CardService cardService
     ) {
 
         return args -> {
@@ -70,6 +74,11 @@ public class DummyData {
             Member member3 = memberService.getMember(signup3.getEmail());
             Member member4 = memberService.getMember(signup4.getEmail());
 
+            cardService.registerCard(member1, "1111111111111111", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member2, "1111111111111112", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member3, "1111111111111113", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member4, "1111111111111114", "28", "11", "990830", CardStatusEnum.CHECKED);
+
             memberService.addFriends(member1.getEmail(), member2.getEmail());
             memberService.addFriends(member1.getEmail(), member3.getEmail());
             memberService.addFriends(member1.getEmail(), member4.getEmail());
@@ -79,7 +88,7 @@ public class DummyData {
 
             // Login
 
-         };
+        };
     }
 
 
