@@ -38,7 +38,7 @@ public class AuthService {
                 .email(signUp.getEmail())
                 .phoneNumber(signUp.getPhoneNumber())
                 .type(signUp.getType())
-                .status(MemberStatusEnum.UNCHECKED)
+                .status(signUp.getStatus())
                 .password(encodedPassword)
                 .build();
         if (signUp.getCorpRegisterNum() != null) { // 점주
