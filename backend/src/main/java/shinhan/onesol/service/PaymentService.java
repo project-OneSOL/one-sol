@@ -98,63 +98,72 @@ public class PaymentService {
                 .build();
         paymentRepository.save(payment);
         List<PaymentMemberDto> paymentMembers = paymentMemberRequest.getPaymentMembers();
+        List<Member> failedMembers = new ArrayList<>();
+        int countSucceed = 0;
+        boolean isSucceed = false;
 
-        boolean isFailed = false;
-        for (PaymentMemberDto paymentMember : paymentMembers) {
-            Member member = memberRepository.findById(paymentMember.getId())
-                    .orElseThrow(NotExistMemberException::new);
+        long startTime = System.currentTimeMillis(); // 무한루프 시작 시간
+        while ((System.currentTimeMillis()-startTime)<30000) { // 30초 timeout
+            for (PaymentMemberDto paymentMember : paymentMembers) {
+                Member member = memberRepository.findById(paymentMember.getId())
+                        .orElseThrow(NotExistMemberException::new);
+                if (!failedMembers.contains(member)) { // 이미 성공한 인원은 패스
+                    continue;
+                }
 
-            JSONObject param = new JSONObject();
-            param.put("orderId", UUID.randomUUID() + paymentMember.getName());
-            param.put("amount", paymentMember.getAmount());
-            param.put("cardNumber", paymentMember.getCardNumber());
-            param.put("cardExpirationYear", paymentMember.getCardExpirationYear());
-            param.put("cardExpirationMonth", paymentMember.getCardExpirationMonth());
-            param.put("orderName", "order" + paymentMember.getName());
-            param.put("customIdentityNumber", paymentMember.getCustomerIdentityNumber());
+                JSONObject param = new JSONObject();
+                param.put("orderId", UUID.randomUUID() + paymentMember.getName());
+                param.put("amount", paymentMember.getAmount());
+                param.put("cardNumber", paymentMember.getCardNumber());
+                param.put("cardExpirationYear", paymentMember.getCardExpirationYear());
+                param.put("cardExpirationMonth", paymentMember.getCardExpirationMonth());
+                param.put("orderName", "order" + paymentMember.getName());
+                param.put("customIdentityNumber", paymentMember.getCustomerIdentityNumber());
 
-            ResponseEntity<PaymentResponse> response = null;
-            try{
-                response = rest.postForEntity(
-                        tossOriginUrl + tossCardNumberPaymentUrl,
-                        new HttpEntity<>(param, headers),
-                        PaymentResponse.class
-                );
-            } catch (HttpClientErrorException e){
-                // 결제 실패 시
-                SubPayment subPayment = SubPayment.builder()
-                        .member(member)
-                        .payment(payment)
-                        .price(paymentMember.getAmount())
-                        .date(LocalDateTime.now())
-                        .status(PaymentStatusEnum.CANCELED)
-                        .build();
-                subPaymentRepository.save(subPayment);
-                isFailed = true;
+                ResponseEntity<PaymentResponse> response = null;
+                try{
+                    response = rest.postForEntity(
+                            tossOriginUrl + tossCardNumberPaymentUrl,
+                            new HttpEntity<>(param, headers),
+                            PaymentResponse.class
+                    );
+                } catch (HttpClientErrorException e){
+                    // 결제 실패 시
+                    if (!failedMembers.contains(member)) {
+                        failedMembers.add(member);
+                    }
+                }
+
+                // 결제 성공
+                if(response != null){
+                    OffsetDateTime offsetDateTime = OffsetDateTime.parse(Objects.requireNonNull(response.getBody()).getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                    LocalDateTime approvedDate = offsetDateTime.toLocalDateTime();
+                    log.info(response.getBody().toString());
+                    // 결제 성공 시
+                    SubPayment subPayment = SubPayment.builder()
+                            .paymentKey(response.getBody().getPaymentKey())
+                            .member(member)
+                            .payment(payment)
+                            .price(paymentMember.getAmount())
+                            .date(approvedDate)
+                            .status(PaymentStatusEnum.SUCCESS)
+                            .build();
+                    subPaymentRepository.save(subPayment);
+                    countSucceed++;
+                }
             }
-
-            if(response != null){
-                OffsetDateTime offsetDateTime = OffsetDateTime.parse(Objects.requireNonNull(response.getBody()).getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-                LocalDateTime approvedDate = offsetDateTime.toLocalDateTime();
-                log.info(response.getBody().toString());
-                // 결제 성공 시
-                SubPayment subPayment = SubPayment.builder()
-                        .paymentKey(response.getBody().getPaymentKey())
-                        .member(member)
-                        .payment(payment)
-                        .price(paymentMember.getAmount())
-                        .date(approvedDate)
-                        .status(PaymentStatusEnum.SUCCESS)
-                        .build();
-                subPaymentRepository.save(subPayment);
+            // 탈출 조건
+            if (countSucceed == paymentMembers.size()) {
+                isSucceed = true;
+                break;
             }
         }
-
-        if(isFailed){
+        // TimeOut - 결제 실패
+        if (!isSucceed) {
             cancelPayment(payment);
             payment.updatePaymentStatus(PaymentStatusEnum.CANCELED);
             paymentRepository.save(payment);
-        } else {
+        } else { // 결제 성공
             payment.updatePaymentStatus(PaymentStatusEnum.SUCCESS);
             paymentRepository.save(payment);
         }
