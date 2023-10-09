@@ -88,7 +88,7 @@ public class DummyData {
 
             // Login
 
-        };
+         };
     }
 
 
