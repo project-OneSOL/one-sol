@@ -14,16 +14,16 @@ import { TitleContainer } from "../components/TitleContainer";
 import { Title } from "../components/Title";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
-import { UserCard } from "../components/UserCard";
-import { Chip } from "react-native-paper";
+// import Constants from "expo-constants";
+// import { UserCard } from "../components/UserCard";
+// import { Chip } from "react-native-paper";
 import {
   MemorizedUserCardWithMoney,
-  UserCardWithMoney,
+  // UserCardWithMoney,
 } from "../components/UserCardWithMoney";
 import { useRecoilState } from "recoil";
 import { paymentMemberState } from "../atoms";
-import { IosAlertStyle } from "expo-notifications";
+// import { IosAlertStyle } from "expo-notifications";
 import { ipAdress } from "../dtos/request/api/Connection";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../atoms";
@@ -93,8 +93,6 @@ async function registerForPushNotificationAsync() {
     console.log(token);
 
     // api call
-    
-
   } else {
     alert("Must use physical device for Push Notifications");
   }
@@ -114,11 +112,12 @@ async function registerForPushNotificationAsync() {
 export const DividePay = ({ navigation, route }) => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
-  const {totalPrice} = route.params;
+  const { totalPrice } = route.params;
 
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState);
   const accessToken = useRecoilValue(accessTokenState);
 
   async function fetchData(apiUrl) {
@@ -127,7 +126,7 @@ export const DividePay = ({ navigation, route }) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "Bearer " + `${accessToken}`
+        Authorization: "Bearer " + `${accessToken}`,
       },
     })
       .then((response) => console.log(response))
@@ -244,7 +243,12 @@ export const DividePay = ({ navigation, route }) => {
         title="확인"
         type="big"
         onPress={async () => {
-          if (isValidTotalPrice(Number(getSumOfAmount(paymentMembers)), totalPrice)) {
+          if (
+            isValidTotalPrice(
+              Number(getSumOfAmount(paymentMembers)),
+              totalPrice
+            )
+          ) {
             console.log(paymentMembers);
             // push notification
             await sendPushNotification(expoPushToken);
@@ -254,7 +258,7 @@ export const DividePay = ({ navigation, route }) => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + `${accessToken}`
+                Authorization: "Bearer " + `${accessToken}`,
               },
               body: JSON.stringify(paymentMemberRequest),
             })
@@ -268,7 +272,7 @@ export const DividePay = ({ navigation, route }) => {
                 console.error("my API Error:", error);
               });
 
-            navigation.navigate("MemberPayment", {totalPrice});
+            navigation.navigate("MemberPayment", { totalPrice });
           } else {
             showConfirmation();
           }

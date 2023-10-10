@@ -9,6 +9,7 @@ import { ipAddress } from "../dtos/request/api/Connection";
 import { accessTokenState, paymentMemberState } from "../atoms/index";
 import { useRecoilState } from "recoil";
 import { Title } from "../components/Title";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Login = ({ navigation }) => {
   const [paymentMembers, setPaymentMembers] =
@@ -73,6 +74,12 @@ export const Login = ({ navigation }) => {
       type: memberType,
     };
 
+    try {
+      await AsyncStorage.setItem("userData", JSON.stringify(memberData));
+    } catch (e) {
+      console.log("async storage set userData error: " + e);
+    }
+
     await fetch(`http://${ipAddress}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -110,6 +117,8 @@ export const Login = ({ navigation }) => {
           fetch(apiUrl, requestOptions)
             .then((response) => response.json())
             .then((memberData) => {
+              // AsyncStorage.setItem("loginUser", memberData);
+
               // 여기서 memberData에는 로그인한 Member 정보가 포함됩니다.
               console.log("Logged In Member Data:", memberData);
 

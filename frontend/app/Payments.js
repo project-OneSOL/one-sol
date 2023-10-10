@@ -45,11 +45,6 @@ export const Payments = ({ navigation }) => {
       });
   }
 
-  // useEffect(() => {
-  //   // Get Friends List
-
-  // }, []);
-
   // 화면 렌더링 시, 내 친구 전체 목록 불러오기
   useEffect(() => {
     // Get Friends List
@@ -124,7 +119,7 @@ export const Payments = ({ navigation }) => {
                 onClose={() => {}}
               >
                 {paymentMember.name}
-                {console.log(paymentMember)}
+                {/* {console.log(paymentMember)} */}
               </Chip>
             ))}
           </ScrollView>
@@ -151,10 +146,6 @@ export const Payments = ({ navigation }) => {
           ></Button>
         </View>
       </View>
-      {/* <AddPayFriend
-        visible={visible}
-        toggleBottomNavigationView={toggleBottomNavigationView}
-      ></AddPayFriend> */}
     </Background>
   );
 };

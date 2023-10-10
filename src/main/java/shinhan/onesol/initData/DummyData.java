@@ -74,10 +74,10 @@ public class DummyData {
             Member member3 = memberService.getMember(signup3.getEmail());
             Member member4 = memberService.getMember(signup4.getEmail());
 
-            cardService.registerCard(member1, "1111111111111111", "28", "11", "990830", CardStatusEnum.CHECKED, "신한카드");
-            cardService.registerCard(member2, "1111111111111112", "28", "11", "990830", CardStatusEnum.CHECKED, "국민카드");
-            cardService.registerCard(member3, "1111111111111113", "28", "11", "990830", CardStatusEnum.CHECKED, "우리카드");
-            cardService.registerCard(member4, "1111111111111114", "28", "11", "990830", CardStatusEnum.CHECKED, "신한카드");
+            cardService.registerCard(member1, "1111111111111111", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member2, "1111111111111112", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member3, "1111111111111113", "28", "11", "990830", CardStatusEnum.CHECKED);
+            cardService.registerCard(member4, "1111111111111114", "28", "11", "990830", CardStatusEnum.CHECKED);
 
             memberService.addFriends(member1.getEmail(), member2.getEmail());
             memberService.addFriends(member1.getEmail(), member3.getEmail());
@@ -88,7 +88,7 @@ public class DummyData {
 
             // Login
 
-        };
+         };
     }
 
 
