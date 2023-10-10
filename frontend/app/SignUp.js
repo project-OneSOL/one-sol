@@ -71,7 +71,7 @@ export const SignUp = ({ navigation }) => {
     };
     console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAddress}/auth/signUp`, {
+    await fetch(`http://${ipAddress}/api/auth/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

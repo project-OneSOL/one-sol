@@ -20,8 +20,7 @@ public class CardService {
     private final CardRepository cardRepository;
 
     // 카드 등록
-    public void registerCard(Member member, String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status) {
-        // 수정 필요 (Member로 중복 체크)
+    public void registerCard(Member member, String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status, String cardName) {
         Card existingCard = cardRepository.findByCardNumber(cardNumber);
         if (existingCard == null) {
             Card card = Card.builder()
@@ -31,6 +30,7 @@ public class CardService {
                     .customerIdentityNumber(customerIdentityNumber)
                     .member(member)
                     .status(status)
+                    .cardName(cardName)
                     .build();
             cardRepository.save(card);
         } else {
@@ -47,7 +47,8 @@ public class CardService {
                         card.getCardExpirationYear(),
                         card.getCardExpirationMonth(),
                         card.getCustomerIdentityNumber(),
-                        card.getStatus()
+                        card.getStatus(),
+                        card.getCardName()
                 ))
                 .collect(Collectors.toList());
     }
@@ -60,7 +61,8 @@ public class CardService {
                 card.getCardExpirationYear(),
                 card.getCardExpirationMonth(),
                 card.getCustomerIdentityNumber(),
-                card.getStatus()
+                card.getStatus(),
+                card.getCardName()
         );
     }
 

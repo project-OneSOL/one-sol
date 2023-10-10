@@ -2,10 +2,6 @@ import { StyleSheet, View, Text, Alert, Button, Pressable } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { TitleContainer } from "../components/TitleContainer";
-import { Header } from "../components/Header";
-import { CustomTextField } from "../components/TextField";
-import { useState } from "react";
-import { ipAddress } from "../dtos/request/api/Connection";
 
 export const SelectSignUp = ({ navigation }) => {
   return (

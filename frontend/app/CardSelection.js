@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState } from "react";
+
 import { StyleSheet, View, Text, FlatList, Pressable } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Button } from "../components/Button.js";
@@ -23,7 +25,7 @@ export const CardSelection = ({ navigation }) => {
     { id: 11, name: "SC카드" },
     { id: 12, name: "BC 바로카드" },
   ];
-
+  const [selectedCard, setSelectedCard] = useState(null);
   return (
     <Background>
       <TitleContainer text1="추가할 카드를 선택해주세요" />
@@ -33,7 +35,14 @@ export const CardSelection = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         numColumns={3} // 3열로 구성
         renderItem={({ item }) => (
-          <Pressable style={styles.box}>
+          <Pressable
+            style={styles.box}
+            onPress={() => {
+              console.log("선택한 데이터:", item);
+              setSelectedCard(item.name);
+              console.log(selectedCard);
+            }}
+          >
             <Text>{item.name}</Text>
           </Pressable>
         )}
@@ -41,7 +50,7 @@ export const CardSelection = ({ navigation }) => {
       <Button
         title="확인"
         type="big"
-        onPress={() => navigation.push("CardInfo")}
+        onPress={() => navigation.push("CardInfo", {cardName: selectedCard})}
       ></Button>
     </Background>
   );

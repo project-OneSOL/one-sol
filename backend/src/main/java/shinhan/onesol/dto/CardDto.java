@@ -14,4 +14,5 @@ public class CardDto {
     private String cardExpirationMonth;
     private String customerIdentityNumber;
     private CardStatusEnum status;
+    private String cardName;
 }

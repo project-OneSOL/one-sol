@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
+import { ipAddress } from "../dtos/request/api/Connection";
+import { accessTokenState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { CardRegistration } from "./CardRegistration";
+import { fetchRepresentativeCard } from "./GetCardInfo";
 
 export const Home = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
+  const [representativeCard, setRepresentativeCard] = useState(null);
+  const [isCardboxPressed, setIsCardboxPressed] = useState(false); // cardbox를 눌렀을 때 상태를 관리합니다.
+  const accessToken = useRecoilValue(accessTokenState);
+
+  const loadRepresentativeCard = async () => {
+    try {
+      const cardInfo = await fetchRepresentativeCard(accessToken);
+      if (cardInfo) {
+        setRepresentativeCard(cardInfo);
+      }
+    } catch (error) {
+      console.error("대표 카드 정보를 불러오는 중 오류 발생:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!visible) {
+      loadRepresentativeCard();
+    }
+  });
+
   const toggleBottomNavigationView = () => {
     setVisible(!visible);
   };
@@ -27,7 +52,17 @@ export const Home = ({ navigation }) => {
             onPress={toggleBottomNavigationView}
           ></Button>
         </View>
-        <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
+          {representativeCard ? (
+            <>
+            <Title
+              text= {representativeCard.cardName}
+              size="small"
+            />
+            <Text>신한카드 {representativeCard.cardNumber} </Text>
+            </>
+          ) : (
+            <Text style={styles.emptytext}>대표 카드를 등록해주세요</Text>
+          )}
       </View>
       <View style={[styles.box, styles.box2]}>
         <Title

@@ -24,17 +24,20 @@ public class Card {
     @Enumerated(value = EnumType.STRING)
     private CardStatusEnum status; // 대표 카드 등록 여부
 
+    private String cardName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Card(String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status, Member member) {
+    public Card(String cardNumber, String cardExpirationYear, String cardExpirationMonth, String customerIdentityNumber, CardStatusEnum status, Member member, String cardName) {
         this.cardNumber = cardNumber;
         this.cardExpirationYear = cardExpirationYear;
         this.cardExpirationMonth = cardExpirationMonth;
         this.customerIdentityNumber = customerIdentityNumber;
         this.status = status;
         this.member = member;
+        this.cardName = cardName;
     }
 }
