@@ -11,7 +11,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 const fetchRepresentativeCard = async (accessToken) => {
   try {
-    const response = await fetch(`http://${ipAddress}/accounts/representativeCard`, {
+    const response = await fetch(`http://${ipAddress}/api/accounts/representativeCard`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -79,10 +79,10 @@ export const CardRegistration = ({
           {representativeCard ? (
             <>
               <Title
-                text="신한카드 Deep Dream Platinum+"
+                text={representativeCard.cardName}
                 size="small"
               />
-              <Text>신한카드 {representativeCard.cardNumber} </Text>
+              <Text> {representativeCard.cardNumber} </Text>
             </>
           ) : (
             <Title

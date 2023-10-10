@@ -10,7 +10,8 @@ import { useState } from "react";
 import { accessTokenState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-export const CardInfo = ({ navigation }) => {
+export const CardInfo = ({ navigation, route}) => {
+  const { cardName } = route.params;
   const accessToken = useRecoilValue(accessTokenState);
   const [cardNumber, setCardNumber] = useState("");
   const [isCardNumber, setIsCardNumber] = useState(true);
@@ -94,6 +95,7 @@ export const CardInfo = ({ navigation }) => {
   };
 
   const onBtnPress = async () => {
+    console.log(cardName);
     try {
       // 입력값의 유효성 검사 로직 추가
       // ...
@@ -104,9 +106,10 @@ export const CardInfo = ({ navigation }) => {
         cardExpirationMonth: cardExpirationMonth,
         customerIdentityNumber: customerIdentityNumber,
         status: "CHECKED",
+        cardName: cardName,
       };
-
-      await fetch(`http://${ipAddress}/accounts/register`, {
+      console.log(requestData);
+      await fetch(`http://${ipAddress}/api/accounts/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
