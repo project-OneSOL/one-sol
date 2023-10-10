@@ -26,7 +26,7 @@ public class CardController {
     public ResponseEntity<Void> registerCard(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody CardDto cardDto) {
         Member member = principalDetails.getMember();
         log.info("member={}", member.getName());
-        cardService.registerCard(member, cardDto.getCardNumber(), cardDto.getCardExpirationYear(), cardDto.getCardExpirationMonth(), cardDto.getCustomerIdentityNumber(), cardDto.getStatus());
+        cardService.registerCard(member, cardDto.getCardNumber(), cardDto.getCardExpirationYear(), cardDto.getCardExpirationMonth(), cardDto.getCustomerIdentityNumber(), cardDto.getStatus(), cardDto.getCardName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

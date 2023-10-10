@@ -41,9 +41,10 @@ class CardServiceTest {
         String cardExpirationYear = "2025";
         String cardExpirationMonth = "12";
         String customerIdentityNumber = "1234567890";
+        String cardName = "신한카드";
 
         // 카드 등록
-        cardService.registerCard(member, cardNumber, cardExpirationYear, cardExpirationMonth, customerIdentityNumber, CardStatusEnum.CHECKED);
+        cardService.registerCard(member, cardNumber, cardExpirationYear, cardExpirationMonth, customerIdentityNumber, CardStatusEnum.CHECKED, cardName);
 
         // 등록된 카드 확인
         List<CardDto> cardList = cardService.getCardListForMember(member);
