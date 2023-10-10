@@ -8,6 +8,7 @@ import { Header } from "../components/Header";
 import { CustomTextField } from "../components/TextField";
 import { useState } from "react";
 import { ipAddress } from "../dtos/request/api/Connection";
+import { registerForPushNotificationAsync } from "./PushNotification";
 
 // 일반 유저 회원가입
 export const SignUp = ({ navigation }) => {
@@ -71,14 +72,48 @@ export const SignUp = ({ navigation }) => {
     };
     console.log(JSON.stringify(memberData));
 
-    await fetch(`http://${ipAddress}/auth/signUp`, {
+    await fetch(`http://${ipAddress}/api/auth/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(memberData),
     })
-      .then(response => {
+      .then((response) => response.json())
+      .then(async (resposneJson) => {
+        console.log(resposneJson);
+        const memberId = resposneJson.id;
+        const token = await registerForPushNotificationAsync();
+        console.log("t: : " + token);
+        return {memberId, token}
+      })
+      .then(({token, memberId}) => {
+        console.log(token);
+        console.log(memberId);
+        // 정규 표현식을 사용하여 [] 안의 값을 추출
+        const matches = token.match(/\[(.*?)\]/);
+
+        // if (matches && matches.length > 1) {
+          const extractedValue = matches[1];
+          console.log(extractedValue); // 추출된 값 출력
+        // } else {
+        //   console.log('매치되는 값이 없습니다.');
+        // }
+        const createPushTokenDto = {
+          memberId: memberId,
+          token: extractedValue
+        };
+        
+        return fetch(`http://${ipAddress}/api/notification/add`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(createPushTokenDto),
+        });
+      })
+      .then(pushTokenResponse => {
         navigation.navigate("Login");
       })
       .catch((error) => {

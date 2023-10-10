@@ -24,92 +24,12 @@ import {
 import { useRecoilState } from "recoil";
 import { paymentMemberState } from "../atoms";
 import { IosAlertStyle } from "expo-notifications";
-import { ipAdress } from "../dtos/request/api/Connection";
+import { ipAddress } from "../dtos/request/api/Connection";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../atoms";
+import { sendPushNotification, registerForPushNotificationAsync } from "./PushNotification"
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
 
-async function sendPushNotification(expoPushToken) {
-  console.log(expoPushToken);
-  // await Notifications.scheduleNotificationAsync({
-  //     content: {
-  //         sound: 'default',
-  //         title: '정산 요청! 📬',
-  //         body: '결제 요청이 되었습니다.',
-  //         data: { data: '10000원 결제해주세요.' },
-  //     },
-  //     trigger: {seconds: 2},
-  // });
-
-  const message = {
-    to: expoPushToken,
-    sound: "default",
-    title: "정산 요청! 📬",
-    body: "결제 요청을 수락해주세요!",
-    data: { someData: "투썸플레이스 10000원 결제 요청" },
-  };
-
-  try {
-    await fetch("https://exp.host/--/api/v2/push/send", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-encoding": "gzip, deflate",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function registerForPushNotificationAsync() {
-  let token;
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
-
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    // token = await Notifications.getExpoPushTokenAsync({
-    //     projectId: "4b7a8e7d-ab26-4f41-9cb9-eaaf03325a73",
-    // });
-    console.log(token);
-
-    // api call
-    
-
-  } else {
-    alert("Must use physical device for Push Notifications");
-  }
-
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
-  return token;
-}
 
 export const DividePay = ({ navigation, route }) => {
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -139,9 +59,12 @@ export const DividePay = ({ navigation, route }) => {
 
   useEffect(() => {
     registerForPushNotificationAsync().then((token) => {
+      console.log("t: " + token);
       setExpoPushToken(token);
-      fetchData(`http://${ipAddress}/api/pushToken/save`);
-    }, []);
+      // fetchData(`http://${ipAddress}/api/pushToken/save`);
+
+      
+    });
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -167,6 +90,7 @@ export const DividePay = ({ navigation, route }) => {
         Notifications.removeNotificationSubscription(responseListener.current);
       }
     };
+
   }, []);
 
   // const onBtnPress = () => {
@@ -247,10 +171,11 @@ export const DividePay = ({ navigation, route }) => {
           if (isValidTotalPrice(Number(getSumOfAmount(paymentMembers)), totalPrice)) {
             console.log(paymentMembers);
             // push notification
-            await sendPushNotification(expoPushToken);
+            console.log(expoPushToken);
+            await sendPushNotification(expoPushToken, paymentMembers);
 
             // api call (init)
-            await fetch(`http://${ipAdress}/api/payments/init`, {
+            await fetch(`http://${ipAddress}/api/payments/init`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { palette } from "../lib/styles/colorPalette";
 import { Background } from "../components/Background";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
 import { CardRegistration } from "./CardRegistration";
+
 
 export const Home = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
