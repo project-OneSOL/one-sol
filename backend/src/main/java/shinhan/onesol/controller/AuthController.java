@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import shinhan.onesol.domain.Member;
 import shinhan.onesol.dto.MemberLoginDto;
+import shinhan.onesol.dto.MemberSignUpDto;
 import shinhan.onesol.dto.TokenInfo;
 import shinhan.onesol.dto.response.FriendDto;
 import shinhan.onesol.enums.MemberTypeEnum;
@@ -33,9 +34,9 @@ public class AuthController {
 //    }
 
     @PostMapping("/auth/signUp")
-    public ResponseEntity<Void> signUp(@RequestBody SignUp signUp) {
-        authService.signUp(signUp);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<MemberSignUpDto> signUp(@RequestBody SignUp signUp) {
+        MemberSignUpDto memberSignUpDto = authService.signUp(signUp);
+        return new ResponseEntity<>(memberSignUpDto, HttpStatus.OK);
     }
 
 //    @GetMapping("/auth/login")

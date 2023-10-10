@@ -8,22 +8,21 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PUSH_TOKEN")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class PushToken {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class PushNotification {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "push_token_id")
     private Long id;
 
+    private String expoPushToken;
+
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    private String token;
-
     @Builder
-    public PushToken(Member member, String token) {
+    private PushNotification(String expoPushToken, Member member) {
+        this.expoPushToken = expoPushToken;
         this.member = member;
-        this.token = token;
     }
 }
