@@ -8,8 +8,9 @@ import { paymentMemberState } from "../atoms";
 import { useRecoilState } from "recoil";
 
 export const CheckPayFriend = ({ navigation }) => {
-  const [paymentMembers, setPaymentMembers] = useRecoilState(paymentMemberState);
-  
+  const [paymentMembers, setPaymentMembers] =
+    useRecoilState(paymentMemberState);
+
   return (
     <Background>
       <TitleContainer
@@ -17,7 +18,7 @@ export const CheckPayFriend = ({ navigation }) => {
         text2="함께 결제할 멤버를 확인해주세요."
         text3={paymentMembers.length + "명"}
       ></TitleContainer>
-      <UserList users={paymentMembers} />
+      <UserList users={paymentMembers} disable={true} />
       <DoubleButton
         press1={() => navigation.goBack()}
         press2={() => navigation.push("ScanQR", { screen: "ScanQR" })}

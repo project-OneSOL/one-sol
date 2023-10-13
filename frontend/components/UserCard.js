@@ -6,10 +6,10 @@ import { useRecoilState } from "recoil";
 import { Button } from "./Button";
 import { FlatList } from "react-native";
 
-export const UserList = ({ users }) => {
-  const renderItem = ({item, index}) => {
+export const UserList = ({ users, disable = false }) => {
+  const renderItem = ({ item, index }) => {
     return (
-      <UserCard user={item}>
+      <UserCard user={item} disable={disable}>
         <Button title="친구 추가" type="small" color="blue"></Button>
       </UserCard>
     );
@@ -17,23 +17,22 @@ export const UserList = ({ users }) => {
   return (
     <FlatList
       data={users}
-      renderItem={renderItem}
+      renderItem={(item) => renderItem(item, this.props)}
       keyExtractor={(item) => item.index}
     />
   );
 };
 
 export const UserCard = (props) => {
-  
-  const { checked, children, user } = props;
-  console.log(user);
+  const { checked, children, user, disable } = props;
+  // console.log(user);
   // console.log("user", user);
   const [paymentMembers, setPaymentMembers] =
     useRecoilState(paymentMemberState);
 
   const handlePress = () => {
     console.log("handlePress");
-    console.log(paymentMembers);
+    // console.log(paymentMembers);
     // 사용자가 이미 목록에 있는지 확인
     const userIndex = paymentMembers.findIndex(
       (member) => member.id === user.id
@@ -41,9 +40,9 @@ export const UserCard = (props) => {
 
     if (userIndex !== -1) {
       // 이미 목록에 있다면 제거
-      const updatedMembers = [...paymentMembers];
-      updatedMembers.splice(userIndex, 1);
-      setPaymentMembers(updatedMembers);
+      // const updatedMembers = [...paymentMembers];
+      // updatedMembers.splice(userIndex, 1);
+      // setPaymentMembers(updatedMembers);
     } else {
       // 목록에 없다면 추가
       setPaymentMembers([...paymentMembers, user]);
@@ -54,19 +53,20 @@ export const UserCard = (props) => {
 
   return (
     <Pressable
-      style={[styles.container, checked ? palette.blue : palette.lightblue]} onPress={handlePress}
+      style={[styles.container, checked ? palette.blue : palette.lightblue]}
+      onPress={disable ? null : handlePress}
     >
       <View style={styles.basic}>
-          <Ionicons
-            style={styles.profile}
-            name="person-circle-sharp"
-            size={30}
-            color="black"
-          />
-          <View style={styles.info}>
-            <Text>{user.item ? user.item.name : user.name}</Text>
-            <Text>{user.item ? user.item.phoneNumber : user.phoneNumber}</Text>
-          </View>
+        <Ionicons
+          style={styles.profile}
+          name="person-circle-sharp"
+          size={30}
+          color="black"
+        />
+        <View style={styles.info}>
+          <Text>{user.item ? user.item.name : user.name}</Text>
+          <Text>{user.item ? user.item.phoneNumber : user.phoneNumber}</Text>
+        </View>
       </View>
       <View>{children}</View>
     </Pressable>
